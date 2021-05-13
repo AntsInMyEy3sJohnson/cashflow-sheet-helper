@@ -13,23 +13,17 @@ class TwoTextFieldRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextAlign left;
-    TextAlign right;
-
-    if (customTextAlign == null) {
-      left = TextAlign.left;
-      right = TextAlign.right;
-    } else {
-      left = customTextAlign;
-      right = customTextAlign;
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(child: VariableSizeTextField(leftTextFieldText, fontSize, left)),
         Expanded(
-            child: VariableSizeTextField(rightTextFieldText, fontSize, right)),
+          child: VariableSizeTextField(
+              leftTextFieldText, fontSize, customTextAlign ?? TextAlign.left),
+        ),
+        Expanded(
+          child: VariableSizeTextField(
+              rightTextFieldText, fontSize, customTextAlign ?? TextAlign.right),
+        ),
       ],
     );
   }

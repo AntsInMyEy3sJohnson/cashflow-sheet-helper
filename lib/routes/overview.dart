@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 
 class Overview extends StatelessWidget {
   static const ROUTE_ID = "/";
+  static const String TITLE_FOR_APP_BAR = "Cashflow Overview";
 
   static final Player _player = Player.withProperties(
-      title: "Docor",
+      title: "Doctor",
       dream: "Magnum Ferrari",
       activeIncome: 13200,
       taxes: 3200,

@@ -17,6 +17,7 @@ class Player {
   double bankLoan;
   int numChildren;
   double expensesPerChild;
+  double totalChildExpenses;
   double passiveIncome;
   double totalIncome;
   double totalExpenses;
@@ -38,6 +39,7 @@ class Player {
     this.bankLoan = 0;
     this.numChildren = 0;
     this.expensesPerChild = 0;
+    this.totalChildExpenses = expensesPerChild * numChildren;
     this.passiveIncome = 0;
     this.totalIncome = activeIncome + passiveIncome;
     this.totalExpenses = taxes +

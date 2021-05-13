@@ -4,11 +4,13 @@ import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
 class Income extends StatelessWidget {
+
   static const String ROUTE_ID = "/income";
+  static const String TITLE_FOR_APP_BAR = "Your income";
 
   // TODO Pass this state around with Provider and Consumer
   static final Player _player = Player.withProperties(
-      title: "Docor",
+      title: "Doctor",
       dream: "Magnum Ferrari",
       activeIncome: 13200,
       taxes: 3200,
