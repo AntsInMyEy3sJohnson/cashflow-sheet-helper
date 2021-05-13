@@ -1,10 +1,11 @@
+import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-class StyledTextField extends StatelessWidget {
+class BorderedTextField extends StatelessWidget {
 
   final String text;
 
-  const StyledTextField(this.text);
+  const BorderedTextField(this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +21,7 @@ class StyledTextField extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: Text(
-        text,
-        textAlign: TextAlign.right,
-        style: TextStyle(fontSize: 32),
-      ),
+      child: VariableSizeTextField(text, 32, TextAlign.right),
     );
   }
 

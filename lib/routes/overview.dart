@@ -1,12 +1,13 @@
-import 'package:cashflow_sheet_helper/data/profession.dart';
-import 'package:cashflow_sheet_helper/widgets/styled_text_field.dart';
+import 'package:cashflow_sheet_helper/data/player.dart';
+import 'package:cashflow_sheet_helper/widgets/bordered_text_field.dart';
 import 'package:flutter/material.dart';
 
-class CashflowOverview extends StatelessWidget {
+class Overview extends StatelessWidget {
   static const ROUTE_ID = "/";
 
-  static final Profession _profession = Profession.withProperties(
+  static final Player _player = Player.withProperties(
       title: "Docor",
+      dream: "Magnum Ferrari",
       activeIncome: 13200,
       taxes: 3200,
       mortgageOrRent: 1900,
@@ -16,7 +17,7 @@ class CashflowOverview extends StatelessWidget {
       otherExpenses: 2000,
       assets: 3500);
 
-  const CashflowOverview();
+  const Overview();
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,11 @@ class CashflowOverview extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            StyledTextField("${_profession.activeIncome}"),
-            StyledTextField("${_profession.passiveIncome}"),
-            StyledTextField("${_profession.totalIncome}"),
-            StyledTextField("${_profession.totalExpenses}"),
-            StyledTextField("${_profession.cashflow}"),
+            BorderedTextField("${_player.activeIncome}"),
+            BorderedTextField("${_player.passiveIncome}"),
+            BorderedTextField("${_player.totalIncome}"),
+            BorderedTextField("${_player.totalExpenses}"),
+            BorderedTextField("${_player.cashflow}"),
           ],
         ),
       ),
