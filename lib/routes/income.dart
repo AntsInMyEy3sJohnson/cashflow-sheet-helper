@@ -29,48 +29,45 @@ class Income extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: const TwoTextFieldRow(
-              "Kind",
-              "Cashflow",
-              32,
-              customTextAlign: TextAlign.center,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: const TwoTextFieldRow(
+            "Kind",
+            "Cashflow",
+            32,
+            customTextAlign: TextAlign.center,
           ),
-          TwoTextFieldRow("Salary:", "4200", 19),
-          TwoTextFieldRow("Interests & dividends:", "400", 19),
-          Padding(
-            padding: const EdgeInsets.only(top: 19),
-            child: VariableSizeTextField(
-              "Real estate & company holdings:",
-              25,
-              TextAlign.left,
-            ),
+        ),
+        TwoTextFieldRow("Salary:", "4200", 19),
+        TwoTextFieldRow("Interests & dividends:", "400", 19),
+        Padding(
+          padding: const EdgeInsets.only(top: 19),
+          child: VariableSizeTextField(
+            "Real estate & company holdings:",
+            25,
+            TextAlign.left,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _player.holdings.length,
-              itemBuilder: (context, i) {
-                final holding = _player.holdings[i];
-                return ListTile(
-                  title: TwoTextFieldRow(
-                    "${holding.name}",
-                    "${holding.cashflow}",
-                    18,
-                  ),
-                );
-              },
-            ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _player.holdings.length,
+            itemBuilder: (context, i) {
+              final holding = _player.holdings[i];
+              return ListTile(
+                title: TwoTextFieldRow(
+                  "${holding.name}",
+                  "${holding.cashflow}",
+                  18,
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

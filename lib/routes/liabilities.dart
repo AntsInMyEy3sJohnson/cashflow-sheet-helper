@@ -26,35 +26,32 @@ class Liabilities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TwoTextFieldRow("Home mortgage:", "${_player.totalMortgage}", 19),
-          TwoTextFieldRow("Student loan:", "${_player.totalStudentLoan}", 19),
-          TwoTextFieldRow("Car loan:", "${_player.totalCarLoan}", 19),
-          TwoTextFieldRow("Credit card debt:", "${_player.totalCreditCardDebt}", 19),
-          TwoTextFieldRow("Bank loan:", "${_player.bankLoan}", 19),
-          TwoTextFieldRow("Real estate/companies:", "Mortgages:", 19),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _player.holdings.length,
-              itemBuilder: (context, i) {
-                final holding = _player.holdings[i];
-                return ListTile(
-                  title: TwoTextFieldRow(
-                    "${holding.name}",
-                    "${holding.mortgage}",
-                    19
-                  ),
-                );
-              },
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        TwoTextFieldRow("Home mortgage:", "${_player.totalMortgage}", 19),
+        TwoTextFieldRow("Student loan:", "${_player.totalStudentLoan}", 19),
+        TwoTextFieldRow("Car loan:", "${_player.totalCarLoan}", 19),
+        TwoTextFieldRow("Credit card debt:", "${_player.totalCreditCardDebt}", 19),
+        TwoTextFieldRow("Bank loan:", "${_player.bankLoan}", 19),
+        TwoTextFieldRow("Real estate/companies:", "Mortgages:", 19),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _player.holdings.length,
+            itemBuilder: (context, i) {
+              final holding = _player.holdings[i];
+              return ListTile(
+                title: TwoTextFieldRow(
+                  "${holding.name}",
+                  "${holding.mortgage}",
+                  19
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -30,22 +30,19 @@ class Expenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TwoTextFieldRow("Taxes", "${_player.taxes}", 19),
-          TwoTextFieldRow("Mortgage/rent", "${_player.monthlyMortgageOrRent}", 19),
-          TwoTextFieldRow("Student loan", "${_player.monthlyStudentLoan}", 19),
-          TwoTextFieldRow("Car loan", "${_player.monthlyCarLoan}", 19),
-          TwoTextFieldRow("Credit card loan", "${_player.monthlyCreditCardLoan}", 19),
-          TwoTextFieldRow("Other expenses", "${_player.monthlyOtherExpenses}", 19),
-          TwoTextFieldRow("Bank loans", "${_player.bankLoan}", 19),
-          TwoTextFieldRow("Child expenses (${_player.numChildren}x${_player.expensesPerChild})", "${_player.totalChildExpenses}", 19),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        TwoTextFieldRow("Taxes", "${_player.taxes}", 19),
+        TwoTextFieldRow("Mortgage/rent", "${_player.monthlyMortgageOrRent}", 19),
+        TwoTextFieldRow("Student loan", "${_player.monthlyStudentLoan}", 19),
+        TwoTextFieldRow("Car loan", "${_player.monthlyCarLoan}", 19),
+        TwoTextFieldRow("Credit card loan", "${_player.monthlyCreditCardLoan}", 19),
+        TwoTextFieldRow("Other expenses", "${_player.monthlyOtherExpenses}", 19),
+        TwoTextFieldRow("Bank loans", "${_player.bankLoan}", 19),
+        TwoTextFieldRow("Child expenses (${_player.numChildren}x${_player.expensesPerChild})", "${_player.totalChildExpenses}", 19),
+      ],
     );
   }
 

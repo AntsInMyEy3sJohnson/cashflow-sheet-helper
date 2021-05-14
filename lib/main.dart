@@ -1,6 +1,10 @@
+import 'package:cashflow_sheet_helper/body.dart';
+import 'package:cashflow_sheet_helper/body_scaffold.dart';
 import 'package:cashflow_sheet_helper/routes.dart';
 import 'package:cashflow_sheet_helper/routes/overview.dart';
+import 'package:cashflow_sheet_helper/state/page_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,9 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      onGenerateTitle: (_) => "CashFlow Sheet Helper",
-      onGenerateRoute: RouteGenerator.generateRoute,
-      initialRoute: Overview.ROUTE_ID,
+      title: "Cashflow Sheet Helper",
+      home: BlocProvider<PageBloc>(
+        create: (_) => PageBloc(),
+        child: const BodyScaffold(),
+      ),
     );
   }
 }

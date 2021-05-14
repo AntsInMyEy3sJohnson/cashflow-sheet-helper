@@ -26,19 +26,17 @@ class Overview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            BorderedTextField("${_player.activeIncome}"),
-            BorderedTextField("${_player.passiveIncome}"),
-            BorderedTextField("${_player.totalIncome}"),
-            BorderedTextField("${_player.totalExpenses}"),
-            BorderedTextField("${_player.cashflow}"),
-          ],
-        ),
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          BorderedTextField("${_player.activeIncome}"),
+          BorderedTextField("${_player.passiveIncome}"),
+          BorderedTextField("${_player.totalIncome}"),
+          BorderedTextField("${_player.totalExpenses}"),
+          BorderedTextField("${_player.cashflow}"),
+        ],
       ),
     );
   }

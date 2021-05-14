@@ -26,52 +26,49 @@ class Assets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TwoTextFieldRow("Savings:", "4500", 19),
-          TwoTextFieldRow("Precious metals etc.:", "50", 19),
-          ThreeTextFieldRow(
-              "Shares & fonds:", "# shares:", "Cost per share:", 19),
-          SizedBox(
-            height: 200,
-            child: ListView.builder(
-              itemCount: _player.assets.length,
-              itemBuilder: (context, i) {
-                final asset = _player.assets[i];
-                return ListTile(
-                  title: ThreeTextFieldRow(
-                    "${asset.name}",
-                    "${asset.numShares}",
-                    "${asset.costPerShare}",
-                    18,
-                  ),
-                );
-              },
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        TwoTextFieldRow("Savings:", "4500", 19),
+        TwoTextFieldRow("Precious metals etc.:", "50", 19),
+        ThreeTextFieldRow(
+            "Shares & fonds:", "# shares:", "Cost per share:", 19),
+        SizedBox(
+          height: 200,
+          child: ListView.builder(
+            itemCount: _player.assets.length,
+            itemBuilder: (context, i) {
+              final asset = _player.assets[i];
+              return ListTile(
+                title: ThreeTextFieldRow(
+                  "${asset.name}",
+                  "${asset.numShares}",
+                  "${asset.costPerShare}",
+                  18,
+                ),
+              );
+            },
           ),
-          ThreeTextFieldRow("Real estate/companies:", "Down payment:", "Cost:", 19),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _player.holdings.length,
-              itemBuilder: (context, i) {
-                final holding = _player.holdings[i];
-                return ListTile(
-                  title: ThreeTextFieldRow(
-                    "${holding.name}",
-                    "${holding.downPayment}",
-                    "${holding.buyingCost}",
-                    18
-                  ),
-                );
-              },
-            ),
+        ),
+        ThreeTextFieldRow("Real estate/companies:", "Down payment:", "Cost:", 19),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _player.holdings.length,
+            itemBuilder: (context, i) {
+              final holding = _player.holdings[i];
+              return ListTile(
+                title: ThreeTextFieldRow(
+                  "${holding.name}",
+                  "${holding.downPayment}",
+                  "${holding.buyingCost}",
+                  18
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
