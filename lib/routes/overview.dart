@@ -11,12 +11,16 @@ class Overview extends StatelessWidget {
       dream: "Magnum Ferrari",
       activeIncome: 13200,
       taxes: 3200,
-      mortgageOrRent: 1900,
-      studentLoan: 700,
-      carLoan: 300,
-      creditCardLoan: 200,
-      otherExpenses: 2000,
-      savings: 3500);
+      monthlyMortgageOrRent: 1900,
+      monthlyStudentLoan: 700,
+      monthlyCarLoan: 300,
+      monthlyCreditCardLoan: 200,
+      monthlyOtherExpenses: 2000,
+      savings: 3500,
+      totalMortgage: 202000,
+      totalStudentLoan: 150000,
+      totalCarLoan: 19000,
+      totalCreditCardDebt: 10000);
 
   const Overview();
 

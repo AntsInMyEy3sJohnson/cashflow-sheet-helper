@@ -8,12 +8,17 @@ class Player {
 
   final double activeIncome;
   final double taxes;
-  final double mortgageOrRent;
-  final double studentLoan;
-  final double carLoan;
-  final double creditCardLoan;
-  final double otherExpenses;
+  final double monthlyMortgageOrRent;
+  final double monthlyStudentLoan;
+  final double monthlyCarLoan;
+  final double monthlyCreditCardLoan;
+  final double monthlyOtherExpenses;
   final double savings;
+
+  final double totalMortgage;
+  final double totalStudentLoan;
+  final double totalCarLoan;
+  final double totalCreditCardDebt;
 
   double bankLoan;
   int numChildren;
@@ -31,12 +36,16 @@ class Player {
     @required this.dream,
     @required this.activeIncome,
     @required this.taxes,
-    @required this.mortgageOrRent,
-    @required this.studentLoan,
-    @required this.carLoan,
-    @required this.creditCardLoan,
-    @required this.otherExpenses,
+    @required this.monthlyMortgageOrRent,
+    @required this.monthlyStudentLoan,
+    @required this.monthlyCarLoan,
+    @required this.monthlyCreditCardLoan,
+    @required this.monthlyOtherExpenses,
     @required this.savings,
+    @required this.totalMortgage,
+    @required this.totalStudentLoan,
+    @required this.totalCarLoan,
+    @required this.totalCreditCardDebt,
   }) {
     this.bankLoan = 0;
     this.numChildren = 0;
@@ -45,11 +54,11 @@ class Player {
     this.passiveIncome = 0;
     this.totalIncome = activeIncome + passiveIncome;
     this.totalExpenses = taxes +
-        mortgageOrRent +
-        studentLoan +
-        carLoan +
-        creditCardLoan +
-        otherExpenses;
+        monthlyMortgageOrRent +
+        monthlyStudentLoan +
+        monthlyCarLoan +
+        monthlyCreditCardLoan +
+        monthlyOtherExpenses;
     this.cashflow = totalIncome - totalExpenses;
     // Create some dummy holdings to work with
     this.holdings = _generateDummyHoldings();

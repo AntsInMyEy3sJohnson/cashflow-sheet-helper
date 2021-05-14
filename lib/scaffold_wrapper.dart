@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/routes/assets.dart';
 import 'package:cashflow_sheet_helper/routes/expenses.dart';
 import 'package:cashflow_sheet_helper/routes/income.dart';
+import 'package:cashflow_sheet_helper/routes/liabilities.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldWrapper extends StatelessWidget {
@@ -32,6 +33,10 @@ class ScaffoldWrapper extends StatelessWidget {
             ListTile(
               title: const Text("Assets"),
               onTap: () => Navigator.pushNamed(context, Assets.ROUTE_ID),
+            ),
+            ListTile(
+              title: const Text("Liabilities"),
+              onTap: () => Navigator.pushNamed(context, Liabilities.ROUTE_ID),
             ),
           ],
         ),

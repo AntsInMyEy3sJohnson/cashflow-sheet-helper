@@ -15,12 +15,16 @@ class Expenses extends StatelessWidget {
       dream: "Magnum Ferrari",
       activeIncome: 13200,
       taxes: 3200,
-      mortgageOrRent: 1900,
-      studentLoan: 700,
-      carLoan: 300,
-      creditCardLoan: 200,
-      otherExpenses: 2000,
-      savings: 3500);
+      monthlyMortgageOrRent: 1900,
+      monthlyStudentLoan: 700,
+      monthlyCarLoan: 300,
+      monthlyCreditCardLoan: 200,
+      monthlyOtherExpenses: 2000,
+      savings: 3500,
+      totalMortgage: 202000,
+      totalStudentLoan: 150000,
+      totalCarLoan: 19000,
+      totalCreditCardDebt: 10000);
 
   const Expenses();
 
@@ -33,11 +37,11 @@ class Expenses extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           TwoTextFieldRow("Taxes", "${_player.taxes}", 19),
-          TwoTextFieldRow("Mortgage/rent", "${_player.mortgageOrRent}", 19),
-          TwoTextFieldRow("Student loan", "${_player.studentLoan}", 19),
-          TwoTextFieldRow("Car loan", "${_player.carLoan}", 19),
-          TwoTextFieldRow("Credit card loan", "${_player.creditCardLoan}", 19),
-          TwoTextFieldRow("Other expenses", "${_player.otherExpenses}", 19),
+          TwoTextFieldRow("Mortgage/rent", "${_player.monthlyMortgageOrRent}", 19),
+          TwoTextFieldRow("Student loan", "${_player.monthlyStudentLoan}", 19),
+          TwoTextFieldRow("Car loan", "${_player.monthlyCarLoan}", 19),
+          TwoTextFieldRow("Credit card loan", "${_player.monthlyCreditCardLoan}", 19),
+          TwoTextFieldRow("Other expenses", "${_player.monthlyOtherExpenses}", 19),
           TwoTextFieldRow("Bank loans", "${_player.bankLoan}", 19),
           TwoTextFieldRow("Child expenses (${_player.numChildren}x${_player.expensesPerChild})", "${_player.totalChildExpenses}", 19),
         ],
