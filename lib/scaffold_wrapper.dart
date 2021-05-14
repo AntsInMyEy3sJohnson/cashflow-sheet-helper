@@ -1,15 +1,9 @@
+import 'package:cashflow_sheet_helper/routes/assets.dart';
 import 'package:cashflow_sheet_helper/routes/expenses.dart';
 import 'package:cashflow_sheet_helper/routes/income.dart';
-import 'package:cashflow_sheet_helper/routes/overview.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldWrapper extends StatelessWidget {
-
-  static final Map<String, String> appBarTitles = <String, String> {
-    Overview.ROUTE_ID: Overview.TITLE_FOR_APP_BAR,
-    Income.ROUTE_ID: Income.TITLE_FOR_APP_BAR,
-    Expenses.ROUTE_ID: Expenses.TITLE_FOR_APP_BAR,
-  };
 
   final Widget body;
 
@@ -20,7 +14,6 @@ class ScaffoldWrapper extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      // Navigator.canPop(context) ? null :
       drawer: Navigator.canPop(context) ? null : Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -35,7 +28,11 @@ class ScaffoldWrapper extends StatelessWidget {
             ListTile(
               title: const Text("Expenses"),
               onTap: () => Navigator.pushNamed(context, Expenses.ROUTE_ID),
-            )
+            ),
+            ListTile(
+              title: const Text("Assets"),
+              onTap: () => Navigator.pushNamed(context, Assets.ROUTE_ID),
+            ),
           ],
         ),
       ),

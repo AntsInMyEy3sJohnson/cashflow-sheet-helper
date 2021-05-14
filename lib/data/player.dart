@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,7 +13,7 @@ class Player {
   final double carLoan;
   final double creditCardLoan;
   final double otherExpenses;
-  final double assets;
+  final double savings;
 
   double bankLoan;
   int numChildren;
@@ -23,6 +24,7 @@ class Player {
   double totalExpenses;
   double cashflow;
   List<Holding> holdings;
+  List<Asset> assets;
 
   Player.withProperties({
     @required this.title,
@@ -34,7 +36,7 @@ class Player {
     @required this.carLoan,
     @required this.creditCardLoan,
     @required this.otherExpenses,
-    @required this.assets,
+    @required this.savings,
   }) {
     this.bankLoan = 0;
     this.numChildren = 0;
@@ -51,6 +53,7 @@ class Player {
     this.cashflow = totalIncome - totalExpenses;
     // Create some dummy holdings to work with
     this.holdings = _generateDummyHoldings();
+    this.assets = _generateDummyAssets();
   }
 
   List<Holding> _generateDummyHoldings() {
@@ -77,4 +80,17 @@ class Player {
     ];
 
   }
+
+  List<Asset> _generateDummyAssets() {
+
+    return <Asset>[
+      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
+      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
+      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
+      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
+      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
+    ];
+
+  }
+
 }

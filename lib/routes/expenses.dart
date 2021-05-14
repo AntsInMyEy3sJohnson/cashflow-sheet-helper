@@ -20,7 +20,7 @@ class Expenses extends StatelessWidget {
       carLoan: 300,
       creditCardLoan: 200,
       otherExpenses: 2000,
-      assets: 3500);
+      savings: 3500);
 
   const Expenses();
 

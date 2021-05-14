@@ -1,14 +1,12 @@
 import 'package:cashflow_sheet_helper/data/player.dart';
+import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:cashflow_sheet_helper/widgets/two_text_field_row.dart';
 import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-class Income extends StatelessWidget {
+class Assets extends StatelessWidget {
+  static const String ROUTE_ID = "/assets";
 
-  static const String ROUTE_ID = "/income";
-  static const String TITLE_FOR_APP_BAR = "Your income";
-
-  // TODO Pass this state around with Provider and Consumer
   static final Player _player = Player.withProperties(
       title: "Doctor",
       dream: "Magnum Ferrari",
@@ -21,45 +19,49 @@ class Income extends StatelessWidget {
       otherExpenses: 2000,
       savings: 3500);
 
-  const Income();
+  const Assets();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: const TwoTextFieldRow(
-              "Kind",
-              "Cashflow",
-              32,
-              customTextAlign: TextAlign.center,
+          TwoTextFieldRow("Savings:", "4500", 19),
+          TwoTextFieldRow("Precious metals etc.:", "50", 19),
+          ThreeTextFieldRow(
+              "Shares & fonds:", "# shares:", "Cost per share:", 19),
+          SizedBox(
+            height: 200,
+            child: ListView.builder(
+              itemCount: _player.assets.length,
+              itemBuilder: (context, i) {
+                final asset = _player.assets[i];
+                return ListTile(
+                  title: ThreeTextFieldRow(
+                    "${asset.name}",
+                    "${asset.numShares}",
+                    "${asset.costPerShare}",
+                    18,
+                  ),
+                );
+              },
             ),
           ),
-          TwoTextFieldRow("Salary:", "4200", 19),
-          TwoTextFieldRow("Interests & dividends:", "400", 19),
-          Padding(
-            padding: const EdgeInsets.only(top: 19),
-            child: VariableSizeTextField(
-              "Real estate & company holdings:",
-              25,
-              TextAlign.left,
-            ),
-          ),
+          ThreeTextFieldRow("Real estate/company:", "Down payment:", "Cost:", 19),
           Expanded(
             child: ListView.builder(
               itemCount: _player.holdings.length,
               itemBuilder: (context, i) {
                 final holding = _player.holdings[i];
                 return ListTile(
-                  title: TwoTextFieldRow(
+                  title: ThreeTextFieldRow(
                     "${holding.name}",
-                    "${holding.cashflow}",
-                    18,
+                    "${holding.downPayment}",
+                    "${holding.buyingCost}",
+                    18
                   ),
                 );
               },

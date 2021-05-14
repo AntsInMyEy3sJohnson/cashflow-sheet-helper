@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/routes/assets.dart';
 import 'package:cashflow_sheet_helper/routes/expenses.dart';
 import 'package:cashflow_sheet_helper/routes/income.dart';
 import 'package:cashflow_sheet_helper/routes/overview.dart';
@@ -18,6 +19,8 @@ class RouteGenerator {
       case Expenses.ROUTE_ID:
         return MaterialPageRoute(
             builder: (_) => ScaffoldWrapper(const Expenses()));
+      case Assets.ROUTE_ID:
+        return MaterialPageRoute(builder: (_) => ScaffoldWrapper(const Assets()));
       default:
         throw RouteException("No such route: ${routeSettings.name}");
     }
