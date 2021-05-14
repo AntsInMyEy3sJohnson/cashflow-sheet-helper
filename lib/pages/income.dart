@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class Income extends StatelessWidget {
 
   static const String ROUTE_ID = "/income";
-  static const String TITLE_FOR_APP_BAR = "Your income";
 
   // TODO Pass this state around with Provider and Consumer
   static final Player _player = Player.withProperties(

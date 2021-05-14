@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class Expenses extends StatelessWidget {
 
   static const String ROUTE_ID = "/expenses";
-  static const String TITLE_FOR_APP_BAR = "Your expenses";
 
   // TODO Pass this state around with Provider and Consumer
   // Or save and load using hydrated_bloc?

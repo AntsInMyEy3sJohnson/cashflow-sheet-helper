@@ -1,9 +1,9 @@
 import 'package:cashflow_sheet_helper/body.dart';
-import 'package:cashflow_sheet_helper/routes/assets.dart';
-import 'package:cashflow_sheet_helper/routes/expenses.dart';
-import 'package:cashflow_sheet_helper/routes/income.dart';
-import 'package:cashflow_sheet_helper/routes/liabilities.dart';
-import 'package:cashflow_sheet_helper/routes/overview.dart';
+import 'package:cashflow_sheet_helper/pages/assets.dart';
+import 'package:cashflow_sheet_helper/pages/expenses.dart';
+import 'package:cashflow_sheet_helper/pages/income.dart';
+import 'package:cashflow_sheet_helper/pages/liabilities.dart';
+import 'package:cashflow_sheet_helper/pages/overview.dart';
 import 'package:cashflow_sheet_helper/state/page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
