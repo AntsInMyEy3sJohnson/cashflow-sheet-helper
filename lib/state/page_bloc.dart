@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PageBloc extends Bloc<String, Widget> {
+
   static final Map<String, Widget> _pages = <String, Widget>{
     Overview.ROUTE_ID: const Overview(),
     Income.ROUTE_ID: const Income(),

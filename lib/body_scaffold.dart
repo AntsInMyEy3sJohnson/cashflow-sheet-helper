@@ -28,23 +28,38 @@ class BodyScaffold extends StatelessWidget {
             ),
             ListTile(
               title: const Text("Overview"),
-              onTap: () => pageBloc.add(Overview.ROUTE_ID),
+              onTap: () {
+                pageBloc.add(Overview.ROUTE_ID);
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               title: const Text("Income"),
-              onTap: () => pageBloc.add(Income.ROUTE_ID),
+              onTap: () {
+                pageBloc.add(Income.ROUTE_ID);
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               title: const Text("Expenses"),
-              onTap: () => pageBloc.add(Expenses.ROUTE_ID),
+              onTap: () {
+                pageBloc.add(Expenses.ROUTE_ID);
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               title: const Text("Assets"),
-              onTap: () => pageBloc.add(Assets.ROUTE_ID),
+              onTap: () {
+                pageBloc.add(Assets.ROUTE_ID);
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               title: const Text("Liabilities"),
-              onTap: () => pageBloc.add(Liabilities.ROUTE_ID),
+              onTap: () {
+                pageBloc.add(Liabilities.ROUTE_ID);
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
@@ -52,6 +67,7 @@ class BodyScaffold extends StatelessWidget {
       body: const Body(),
     );
   }
+
 
 
 
