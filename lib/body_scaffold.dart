@@ -4,7 +4,7 @@ import 'package:cashflow_sheet_helper/pages/expenses.dart';
 import 'package:cashflow_sheet_helper/pages/income.dart';
 import 'package:cashflow_sheet_helper/pages/liabilities.dart';
 import 'package:cashflow_sheet_helper/pages/overview.dart';
-import 'package:cashflow_sheet_helper/state/page_bloc.dart';
+import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,18 +1,18 @@
-import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
+import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AssetList extends StatefulWidget {
-  const AssetList();
+class HoldingList extends StatefulWidget {
+  const HoldingList();
 
   @override
-  _AssetListState createState() => _AssetListState();
+  _HoldingListState createState() => _HoldingListState();
 }
 
-class _AssetListState extends State<AssetList> {
+class _HoldingListState extends State<HoldingList> {
   PlayerBloc _playerBloc;
 
   @override
@@ -26,29 +26,25 @@ class _AssetListState extends State<AssetList> {
     return BlocBuilder<PlayerBloc, PlayerState>(
       builder: (context, state) {
         return ListView.builder(
-          itemCount: state.assets.length + 1,
+          itemCount: state.holdings.length + 1,
           itemBuilder: (context, i) {
-            if (i < state.assets.length) {
-              final asset = state.assets[i];
+            if (i < state.holdings.length) {
+              final holding = state.holdings[i];
               return ListTile(
-                title: ThreeTextFieldRow(
-                  "${asset.name}",
-                  "${asset.numShares}",
-                  "${asset.costPerShare}",
-                  18,
-                ),
+                title: ThreeTextFieldRow("${holding.name}",
+                    "${holding.downPayment}", "${holding.buyingCost}", 18),
               );
             }
             return ElevatedButton(
-                onPressed: _addAsset, child: const Text("Add"));
+                onPressed: _addHolding, child: const Text("Buy"));
           },
         );
       },
     );
   }
 
-  void _addAsset() {
-    // Hard-coded asset for now
-    _playerBloc.add(AssetBought("ON2U", 15, 10));
+  void _addHolding() {
+    // Hard-coded for now
+    _playerBloc.add(HoldingBought("APH", 50000, 550000, 500000, 2400));
   }
 }

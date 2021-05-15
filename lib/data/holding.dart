@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-class Holding {
+class Holding extends Equatable {
   final String name;
   final double downPayment;
   final double buyingCost;
@@ -14,4 +15,7 @@ class Holding {
     @required this.mortgage,
     @required this.cashflow,
   });
+
+  @override
+  List<Object> get props => [name, downPayment, buyingCost, mortgage, cashflow];
 }
