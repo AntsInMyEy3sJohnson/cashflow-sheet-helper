@@ -1,34 +1,52 @@
 import 'package:cashflow_sheet_helper/body_scaffold.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
+import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'data/asset.dart';
-
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  static final PlayerState _playerState = PlayerState(
-    <Asset>[
-      Asset(name: "GRO4US", numShares: 25, costPerShare: 5),
-    ],
-    <Holding>[
-      Holding(
-          name: "EFH",
-          downPayment: 16000,
-          buyingCost: 275000,
-          mortgage: 259000,
-          cashflow: 1000),
-    ],
-  );
 
   @override
   Widget build(BuildContext context) {
+
+    // Hard-coded for now
+    // TODO Put initialization of Player in initialization screen
+    Player.createInstance(
+        title: "Doctor",
+        dream: "Magnum Ferrari",
+        activeIncome: 13200,
+        taxes: 3200,
+        monthlyMortgageOrRent: 1900,
+        monthlyStudentLoan: 700,
+        monthlyCarLoan: 300,
+        monthlyCreditCardLoan: 200,
+        monthlyChildExpenses: 700,
+        monthlyOtherExpenses: 2000,
+        savings: 3500,
+        totalMortgage: 202000,
+        totalStudentLoan: 150000,
+        totalCarLoan: 19000,
+        totalCreditCardDebt: 10000);
+
+    final PlayerState _playerState = PlayerState(
+      bankLoan: 0,
+      numChildren: 0,
+      totalExpenses: 8300,
+      passiveIncome: 0,
+      totalIncome: 13200,
+      totalChildExpenses: 0,
+      cashflow: 4900,
+      holdings: [],
+      assets: [],
+    );
+
     return MaterialApp(
       title: "Cashflow Sheet Helper",
       home: MultiBlocProvider(

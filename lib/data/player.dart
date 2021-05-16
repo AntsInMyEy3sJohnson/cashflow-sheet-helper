@@ -1,37 +1,66 @@
-import 'package:cashflow_sheet_helper/data/asset.dart';
-import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:flutter/cupertino.dart';
 
+/// Contains all properties about the player that
+/// cannot change during a game, but are set only once
+/// at the game's beginning.
 class Player {
   final String title;
   final String dream;
-
   final double activeIncome;
   final double taxes;
   final double monthlyMortgageOrRent;
   final double monthlyStudentLoan;
   final double monthlyCarLoan;
   final double monthlyCreditCardLoan;
+  final double monthlyChildExpenses;
   final double monthlyOtherExpenses;
   final double savings;
-
   final double totalMortgage;
   final double totalStudentLoan;
   final double totalCarLoan;
   final double totalCreditCardDebt;
 
-  double bankLoan;
-  int numChildren;
-  double expensesPerChild;
-  double totalChildExpenses;
-  double passiveIncome;
-  double totalIncome;
-  double totalExpenses;
-  double cashflow;
-  List<Holding> holdings;
-  List<Asset> assets;
+  static Player createInstance({
+    @required String title,
+    @required String dream,
+    @required double activeIncome,
+    @required double taxes,
+    @required double monthlyMortgageOrRent,
+    @required double monthlyStudentLoan,
+    @required double monthlyCarLoan,
+    @required double monthlyCreditCardLoan,
+    @required double monthlyChildExpenses,
+    @required double monthlyOtherExpenses,
+    @required double savings,
+    @required double totalMortgage,
+    @required double totalStudentLoan,
+    @required double totalCarLoan,
+    @required double totalCreditCardDebt}) {
+    _theInstance = Player._(title: title,
+        dream: dream,
+        activeIncome: activeIncome,
+        taxes: taxes,
+        monthlyMortgageOrRent: monthlyMortgageOrRent,
+        monthlyStudentLoan: monthlyStudentLoan,
+        monthlyCarLoan: monthlyCarLoan,
+        monthlyCreditCardLoan: monthlyCreditCardLoan,
+        monthlyChildExpenses: monthlyChildExpenses,
+        monthlyOtherExpenses: monthlyOtherExpenses,
+        savings: savings,
+        totalMortgage: totalMortgage,
+        totalStudentLoan: totalStudentLoan,
+        totalCarLoan: totalCarLoan,
+        totalCreditCardDebt: totalCreditCardDebt);
+    return _theInstance;
+  }
 
-  Player.withProperties({
+  static Player _theInstance;
+
+  static Player getInstance() {
+    return _theInstance;
+  }
+
+  const Player._({
     @required this.title,
     @required this.dream,
     @required this.activeIncome,
@@ -40,66 +69,12 @@ class Player {
     @required this.monthlyStudentLoan,
     @required this.monthlyCarLoan,
     @required this.monthlyCreditCardLoan,
+    @required this.monthlyChildExpenses,
     @required this.monthlyOtherExpenses,
     @required this.savings,
     @required this.totalMortgage,
     @required this.totalStudentLoan,
     @required this.totalCarLoan,
     @required this.totalCreditCardDebt,
-  }) {
-    this.bankLoan = 0;
-    this.numChildren = 0;
-    this.expensesPerChild = 0;
-    this.totalChildExpenses = expensesPerChild * numChildren;
-    this.passiveIncome = 0;
-    this.totalIncome = activeIncome + passiveIncome;
-    this.totalExpenses = taxes +
-        monthlyMortgageOrRent +
-        monthlyStudentLoan +
-        monthlyCarLoan +
-        monthlyCreditCardLoan +
-        monthlyOtherExpenses;
-    this.cashflow = totalIncome - totalExpenses;
-    // Create some dummy holdings to work with
-    this.holdings = _generateDummyHoldings();
-    this.assets = _generateDummyAssets();
-  }
-
-  List<Holding> _generateDummyHoldings() {
-
-    return <Holding>[
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-      Holding(name: "EFH", downPayment: 16000, buyingCost: 275000, mortgage: 259000, cashflow: 1000),
-    ];
-
-  }
-
-  List<Asset> _generateDummyAssets() {
-
-    return <Asset>[
-      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
-      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
-      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
-      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
-      Asset(name: "GRO4US", numShares: 42, costPerShare: 5),
-    ];
-
-  }
-
+  });
 }
