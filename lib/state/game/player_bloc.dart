@@ -28,7 +28,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         buyingCost: event.buyingCost,
         mortgage: event.mortgage,
         cashflow: event.cashflow));
-    return state.copyWithHoldings(holdings);
+    final newCash = state.cash - event.downPayment;
+    return state.copyWithHoldingsAndCash(holdings, newCash);
   }
 
   Future<PlayerState> _mapAssetBoughtToPlayerState(

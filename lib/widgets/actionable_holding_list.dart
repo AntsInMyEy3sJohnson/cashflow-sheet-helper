@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/buy_holding_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,15 +37,35 @@ class _HoldingListState extends State<HoldingList> {
               );
             }
             return ElevatedButton(
-                onPressed: _addHolding, child: const Text("Buy"));
+                onPressed: () async {
+                  HoldingBought holdingBought = await showDialog<HoldingBought>(
+                      context: context,
+                      builder: (_) {
+                        return BuyHoldingDialog();
+                      });
+                  _addHolding(context, holdingBought);
+                },
+                child: const Text("Buy"));
           },
         );
       },
     );
   }
 
-  void _addHolding() {
-    // Hard-coded for now
-    _playerBloc.add(HoldingBought("APH", 50000, 550000, 500000, 2400));
+  void _addHolding(BuildContext context, HoldingBought holdingBought) {
+    _playerBloc.add(holdingBought);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text("Holding bought"),
+            Text("Cash -${holdingBought.downPayment}"),
+            Text("Liabilities +${holdingBought.mortgage}"),
+            Text("Cashflow +${holdingBought.cashflow}")
+          ],
+        ),
+      ),
+    );
   }
 }

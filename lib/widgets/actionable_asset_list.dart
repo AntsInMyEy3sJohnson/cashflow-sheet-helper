@@ -1,7 +1,7 @@
 import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
-import 'package:cashflow_sheet_helper/widgets/buy_asset_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,14 +61,12 @@ class _AssetListState extends State<AssetList> {
     _playerBloc.add(assetBought);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: SizedBox(
-          height: 50,
-          child: Column(
-            children: [
-              const Text("Asset bought."),
-              Text("Cash -${assetBought.totalCost}"),
-            ],
-          ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text("Asset bought."),
+            Text("Cash -${assetBought.totalCost}"),
+          ],
         ),
       ),
     );

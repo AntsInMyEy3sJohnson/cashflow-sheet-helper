@@ -30,7 +30,7 @@ class PlayerState extends Equatable {
     @required this.assets,
   });
 
-  PlayerState copyWithHoldings(List<Holding> holdings) {
+  PlayerState copyWithHoldingsAndCash(List<Holding> holdings, double cash) {
     return PlayerState(
       bankLoan: this.bankLoan,
       numChildren: this.numChildren,
@@ -39,7 +39,7 @@ class PlayerState extends Equatable {
       totalIncome: this.totalIncome,
       totalExpenses: this.totalExpenses,
       cashflow: this.cashflow,
-      cash: this.cash,
+      cash: cash,
       holdings: holdings,
       assets: this.assets,
     );

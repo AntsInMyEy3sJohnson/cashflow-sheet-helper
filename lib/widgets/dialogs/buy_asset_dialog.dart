@@ -18,16 +18,21 @@ class BuyAssetDialog extends StatelessWidget {
           PaddedInputTextField("Today's price", _priceController),
           PaddedInputTextField("# shares to buy", _numSharesController),
           ElevatedButton(
-              onPressed: () {
-                final numShares = int.parse(_numSharesController.text);
-                final price = double.parse(_priceController.text);
-                final assetBought = AssetBought(
-                    _nameController.text, numShares, price, numShares * price);
-                Navigator.pop(context, assetBought);
-              },
-              child: const Text("Confirm"))
+              onPressed: () => _process(context), child: const Text("Confirm"))
         ],
       ),
     );
+  }
+
+  void _process(BuildContext context) {
+    final numShares = int.parse(_numSharesController.text);
+    final price = double.parse(_priceController.text);
+    final assetBought = AssetBought(
+      _nameController.text,
+      numShares,
+      price,
+      numShares * price,
+    );
+    Navigator.pop(context, assetBought);
   }
 }
