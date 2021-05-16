@@ -26,6 +26,10 @@ class Overview extends StatelessWidget {
               BorderedTextField("${state.totalIncome}"),
               BorderedTextField("${state.totalExpenses}"),
               BorderedTextField("${state.cashflow}"),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text("${state.cash}"),
+              ),
             ],
           ),
         );

@@ -43,6 +43,8 @@ class MyApp extends StatelessWidget {
       totalIncome: 13200,
       totalChildExpenses: 0,
       cashflow: 4900,
+      // Initial cash = initial cashflow + savings
+      cash: 4900.0 + 3500.0,
       holdings: [],
       assets: [],
     );

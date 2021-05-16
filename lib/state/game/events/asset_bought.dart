@@ -5,7 +5,8 @@ class AssetBought extends PlayerEvent {
   final String name;
   final int numShares;
   final double costPerShare;
+  final double totalCost;
 
-  const AssetBought(this.name, this.numShares, this.costPerShare);
+  const AssetBought(this.name, this.numShares, this.costPerShare, this.totalCost);
 
 }

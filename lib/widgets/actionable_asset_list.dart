@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/buy_asset_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,15 +41,36 @@ class _AssetListState extends State<AssetList> {
               );
             }
             return ElevatedButton(
-                onPressed: _addAsset, child: const Text("Add"));
+                onPressed: () async {
+                  AssetBought assetBought = await showDialog<AssetBought>(
+                      context: context,
+                      builder: (_) {
+                        return BuyAssetDialog();
+                      });
+                  _addAsset(context, assetBought);
+                },
+                child: const Text("Add"));
           },
         );
       },
     );
   }
 
-  void _addAsset() {
+  void _addAsset(BuildContext context, AssetBought assetBought) {
     // Hard-coded asset for now
-    _playerBloc.add(AssetBought("ON2U", 15, 10));
+    _playerBloc.add(assetBought);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: SizedBox(
+          height: 50,
+          child: Column(
+            children: [
+              const Text("Asset bought."),
+              Text("Cash -${assetBought.totalCost}"),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

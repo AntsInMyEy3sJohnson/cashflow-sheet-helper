@@ -13,6 +13,7 @@ class PlayerState extends Equatable {
   final double totalIncome;
   final double totalExpenses;
   final double cashflow;
+  final double cash;
   final List<Holding> holdings;
   final List<Asset> assets;
 
@@ -24,6 +25,7 @@ class PlayerState extends Equatable {
     @required this.totalIncome,
     @required this.totalExpenses,
     @required this.cashflow,
+    @required this.cash,
     @required this.holdings,
     @required this.assets,
   });
@@ -37,12 +39,13 @@ class PlayerState extends Equatable {
       totalIncome: this.totalIncome,
       totalExpenses: this.totalExpenses,
       cashflow: this.cashflow,
+      cash: this.cash,
       holdings: holdings,
       assets: this.assets,
     );
   }
 
-  PlayerState copyWithAssets(List<Asset> assets) {
+  PlayerState copyWithAssetsAndCash(List<Asset> assets, double cash) {
     return PlayerState(
       bankLoan: this.bankLoan,
       numChildren: this.numChildren,
@@ -51,6 +54,7 @@ class PlayerState extends Equatable {
       totalIncome: this.totalIncome,
       totalExpenses: this.totalExpenses,
       cashflow: this.cashflow,
+      cash: cash,
       holdings: this.holdings,
       assets: assets,
     );
@@ -65,6 +69,7 @@ class PlayerState extends Equatable {
         totalIncome,
         totalExpenses,
         cashflow,
+        cash,
         holdings,
         assets
       ];

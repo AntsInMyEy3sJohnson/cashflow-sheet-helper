@@ -41,6 +41,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         name: event.name,
         numShares: event.numShares,
         costPerShare: event.costPerShare));
-    return state.copyWithAssets(assets);
+    final newCash = state.cash - event.totalCost;
+    return state.copyWithAssetsAndCash(assets, newCash);
   }
 }
