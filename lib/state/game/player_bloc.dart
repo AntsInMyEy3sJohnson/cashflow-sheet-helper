@@ -2,6 +2,7 @@ import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
+import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +20,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapHoldingBoughtToPlayerState(state, event);
     } else if (event is CashflowReached) {
       yield await _mapCashflowReachedToPlayerState(state);
+    } else if (event is MoneyGivenToCharity) {
+      yield await _mapCharityToPlayerState();
     }
+  }
+
+  Future<PlayerState> _mapCharityToPlayerState() async {
+    final newCash = state.balance - (state.totalIncome * 0.1);
+    return state.copyWithBalance(newCash);
   }
 
   Future<PlayerState> _mapCashflowReachedToPlayerState(

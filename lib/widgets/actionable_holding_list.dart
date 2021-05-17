@@ -2,6 +2,7 @@ import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_holding_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,18 +55,12 @@ class _HoldingListState extends State<HoldingList> {
 
   void _addHolding(BuildContext context, HoldingBought holdingBought) {
     _playerBloc.add(holdingBought);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text("Holding bought"),
-            Text("Cash -${holdingBought.downPayment}"),
-            Text("Liabilities +${holdingBought.mortgage}"),
-            Text("Cashflow +${holdingBought.cashflow}")
-          ],
-        ),
-      ),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+      const Text("Holding bought"),
+      Text("Cash -${holdingBought.downPayment}"),
+      Text("Liabilities +${holdingBought.mortgage}"),
+      Text("Cashflow +${holdingBought.cashflow}")
+    ]));
   }
 }
