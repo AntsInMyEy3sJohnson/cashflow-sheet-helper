@@ -6,7 +6,10 @@ class ButtonRow extends StatelessWidget {
   final String textLeft;
   final String textRight;
 
-  const ButtonRow(this.textLeft, this.textRight);
+  final Function callbackLeft;
+  final Function callbackRight;
+
+  const ButtonRow(this.textLeft, this.textRight, this.callbackLeft, this.callbackRight);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class ButtonRow extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: callbackLeft,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: VariableSizeTextField(textLeft, 18, TextAlign.center),
@@ -28,7 +31,7 @@ class ButtonRow extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: callbackRight,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: VariableSizeTextField(textRight, 18, TextAlign.center),

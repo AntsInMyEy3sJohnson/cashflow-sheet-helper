@@ -13,7 +13,7 @@ class PlayerState extends Equatable {
   final double totalIncome;
   final double totalExpenses;
   final double cashflow;
-  final double cash;
+  final double balance;
   final List<Holding> holdings;
   final List<Asset> assets;
 
@@ -25,12 +25,12 @@ class PlayerState extends Equatable {
     @required this.totalIncome,
     @required this.totalExpenses,
     @required this.cashflow,
-    @required this.cash,
+    @required this.balance,
     @required this.holdings,
     @required this.assets,
   });
 
-  PlayerState copyWithHoldingsAndCash(List<Holding> holdings, double cash) {
+  PlayerState copyWithBalance(double balance) {
     return PlayerState(
       bankLoan: this.bankLoan,
       numChildren: this.numChildren,
@@ -39,13 +39,28 @@ class PlayerState extends Equatable {
       totalIncome: this.totalIncome,
       totalExpenses: this.totalExpenses,
       cashflow: this.cashflow,
-      cash: cash,
+      balance: balance,
+      holdings: this.holdings,
+      assets: this.assets,
+    );
+  }
+
+  PlayerState copyWithHoldingsAndBalance(List<Holding> holdings, double balance) {
+    return PlayerState(
+      bankLoan: this.bankLoan,
+      numChildren: this.numChildren,
+      totalChildExpenses: this.totalChildExpenses,
+      passiveIncome: this.passiveIncome,
+      totalIncome: this.totalIncome,
+      totalExpenses: this.totalExpenses,
+      cashflow: this.cashflow,
+      balance: balance,
       holdings: holdings,
       assets: this.assets,
     );
   }
 
-  PlayerState copyWithAssetsAndCash(List<Asset> assets, double cash) {
+  PlayerState copyWithAssetsAndBalance(List<Asset> assets, double balance) {
     return PlayerState(
       bankLoan: this.bankLoan,
       numChildren: this.numChildren,
@@ -54,7 +69,7 @@ class PlayerState extends Equatable {
       totalIncome: this.totalIncome,
       totalExpenses: this.totalExpenses,
       cashflow: this.cashflow,
-      cash: cash,
+      balance: balance,
       holdings: this.holdings,
       assets: assets,
     );
@@ -69,7 +84,7 @@ class PlayerState extends Equatable {
         totalIncome,
         totalExpenses,
         cashflow,
-        cash,
+        balance,
         holdings,
         assets
       ];

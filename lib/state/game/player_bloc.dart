@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
+import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
@@ -16,7 +17,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapAssetBoughtToPlayerState(state, event);
     } else if (event is HoldingBought) {
       yield await _mapHoldingBoughtToPlayerState(state, event);
+    } else if (event is CashflowReached) {
+      yield await _mapCashflowReachedToPlayerState(state);
     }
+  }
+
+  Future<PlayerState> _mapCashflowReachedToPlayerState(
+      PlayerState state) async {
+    final newCash = state.balance + state.cashflow;
+    return state.copyWithBalance(newCash);
   }
 
   Future<PlayerState> _mapHoldingBoughtToPlayerState(
@@ -28,8 +37,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         buyingCost: event.buyingCost,
         mortgage: event.mortgage,
         cashflow: event.cashflow));
-    final newCash = state.cash - event.downPayment;
-    return state.copyWithHoldingsAndCash(holdings, newCash);
+    final newCash = state.balance - event.downPayment;
+    return state.copyWithHoldingsAndBalance(holdings, newCash);
   }
 
   Future<PlayerState> _mapAssetBoughtToPlayerState(
@@ -42,7 +51,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         name: event.name,
         numShares: event.numShares,
         costPerShare: event.costPerShare));
-    final newCash = state.cash - event.totalCost;
-    return state.copyWithAssetsAndCash(assets, newCash);
+    final newCash = state.balance - event.totalCost;
+    return state.copyWithAssetsAndBalance(assets, newCash);
   }
 }
