@@ -11,17 +11,16 @@ class BorderedTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        minWidth: 200,
-        minHeight: 50,
+        minWidth: 180,
       ),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey,
         ),
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: VariableSizeTextField(text, 32, TextAlign.right),
+      child: VariableSizeTextField(text, 20, TextAlign.right),
     );
   }
 
