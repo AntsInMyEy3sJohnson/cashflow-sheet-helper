@@ -38,11 +38,6 @@ class MyApp extends StatelessWidget {
     final PlayerState _playerState = PlayerState(
       bankLoan: 0,
       numChildren: 0,
-      totalExpenses: 8300,
-      passiveIncome: 0,
-      totalIncome: 13200,
-      totalChildExpenses: 0,
-      cashflow: 4900,
       // Initial cash = initial cashflow + savings
       balance: 4900.0 + 3500.0,
       holdings: [],

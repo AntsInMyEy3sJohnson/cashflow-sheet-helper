@@ -1,5 +1,7 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
+import 'package:cashflow_sheet_helper/data/player.dart';
+import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
@@ -25,7 +27,16 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapCharityToPlayerState();
     } else if (event is DoodadBought) {
       yield await _mapDoodadBoughtToPlayerState(event);
+    } else if (event is BabyBorn) {
+      yield await _mapBabyBornToPlayerState(event, Player.getInstance());
     }
+  }
+
+  Future<PlayerState> _mapBabyBornToPlayerState(BabyBorn event, Player player) async {
+    final newNumChildren = state.numChildren + 1;
+    final newMonthlyChildExpenses = newNumChildren * player.monthlyChildExpenses;
+    final newTotalExpenses = state.totalChildExpenses + player.monthlyChildExpenses;
+    return state.copyWithNumChildren(newNumChildren);
   }
 
   Future<PlayerState> _mapDoodadBoughtToPlayerState(DoodadBought event) async {
@@ -52,8 +63,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         buyingCost: event.buyingCost,
         mortgage: event.mortgage,
         cashflow: event.cashflow));
-    final newCash = state.balance - event.downPayment;
-    return state.copyWithHoldingsAndBalance(holdings, newCash);
+    final newBalance = state.balance - event.downPayment;
+    return state.copyWithHoldingsAndBalance(holdings, newBalance);
   }
 
   Future<PlayerState> _mapAssetBoughtToPlayerState(AssetBought event) async {
@@ -65,7 +76,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         name: event.name,
         numShares: event.numShares,
         costPerShare: event.costPerShare));
-    final newCash = state.balance - event.totalCost;
-    return state.copyWithAssetsAndBalance(assets, newCash);
+    final newBalance = state.balance - event.totalCost;
+    return state.copyWithAssetsAndBalance(assets, newBalance);
   }
+
 }

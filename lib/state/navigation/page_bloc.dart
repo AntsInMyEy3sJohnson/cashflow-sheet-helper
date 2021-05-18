@@ -16,10 +16,10 @@ class PageBloc extends Bloc<String, Widget> {
     Liabilities.ROUTE_ID: const Liabilities(),
   };
 
-  PageBloc() : super(_pages[Overview.ROUTE_ID]);
+  PageBloc() : super(_pages[Overview.ROUTE_ID]!);
 
   @override
   Stream<Widget> mapEventToState(String event) async* {
-    yield _pages[event];
+    yield _pages[event]!;
   }
 }

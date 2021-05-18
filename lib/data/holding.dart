@@ -9,11 +9,11 @@ class Holding extends Equatable {
   final double cashflow;
 
   const Holding({
-    @required this.name,
-    @required this.downPayment,
-    @required this.buyingCost,
-    @required this.mortgage,
-    @required this.cashflow,
+    required this.name,
+    required this.downPayment,
+    required this.buyingCost,
+    required this.mortgage,
+    required this.cashflow,
   });
 
   @override

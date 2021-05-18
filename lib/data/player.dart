@@ -21,21 +21,21 @@ class Player {
   final double totalCreditCardDebt;
 
   static Player createInstance({
-    @required String title,
-    @required String dream,
-    @required double activeIncome,
-    @required double taxes,
-    @required double monthlyMortgageOrRent,
-    @required double monthlyStudentLoan,
-    @required double monthlyCarLoan,
-    @required double monthlyCreditCardLoan,
-    @required double monthlyChildExpenses,
-    @required double monthlyOtherExpenses,
-    @required double savings,
-    @required double totalMortgage,
-    @required double totalStudentLoan,
-    @required double totalCarLoan,
-    @required double totalCreditCardDebt}) {
+    required String title,
+    required String dream,
+    required double activeIncome,
+    required double taxes,
+    required double monthlyMortgageOrRent,
+    required double monthlyStudentLoan,
+    required double monthlyCarLoan,
+    required double monthlyCreditCardLoan,
+    required double monthlyChildExpenses,
+    required double monthlyOtherExpenses,
+    required double savings,
+    required double totalMortgage,
+    required double totalStudentLoan,
+    required double totalCarLoan,
+    required double totalCreditCardDebt}) {
     _theInstance = Player._(title: title,
         dream: dream,
         activeIncome: activeIncome,
@@ -54,27 +54,27 @@ class Player {
     return _theInstance;
   }
 
-  static Player _theInstance;
+  static late final Player _theInstance;
 
   static Player getInstance() {
     return _theInstance;
   }
 
   const Player._({
-    @required this.title,
-    @required this.dream,
-    @required this.activeIncome,
-    @required this.taxes,
-    @required this.monthlyMortgageOrRent,
-    @required this.monthlyStudentLoan,
-    @required this.monthlyCarLoan,
-    @required this.monthlyCreditCardLoan,
-    @required this.monthlyChildExpenses,
-    @required this.monthlyOtherExpenses,
-    @required this.savings,
-    @required this.totalMortgage,
-    @required this.totalStudentLoan,
-    @required this.totalCarLoan,
-    @required this.totalCreditCardDebt,
+    required this.title,
+    required this.dream,
+    required this.activeIncome,
+    required this.taxes,
+    required this.monthlyMortgageOrRent,
+    required this.monthlyStudentLoan,
+    required this.monthlyCarLoan,
+    required this.monthlyCreditCardLoan,
+    required this.monthlyChildExpenses,
+    required this.monthlyOtherExpenses,
+    required this.savings,
+    required this.totalMortgage,
+    required this.totalStudentLoan,
+    required this.totalCarLoan,
+    required this.totalCreditCardDebt,
   });
 }

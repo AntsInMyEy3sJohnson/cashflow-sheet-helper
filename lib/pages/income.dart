@@ -22,8 +22,7 @@ class Income extends StatelessWidget {
             child: const TwoTextFieldRow(
               "Kind",
               "Cashflow",
-              32,
-              customTextAlign: TextAlign.center,
+              32
             ),
           ),
           TwoTextFieldRow("Salary:", "4200", 19),

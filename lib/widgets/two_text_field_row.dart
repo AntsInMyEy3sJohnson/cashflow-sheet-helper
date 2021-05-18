@@ -5,11 +5,8 @@ class TwoTextFieldRow extends StatelessWidget {
   final String leftTextFieldText;
   final String rightTextFieldText;
   final double fontSize;
-  final TextAlign customTextAlign;
 
-  const TwoTextFieldRow(
-      this.leftTextFieldText, this.rightTextFieldText, this.fontSize,
-      {this.customTextAlign});
+  const TwoTextFieldRow(this.leftTextFieldText, this.rightTextFieldText, this.fontSize);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +14,12 @@ class TwoTextFieldRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: VariableSizeTextField(
-              leftTextFieldText, fontSize, customTextAlign ?? TextAlign.left),
+          child:
+              VariableSizeTextField(leftTextFieldText, fontSize, TextAlign.left),
         ),
         Expanded(
           child: VariableSizeTextField(
-              rightTextFieldText, fontSize, customTextAlign ?? TextAlign.right),
+              rightTextFieldText, fontSize, TextAlign.right),
         ),
       ],
     );

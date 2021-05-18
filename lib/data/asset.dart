@@ -7,9 +7,9 @@ class Asset extends Equatable {
   final double costPerShare;
 
   const Asset(
-      {@required this.name,
-      @required this.numShares,
-      @required this.costPerShare});
+      {required this.name,
+      required this.numShares,
+      required this.costPerShare});
 
   @override
   List<Object> get props => [name, numShares, costPerShare];

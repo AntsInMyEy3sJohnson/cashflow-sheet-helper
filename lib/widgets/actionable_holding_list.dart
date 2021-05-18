@@ -15,7 +15,7 @@ class HoldingList extends StatefulWidget {
 }
 
 class _HoldingListState extends State<HoldingList> {
-  PlayerBloc _playerBloc;
+  late final PlayerBloc _playerBloc;
 
   @override
   void initState() {
@@ -39,12 +39,15 @@ class _HoldingListState extends State<HoldingList> {
             }
             return ElevatedButton(
                 onPressed: () async {
-                  HoldingBought holdingBought = await showDialog<HoldingBought>(
-                      context: context,
-                      builder: (_) {
-                        return BuyHoldingDialog();
-                      });
-                  _addHolding(context, holdingBought);
+                  HoldingBought? holdingBought =
+                      await showDialog<HoldingBought>(
+                          context: context,
+                          builder: (_) {
+                            return BuyHoldingDialog();
+                          });
+                  if (holdingBought != null) {
+                    _addHolding(context, holdingBought);
+                  }
                 },
                 child: const Text("Buy"));
           },

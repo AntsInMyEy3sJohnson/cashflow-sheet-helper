@@ -15,7 +15,7 @@ class AssetList extends StatefulWidget {
 }
 
 class _AssetListState extends State<AssetList> {
-  PlayerBloc _playerBloc;
+  late final PlayerBloc _playerBloc;
 
   @override
   void initState() {
@@ -43,12 +43,14 @@ class _AssetListState extends State<AssetList> {
             }
             return ElevatedButton(
                 onPressed: () async {
-                  AssetBought assetBought = await showDialog<AssetBought>(
+                  AssetBought? assetBought = await showDialog<AssetBought>(
                       context: context,
                       builder: (_) {
                         return BuyAssetDialog();
                       });
+                  if (assetBought != null) {
                   _addAsset(context, assetBought);
+                  }
                 },
                 child: const Text("Add"));
           },

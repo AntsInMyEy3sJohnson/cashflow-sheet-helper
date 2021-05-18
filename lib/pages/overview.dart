@@ -1,4 +1,5 @@
 import 'package:cashflow_sheet_helper/data/player.dart';
+import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
@@ -7,6 +8,7 @@ import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/bordered_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/overview_row.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
@@ -23,7 +25,7 @@ class Overview extends StatefulWidget {
 }
 
 class _OverviewState extends State<Overview> {
-  PlayerBloc _playerBloc;
+  late final PlayerBloc _playerBloc;
 
   @override
   void initState() {
@@ -60,7 +62,7 @@ class _OverviewState extends State<Overview> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    onPressed: () => _processCashflowDay(context, state),
+                    onPressed: () => _processCashflowDay(state),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: const VariableSizeTextField(
@@ -68,12 +70,15 @@ class _OverviewState extends State<Overview> {
                     ),
                   ),
                 ),
-                ButtonRow(
-                    "Charity",
-                    "Doodad",
-                    () => _processCharity(context, state),
+                ButtonRow("Charity", "Doodad", () => _processCharity(state),
                     () => _processDoodad(context)),
-                ButtonRow("Child", "Unemployed", null, null),
+                ButtonRow(
+                    "Child",
+                    "Unemployed",
+                    state.numChildren < 3
+                        ? () => _processChildBorn(player, state)
+                        : null,
+                    null),
                 ButtonRow("Take up loan", "Pay back loan", null, null),
               ],
             ),
@@ -83,7 +88,28 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  void _processCashflowDay(BuildContext context, PlayerState state) {
+  void _processChildBorn(Player player, PlayerState state) async {
+    final currentChildExpenses = state.totalChildExpenses;
+    final newChildExpenses = currentChildExpenses + player.monthlyChildExpenses;
+    final dialogResult = await showDialog<bool>(
+        context: context,
+        builder: (_) {
+          return YesNoAlertDialog(
+              "Get baby",
+              Text(
+                  "Get a baby? This will increase your monthly child expenses from $currentChildExpenses to $newChildExpenses."));
+        });
+    if (dialogResult ?? false) {
+      _playerBloc.add(const BabyBorn());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+        const Text("Child added."),
+        Text("Monthly expenses +${player.monthlyChildExpenses}"),
+      ]));
+    }
+  }
+
+  void _processCashflowDay(PlayerState state) {
     _playerBloc.add(const CashflowReached());
     ScaffoldMessenger.of(context)
         .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
@@ -92,28 +118,19 @@ class _OverviewState extends State<Overview> {
     ]));
   }
 
-  void _processCharity(BuildContext context, PlayerState state) async {
+  void _processCharity(PlayerState state) async {
     final charityAmount = state.totalIncome * 0.1;
-    final charity = await showDialog<bool>(
+    final dialogResult = await showDialog<bool>(
         barrierDismissible: false,
         context: context,
         builder: (_) {
-          return AlertDialog(
-            title: const Text("Give money to charity"),
-            content: Text(
-                "Give 10 % of your total income ($charityAmount) to charity?"),
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  child: const Text("Confirm")),
-              TextButton(
-                  onPressed: () => Navigator.pop(context, false),
-                  child: const Text("Abort")),
-            ],
-          );
+          return YesNoAlertDialog(
+              "Give money to charity",
+              Text(
+                  "Give 10 % of your total income ($charityAmount) to charity?"));
         });
 
-    if (charity) {
+    if (dialogResult ?? false) {
       _playerBloc.add(const MoneyGivenToCharity());
       ScaffoldMessenger.of(context)
           .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
