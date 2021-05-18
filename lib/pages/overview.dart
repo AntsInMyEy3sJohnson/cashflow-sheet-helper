@@ -1,10 +1,12 @@
 import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
+import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/bordered_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/button_row.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/overview_row.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
@@ -36,40 +38,45 @@ class _OverviewState extends State<Overview> {
 
     return BlocBuilder<PlayerBloc, PlayerState>(
       builder: (context, state) {
-        return Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const VariableSizeTextField(
-                    "Income and balance overview", 25, TextAlign.center),
-              ),
-              OverviewRow(
-                  "Income", "${player.activeIncome} + ${state.passiveIncome}"),
-              OverviewRow("Expenses", "${state.totalExpenses}"),
-              OverviewRow("Cashflow", "${state.cashflow}"),
-              OverviewRow("Account balance", "${state.balance}"),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: const VariableSizeTextField(
-                    "Actions", 25, TextAlign.center),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => _processCashflowDay(context, state),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const VariableSizeTextField(
-                        "Cashflow day!", 40, TextAlign.center),
+        return SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const VariableSizeTextField(
+                      "Income and balance overview", 25, TextAlign.center),
+                ),
+                OverviewRow("Income",
+                    "${player.activeIncome} + ${state.passiveIncome}"),
+                OverviewRow("Expenses", "${state.totalExpenses}"),
+                OverviewRow("Cashflow", "${state.cashflow}"),
+                OverviewRow("Account balance", "${state.balance}"),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: const VariableSizeTextField(
+                      "Actions", 25, TextAlign.center),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => _processCashflowDay(context, state),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const VariableSizeTextField(
+                          "Cashflow day!", 40, TextAlign.center),
+                    ),
                   ),
                 ),
-              ),
-              ButtonRow("Charity", "Consuming",
-                  () => _processCharity(context, state), _processConsuming),
-              ButtonRow("Child", "Unemployed", null, null),
-              ButtonRow("Take up loan", "Pay back loan", null, null),
-            ],
+                ButtonRow(
+                    "Charity",
+                    "Doodad",
+                    () => _processCharity(context, state),
+                    () => _processDoodad(context)),
+                ButtonRow("Child", "Unemployed", null, null),
+                ButtonRow("Take up loan", "Pay back loan", null, null),
+              ],
+            ),
           ),
         );
       },
@@ -88,6 +95,7 @@ class _OverviewState extends State<Overview> {
   void _processCharity(BuildContext context, PlayerState state) async {
     final charityAmount = state.totalIncome * 0.1;
     final charity = await showDialog<bool>(
+        barrierDismissible: false,
         context: context,
         builder: (_) {
           return AlertDialog(
@@ -115,5 +123,21 @@ class _OverviewState extends State<Overview> {
     }
   }
 
-  void _processConsuming() {}
+  void _processDoodad(BuildContext context) async {
+    final TextEditingController amountController = TextEditingController();
+    final doodadBought = await showDialog<DoodadBought>(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return BuyDoodadDialog(amountController);
+        });
+    if (doodadBought != null) {
+      _playerBloc.add(doodadBought);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+        const Text("Doodad bought."),
+        Text("Cash -${doodadBought.amount}"),
+      ]));
+    }
+  }
 }

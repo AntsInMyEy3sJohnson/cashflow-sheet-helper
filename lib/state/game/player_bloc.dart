@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
+import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
@@ -15,14 +16,21 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   @override
   Stream<PlayerState> mapEventToState(PlayerEvent event) async* {
     if (event is AssetBought) {
-      yield await _mapAssetBoughtToPlayerState(state, event);
+      yield await _mapAssetBoughtToPlayerState(event);
     } else if (event is HoldingBought) {
-      yield await _mapHoldingBoughtToPlayerState(state, event);
+      yield await _mapHoldingBoughtToPlayerState(event);
     } else if (event is CashflowReached) {
       yield await _mapCashflowReachedToPlayerState(state);
     } else if (event is MoneyGivenToCharity) {
       yield await _mapCharityToPlayerState();
+    } else if (event is DoodadBought) {
+      yield await _mapDoodadBoughtToPlayerState(event);
     }
+  }
+
+  Future<PlayerState> _mapDoodadBoughtToPlayerState(DoodadBought event) async {
+    final newBalance = state.balance - event.amount;
+    return state.copyWithBalance(newBalance);
   }
 
   Future<PlayerState> _mapCharityToPlayerState() async {
@@ -36,8 +44,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     return state.copyWithBalance(newCash);
   }
 
-  Future<PlayerState> _mapHoldingBoughtToPlayerState(
-      PlayerState state, HoldingBought event) async {
+  Future<PlayerState> _mapHoldingBoughtToPlayerState(HoldingBought event) async {
     List<Holding> holdings = List.from(state.holdings);
     holdings.add(Holding(
         name: event.name,
@@ -49,8 +56,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     return state.copyWithHoldingsAndBalance(holdings, newCash);
   }
 
-  Future<PlayerState> _mapAssetBoughtToPlayerState(
-      PlayerState state, AssetBought event) async {
+  Future<PlayerState> _mapAssetBoughtToPlayerState(AssetBought event) async {
     // We need new state containers -- list and enclosing
     // 'PlayerState' -- to cause all listening BlocBuilders
     // to rebuild
