@@ -34,8 +34,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   Future<PlayerState> _mapBabyBornToPlayerState(BabyBorn event, Player player) async {
     final newNumChildren = state.numChildren + 1;
-    final newMonthlyChildExpenses = newNumChildren * player.monthlyChildExpenses;
-    final newTotalExpenses = state.totalChildExpenses + player.monthlyChildExpenses;
     return state.copyWithNumChildren(newNumChildren);
   }
 

@@ -12,10 +12,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     // Hard-coded for now
     // TODO Put initialization of Player in initialization screen
     Player.createInstance(

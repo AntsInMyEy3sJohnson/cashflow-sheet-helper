@@ -5,7 +5,6 @@ import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
-import 'package:cashflow_sheet_helper/widgets/bordered_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
@@ -73,7 +72,7 @@ class _OverviewState extends State<Overview> {
                 ButtonRow("Charity", "Doodad", () => _processCharity(state),
                     () => _processDoodad(context)),
                 ButtonRow(
-                    "Child",
+                    "Child (Current: ${state.numChildren})",
                     "Unemployed",
                     state.numChildren < 3
                         ? () => _processChildBorn(player, state)

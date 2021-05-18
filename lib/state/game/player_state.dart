@@ -1,7 +1,7 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
+import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 /// Encapsulates all pieces of state about the player that
 /// can change during a game.
@@ -14,9 +14,49 @@ class PlayerState extends Equatable {
 
   late final double cashflow;
   late final double passiveIncome;
+  late final double monthlyBankLoan;
   late final double totalChildExpenses;
   late final double totalExpenses;
   late final double totalIncome;
+
+  static double _calculatePassiveIncome(List<Holding> holdings) {
+    if (holdings.length == 0) return 0.0;
+    return holdings
+        .map((h) => h.cashflow)
+        .reduce((value, element) => value + element);
+  }
+
+  static double _calculateTotalIncome(List<Holding> holdings) {
+    return Player.getInstance().activeIncome +
+        _calculatePassiveIncome(holdings);
+  }
+
+  static double _calculateCashflow(
+      List<Holding> holdings, double totalBankLoan, int numChildren) {
+    return _calculateTotalIncome(holdings) -
+        _calculateTotalExpenses(totalBankLoan, numChildren);
+  }
+
+  static double _calculateTotalExpenses(double totalBankLoan, int numChildren) {
+    final player = Player.getInstance();
+    final staticExpenses = player.taxes +
+        player.monthlyMortgageOrRent +
+        player.monthlyStudentLoan +
+        player.monthlyCarLoan +
+        player.monthlyCreditCardExpenses +
+        player.monthlyOtherExpenses;
+    final dynamicExpenses = _calculateMonthlyBankLoan(totalBankLoan) +
+        _calculateChildExpenses(numChildren);
+    return staticExpenses + dynamicExpenses;
+  }
+
+  static double _calculateChildExpenses(int numChildren) {
+    return Player.getInstance().monthlyChildExpenses * numChildren;
+  }
+
+  static double _calculateMonthlyBankLoan(double totalBankLoan) {
+    return totalBankLoan * 0.1;
+  }
 
   PlayerState({
     required this.bankLoan,
@@ -24,17 +64,13 @@ class PlayerState extends Equatable {
     required this.balance,
     required this.holdings,
     required this.assets,
-  })  : passiveIncome = PlayerState._calculatePassiveIncome(),
-        cashflow = 0,
-        totalChildExpenses = 0,
-        totalExpenses = 0,
-        totalIncome = 0;
-
-  static double _calculatePassiveIncome() {
-
-    return 0.0;
-
-  }
+  })   : passiveIncome = PlayerState._calculatePassiveIncome(holdings),
+        cashflow =
+            PlayerState._calculateCashflow(holdings, bankLoan, numChildren),
+        totalChildExpenses = PlayerState._calculateChildExpenses(numChildren),
+        totalExpenses =
+            PlayerState._calculateTotalExpenses(bankLoan, numChildren),
+        totalIncome = PlayerState._calculateTotalIncome(holdings);
 
   PlayerState copyWithNumChildren(int newNumChildren) {
     return PlayerState(
