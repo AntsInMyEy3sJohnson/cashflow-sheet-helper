@@ -3,6 +3,7 @@ import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
+import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/button_row.dart';
@@ -77,7 +78,7 @@ class _OverviewState extends State<Overview> {
                     state.numChildren < 3
                         ? () => _processChildBorn(player, state)
                         : null,
-                    null),
+                    () => _processUnemployment(state)),
                 ButtonRow("Take up loan", "Pay back loan", null, null),
               ],
             ),
@@ -85,6 +86,27 @@ class _OverviewState extends State<Overview> {
         );
       },
     );
+  }
+
+  void _processUnemployment(PlayerState state) async {
+    final dialogResult = await showDialog<bool>(
+        context: context,
+        builder: (_) {
+          return YesNoAlertDialog(
+            "Oh no!",
+            Text("Enter unemployed state for two rounds? This will deduct "
+                "your total expenses (${state.totalExpenses}) from your account once."),
+          );
+        });
+    if (dialogResult ?? false) {
+      _playerBloc.add(const UnemploymentIncurred());
+      ScaffoldMessenger.of(context).showSnackBar(
+        ReusableSnackbar.fromChildren(<Widget>[
+          const Text("Incurred unemployment."),
+          Text("Cash -${state.totalExpenses}"),
+        ]),
+      );
+    }
   }
 
   void _processChildBorn(Player player, PlayerState state) async {
