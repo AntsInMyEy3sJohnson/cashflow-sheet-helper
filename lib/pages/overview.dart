@@ -81,7 +81,8 @@ class _OverviewState extends State<Overview> {
                         ? () => _processChildBorn(player, state)
                         : null,
                     () => _processUnemployment(state)),
-                ButtonRow("Take up loan", "Pay back loan", () => _processLoanTaken(), null),
+                ButtonRow("Take up loan", "Pay back loan",
+                    () => _processLoanTaken(), null),
               ],
             ),
           ),
@@ -97,7 +98,13 @@ class _OverviewState extends State<Overview> {
           return TakeUpLoanDialog();
         });
     if (loanTaken != null) {
-      print("Loan taken. Amount: ${loanTaken.amount}");
+      _playerBloc.add(loanTaken);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+        const Text("Loan taken."),
+        Text("Balance +${loanTaken.amount}"),
+        Text("Monthly expenses +${loanTaken.amount * 0.1}"),
+      ]));
     }
   }
 

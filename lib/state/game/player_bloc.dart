@@ -5,6 +5,7 @@ import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
+import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
@@ -32,7 +33,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapBabyBornToPlayerState(event, Player.getInstance());
     } else if (event is UnemploymentIncurred) {
       yield await _mapUnemploymentIncurredToPlayerState();
+    } else if (event is LoanTaken) {
+      yield await _mapLoanTakenToPlayerState(event);
     }
+  }
+
+  Future<PlayerState> _mapLoanTakenToPlayerState(LoanTaken event) async {
+    final newBalance = state.balance + event.amount;
+    final newTotalBankLoan = state.bankLoan + event.amount;
+    return state.copyWithBalanceAndBankLoan(newBalance, newTotalBankLoan);
   }
 
   Future<PlayerState> _mapUnemploymentIncurredToPlayerState() async {
