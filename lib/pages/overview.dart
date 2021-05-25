@@ -2,6 +2,7 @@ import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
+import 'package:cashflow_sheet_helper/state/game/events/loan_paid_back.dart';
 import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
@@ -9,6 +10,7 @@ import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/overview_row.dart';
@@ -81,14 +83,38 @@ class _OverviewState extends State<Overview> {
                         ? () => _processChildBorn(player, state)
                         : null,
                     () => _processUnemployment(state)),
-                ButtonRow("Take up loan", "Pay back loan",
-                    () => _processLoanTaken(), null),
+                ButtonRow(
+                  "Take up loan",
+                  "Pay back loan",
+                  () => _processLoanTaken(),
+                  state.bankLoan > 0 ? () => _processLoanPaidBack() : null,
+                ),
               ],
             ),
           ),
         );
       },
     );
+  }
+
+  void _processLoanPaidBack() async {
+    final loanPaidBack = await showDialog<LoanPaidBack>(
+        context: context,
+        builder: (context) {
+          return BlocProvider<PlayerBloc>.value(
+            value: _playerBloc,
+            child: PayBackLoanDialog(),
+          );
+        });
+    if (loanPaidBack != null) {
+      _playerBloc.add(loanPaidBack);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+        const Text("Loan amount reduced."),
+        Text("Balance -${loanPaidBack.amount}"),
+        Text("Monthly expenses -${loanPaidBack.amount * 0.1}"),
+      ]));
+    }
   }
 
   void _processLoanTaken() async {

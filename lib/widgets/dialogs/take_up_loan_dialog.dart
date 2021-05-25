@@ -1,6 +1,5 @@
 import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
-import 'package:cashflow_sheet_helper/widgets/amount_selection_row.dart';
-import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/select_amount_dialog.dart';
 import 'package:flutter/material.dart';
 
 class TakeUpLoanDialog extends StatefulWidget {
@@ -22,29 +21,14 @@ class _TakeUpLoanDialogState extends State<TakeUpLoanDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const VariableSizeTextField(
-              "Take up bank loan", 20, TextAlign.center),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: AmountSelectionRow(
-              _amountController,
-              () => _processAmountIncreased(),
-              () => _processAmountDecreased(),
-            ),
-          ),
-          Text("Monthly expenses +${_step * 100}"),
-          ElevatedButton(
-              onPressed: () => _processConfirm(context),
-              child: const Text("Confirm")),
-          ElevatedButton(
-              onPressed: () => _processAbort(context),
-              child: const Text("Abort")),
-        ],
-      ),
+    return SelectAmountDialog(
+      title: "Provide amount to be loaned",
+      infoBoxText: "Monthly expenses +${_step * 100}",
+      amountController: _amountController,
+      callbackAmountIncreased: _processAmountIncreased,
+      callbackAmountDecreased: _processAmountDecreased,
+      callbackDialogConfirmed: _processConfirm,
+      callbackDialogAborted: _processAbort,
     );
   }
 
@@ -64,11 +48,11 @@ class _TakeUpLoanDialogState extends State<TakeUpLoanDialog> {
     }
   }
 
-  void _processConfirm(BuildContext context) {
+  void _processConfirm() {
     Navigator.pop(context, LoanTaken(double.parse(_amountController.text)));
   }
 
-  void _processAbort(BuildContext context) {
+  void _processAbort() {
     Navigator.pop(context);
   }
 }

@@ -23,10 +23,8 @@ class AmountSelectionRow extends StatelessWidget {
             child: Column(
               children: [
                 // TODO Adapt keyboard types according to type of input
-                RoundIconButton(
-                    () => callbackAmountIncreased(), Icons.arrow_circle_up),
-                RoundIconButton(
-                    () => callbackAmountDecreased(), Icons.arrow_circle_down),
+                RoundIconButton(callbackAmountIncreased, Icons.arrow_circle_up),
+                RoundIconButton(callbackAmountDecreased, Icons.arrow_circle_down),
               ],
             ),
           ),
