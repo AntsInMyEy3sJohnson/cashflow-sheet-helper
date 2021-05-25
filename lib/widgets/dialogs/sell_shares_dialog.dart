@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/widgets/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
@@ -7,6 +8,9 @@ class SellSharesDialog extends StatelessWidget {
 
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  final Asset asset;
+
+  SellSharesDialog(this.asset);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class SellSharesDialog extends StatelessWidget {
   }
 
   void _processConfirm(BuildContext context) {
-    final SharesSold sharesSold = SharesSold(int.parse(_amountController.text), double.parse(_priceController.text));
+    final SharesSold sharesSold = SharesSold(asset, int.parse(_amountController.text), double.parse(_priceController.text));
     Navigator.pop(context, sharesSold);
   }
 

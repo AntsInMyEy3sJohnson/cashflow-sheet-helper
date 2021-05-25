@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
@@ -52,7 +53,7 @@ class _AssetListState extends State<AssetList> {
                     caption: "Sell",
                     color: Colors.blueAccent,
                     icon: Icons.monetization_on_outlined,
-                    onTap: _showSellSharesDialog,
+                    onTap: () => _showSellSharesDialog(asset),
                   ),
                   IconSlideAction(
                     caption: "Forward Split",
@@ -87,11 +88,11 @@ class _AssetListState extends State<AssetList> {
     );
   }
 
-  void _showSellSharesDialog() async {
+  void _showSellSharesDialog(Asset asset) async {
     final SharesSold? sharesSold = await showDialog<SharesSold>(
         context: context,
         builder: (context) {
-          return SellSharesDialog();
+          return SellSharesDialog(asset);
         });
     if(sharesSold != null) {
       _playerBloc.add(sharesSold);

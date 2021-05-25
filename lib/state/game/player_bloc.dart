@@ -9,6 +9,7 @@ import 'package:cashflow_sheet_helper/state/game/events/loan_paid_back.dart';
 import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
+import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +39,25 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapLoanTakenToPlayerState(event);
     } else if (event is LoanPaidBack) {
       yield await _mapLoanPaidBackToPlayerState(event);
+    } else if (event is SharesSold) {
+      yield await _mapSharesSoldToPlayerState(event);
     }
+  }
+
+  Future<PlayerState> _mapSharesSoldToPlayerState(SharesSold event) async {
+    final List<Asset> assets = List.from(state.assets);
+    final Asset matchingAsset = assets.singleWhere((element) => element.name == event.asset.name);
+    if(event.numSold == matchingAsset.numShares) {
+      assets.remove(matchingAsset);
+    } else {
+      int index = assets.indexWhere((element) => element.name == event.asset.name);
+      assets[index] = Asset(
+          name: matchingAsset.name,
+          numShares: matchingAsset.numShares - event.numSold,
+          costPerShare: matchingAsset.costPerShare);
+    }
+    final newBalance = state.balance + (event.numSold * event.price);
+    return state.copyWithAssetsAndBalance(assets, newBalance);
   }
 
   Future<PlayerState> _mapLoanPaidBackToPlayerState(LoanPaidBack event) async {
