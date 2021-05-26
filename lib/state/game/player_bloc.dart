@@ -9,6 +9,7 @@ import 'package:cashflow_sheet_helper/state/game/events/loan_paid_back.dart';
 import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
+import 'package:cashflow_sheet_helper/state/game/events/shares_backward_split.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_split.dart';
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
@@ -43,13 +44,30 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     } else if (event is SharesSold) {
       yield await _mapSharesSoldToPlayerState(event);
     } else if (event is SharesSplit) {
-      yield await _mapSharesSplitToPlayerState(event);
+      yield await _mapShareSplitPerformedToPlayerState(event);
+    } else if (event is SharesBackwardSplit) {
+      yield await _mapShareBackwardSplitPerformedToPlayerState(event);
     }
   }
 
-  Future<PlayerState> _mapSharesSplitToPlayerState(SharesSplit event) async {
+  Future<PlayerState> _mapShareBackwardSplitPerformedToPlayerState(
+      SharesBackwardSplit event) async {
     final List<Asset> assets = List.from(state.assets);
-    int index = assets.indexWhere((element) => element.name == event.asset.name);
+    int index =
+        assets.indexWhere((element) => element.name == event.asset.name);
+    assets[index] = Asset(
+      name: event.asset.name,
+      numShares: (event.asset.numShares / 2).round(),
+      costPerShare: event.asset.costPerShare,
+    );
+    return state.copyWithAssets(assets);
+  }
+
+  Future<PlayerState> _mapShareSplitPerformedToPlayerState(
+      SharesSplit event) async {
+    final List<Asset> assets = List.from(state.assets);
+    int index =
+        assets.indexWhere((element) => element.name == event.asset.name);
     assets[index] = Asset(
       name: event.asset.name,
       numShares: event.asset.numShares * 2,
@@ -60,11 +78,13 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   Future<PlayerState> _mapSharesSoldToPlayerState(SharesSold event) async {
     final List<Asset> assets = List.from(state.assets);
-    final Asset matchingAsset = assets.singleWhere((element) => element.name == event.asset.name);
-    if(event.numSold == matchingAsset.numShares) {
+    final Asset matchingAsset =
+        assets.singleWhere((element) => element.name == event.asset.name);
+    if (event.numSold == matchingAsset.numShares) {
       assets.remove(matchingAsset);
     } else {
-      int index = assets.indexWhere((element) => element.name == event.asset.name);
+      int index =
+          assets.indexWhere((element) => element.name == event.asset.name);
       assets[index] = Asset(
           name: matchingAsset.name,
           numShares: matchingAsset.numShares - event.numSold,
@@ -91,7 +111,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     return state.copyWithBalance(newBalance);
   }
 
-  Future<PlayerState> _mapBabyBornToPlayerState(BabyBorn event, Player player) async {
+  Future<PlayerState> _mapBabyBornToPlayerState(
+      BabyBorn event, Player player) async {
     final newNumChildren = state.numChildren + 1;
     return state.copyWithNumChildren(newNumChildren);
   }
@@ -112,7 +133,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     return state.copyWithBalance(newCash);
   }
 
-  Future<PlayerState> _mapHoldingBoughtToPlayerState(HoldingBought event) async {
+  Future<PlayerState> _mapHoldingBoughtToPlayerState(
+      HoldingBought event) async {
     List<Holding> holdings = List.from(state.holdings);
     holdings.add(Holding(
         name: event.name,
@@ -136,5 +158,4 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     final newBalance = state.balance - event.totalCost;
     return state.copyWithAssetsAndBalance(assets, newBalance);
   }
-
 }

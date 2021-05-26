@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
+import 'package:cashflow_sheet_helper/state/game/events/shares_backward_split.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_split.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
@@ -67,7 +68,8 @@ class _AssetListState extends State<AssetList> {
                     caption: "Backward split",
                     color: Colors.redAccent,
                     icon: Icons.arrow_downward,
-                    onTap: () => print("Backward split was tapped"),
+                    // TODO Disable this button if player holds only one share by this company
+                    onTap: () => _showBackwardSplitSharesDialog(asset),
                   ),
                 ],
               );
@@ -90,6 +92,28 @@ class _AssetListState extends State<AssetList> {
     );
   }
 
+  void _showBackwardSplitSharesDialog(Asset asset) async {
+    final bool? dialogResult = await showDialog<bool>(
+        context: context,
+        builder: (_) {
+          return YesNoAlertDialog(
+            "Share Backward Split",
+            Text(
+                "Perform backward split on ${asset.name} shares? This will halve "
+                "the number of shares you own by this company."),
+          );
+        });
+    if (dialogResult ?? false) {
+      _playerBloc.add(SharesBackwardSplit(asset));
+      ScaffoldMessenger.of(context).showSnackBar(
+        ReusableSnackbar.fromChildren(<Widget>[
+          Text("Performed backward split on ${asset.name} shares."),
+          Text("Number of ${asset.name} shares: -${(asset.numShares / 2).round()}"),
+        ]),
+      );
+    }
+  }
+
   void _showSplitSharesDialog(Asset asset) async {
     final bool? dialogResult = await showDialog<bool>(
         context: context,
@@ -101,12 +125,12 @@ class _AssetListState extends State<AssetList> {
                 "the number of shares you hold by this company."),
           );
         });
-    if(dialogResult ?? false) {
+    if (dialogResult ?? false) {
       _playerBloc.add(SharesSplit(asset));
       ScaffoldMessenger.of(context).showSnackBar(
         ReusableSnackbar.fromChildren(<Widget>[
           Text("Performed split on ${asset.name} shares."),
-          Text("Number of shares +${asset.numShares}"),
+          Text("Number of ${asset.name} shares +${asset.numShares}"),
         ]),
       );
     }
