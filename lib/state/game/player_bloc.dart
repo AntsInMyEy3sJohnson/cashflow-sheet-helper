@@ -10,6 +10,7 @@ import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
+import 'package:cashflow_sheet_helper/state/game/events/shares_split.dart';
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,20 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapLoanPaidBackToPlayerState(event);
     } else if (event is SharesSold) {
       yield await _mapSharesSoldToPlayerState(event);
+    } else if (event is SharesSplit) {
+      yield await _mapSharesSplitToPlayerState(event);
     }
+  }
+
+  Future<PlayerState> _mapSharesSplitToPlayerState(SharesSplit event) async {
+    final List<Asset> assets = List.from(state.assets);
+    int index = assets.indexWhere((element) => element.name == event.asset.name);
+    assets[index] = Asset(
+      name: event.asset.name,
+      numShares: event.asset.numShares * 2,
+      costPerShare: event.asset.costPerShare,
+    );
+    return state.copyWithAssets(assets);
   }
 
   Future<PlayerState> _mapSharesSoldToPlayerState(SharesSold event) async {
