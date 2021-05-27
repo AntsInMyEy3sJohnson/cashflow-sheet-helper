@@ -22,11 +22,11 @@ class Assets extends StatelessWidget {
             "Shares & fonds:", "# shares:", "Cost per share:", 19),
         SizedBox(
           height: 200,
-          child: const AssetList(),
+          child: const ActionableAssetList(),
         ),
         ThreeTextFieldRow(
             "Real estate/companies:", "Down payment:", "Cost:", 19),
-        Expanded(child: const HoldingList()),
+        Expanded(child: const ActionableHoldingList()),
       ],
     );
   }

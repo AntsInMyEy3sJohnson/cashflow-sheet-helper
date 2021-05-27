@@ -14,14 +14,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class AssetList extends StatefulWidget {
-  const AssetList();
+class ActionableAssetList extends StatefulWidget {
+  const ActionableAssetList();
 
   @override
-  _AssetListState createState() => _AssetListState();
+  _ActionableAssetListState createState() => _ActionableAssetListState();
 }
 
-class _AssetListState extends State<AssetList> {
+class _ActionableAssetListState extends State<ActionableAssetList> {
   late final PlayerBloc _playerBloc;
 
   @override

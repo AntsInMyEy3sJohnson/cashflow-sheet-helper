@@ -7,14 +7,14 @@ import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HoldingList extends StatefulWidget {
-  const HoldingList();
+class ActionableHoldingList extends StatefulWidget {
+  const ActionableHoldingList();
 
   @override
-  _HoldingListState createState() => _HoldingListState();
+  _ActionableHoldingListState createState() => _ActionableHoldingListState();
 }
 
-class _HoldingListState extends State<HoldingList> {
+class _ActionableHoldingListState extends State<ActionableHoldingList> {
   late final PlayerBloc _playerBloc;
 
   @override
