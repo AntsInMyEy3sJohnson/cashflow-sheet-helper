@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
@@ -6,6 +7,7 @@ import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ActionableHoldingList extends StatefulWidget {
   const ActionableHoldingList();
@@ -32,9 +34,25 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
           itemBuilder: (context, i) {
             if (i < state.holdings.length) {
               final holding = state.holdings[i];
-              return ListTile(
-                title: ThreeTextFieldRow("${holding.name}",
-                    "${holding.downPayment}", "${holding.buyingCost}", 18),
+              return Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: 0.25,
+                child: ListTile(
+                  title: ThreeTextFieldRow(
+                    "${holding.name}",
+                    "${holding.downPayment}",
+                    "${holding.buyingCost}",
+                    18,
+                  ),
+                ),
+                secondaryActions: [
+                  IconSlideAction(
+                    caption: "Sell",
+                    color: Colors.blueAccent,
+                    icon: Icons.monetization_on_outlined,
+                    onTap: () => _showSellHoldingDialog(holding),
+                  )
+                ],
               );
             }
             return ElevatedButton(
@@ -54,6 +72,10 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
         );
       },
     );
+  }
+
+  void _showSellHoldingDialog(Holding holding) {
+
   }
 
   void _addHolding(BuildContext context, HoldingBought holdingBought) {

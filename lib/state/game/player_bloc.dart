@@ -138,6 +138,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     List<Holding> holdings = List.from(state.holdings);
     holdings.add(Holding(
         name: event.name,
+        holdingKind: event.holdingKind,
+        numUnits: event.numUnits,
         downPayment: event.downPayment,
         buyingCost: event.buyingCost,
         mortgage: event.mortgage,

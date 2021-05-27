@@ -1,8 +1,10 @@
+import 'package:cashflow_sheet_helper/data/holding_kind.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
 class Holding extends Equatable {
   final String name;
+  final HoldingKind holdingKind;
+  final int numUnits;
   final double downPayment;
   final double buyingCost;
   final double mortgage;
@@ -10,6 +12,8 @@ class Holding extends Equatable {
 
   const Holding({
     required this.name,
+    required this.holdingKind,
+    required this.numUnits,
     required this.downPayment,
     required this.buyingCost,
     required this.mortgage,
@@ -17,5 +21,6 @@ class Holding extends Equatable {
   });
 
   @override
-  List<Object> get props => [name, downPayment, buyingCost, mortgage, cashflow];
+  List<Object> get props => [name, holdingKind, numUnits, downPayment, buyingCost, mortgage, cashflow];
+
 }
