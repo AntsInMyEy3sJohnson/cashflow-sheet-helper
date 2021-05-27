@@ -12,6 +12,8 @@ class BuyHoldingDialog extends StatefulWidget {
 class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   final TextEditingController _nameController = TextEditingController();
 
+  final TextEditingController _numUnitsController = TextEditingController();
+
   final TextEditingController _downPaymentController = TextEditingController();
 
   final TextEditingController _buyingCostController = TextEditingController();
@@ -19,6 +21,8 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   final TextEditingController _mortgageController = TextEditingController();
 
   final TextEditingController _cashflowController = TextEditingController();
+
+  late List<PaddedInputTextField> _inputTextFields;
 
   late HoldingKind _holdingKind;
 
@@ -31,22 +35,30 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DropdownButton(
-            value: HoldingKindHelper.toHumanReadableName(_holdingKind),
-            items: _holdingKindsToDropdownMenuItems(),
-            hint: const Text("Kind of real estate"),
-          ),
-          PaddedInputTextField("Name", _nameController),
-          PaddedInputTextField("Down payment", _downPaymentController),
-          PaddedInputTextField("Buying cost", _buyingCostController),
-          PaddedInputTextField("Mortgage", _mortgageController),
-          PaddedInputTextField("Cashflow", _cashflowController),
-          ElevatedButton(
-              onPressed: () => _processPurchaseConfirmed(context), child: const Text("Confirm")),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            DropdownButton<String>(
+              value: HoldingKindHelper.toHumanReadableName(_holdingKind),
+              items: _holdingKindsToDropdownMenuItems(),
+              hint: const Text("Kind of real estate"),
+              onChanged: (String? value) =>
+                  _processHoldingKindSelectionChanged(value),
+            ),
+            // TODO Pre-populate name field base on selected type
+            PaddedInputTextField("Name", _nameController),
+            // TODO Hide this if selected type cannot contain more than one unit
+            PaddedInputTextField("# Units", _numUnitsController),
+            PaddedInputTextField("Down payment", _downPaymentController),
+            PaddedInputTextField("Buying cost", _buyingCostController),
+            PaddedInputTextField("Mortgage", _mortgageController),
+            PaddedInputTextField("Cashflow", _cashflowController),
+            ElevatedButton(
+                onPressed: () => _processPurchaseConfirmed(context),
+                child: const Text("Confirm")),
+          ],
+        ),
       ),
     );
   }
@@ -57,17 +69,19 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
         .map((e) => DropdownMenuItem<String>(value: e, child: Text(e))));
   }
 
-  void _processHoldingKindSelectionChanged(String value) {
-    setState(() {
-      _holdingKind = HoldingKindHelper.fromHumanReadableName(value);
-    });
+  void _processHoldingKindSelectionChanged(String? value) {
+    if (value != null) {
+      setState(() {
+        _holdingKind = HoldingKindHelper.fromHumanReadableName(value);
+      });
+    }
   }
 
   void _processPurchaseConfirmed(BuildContext context) {
     final holdingBought = HoldingBought(
         _nameController.text,
         _holdingKind,
-        42,
+        int.parse(_numUnitsController.text),
         double.parse(_downPaymentController.text),
         double.parse(_buyingCostController.text),
         double.parse(_mortgageController.text),
