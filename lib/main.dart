@@ -1,9 +1,10 @@
 import 'package:cashflow_sheet_helper/body_scaffold.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
+import 'package:cashflow_sheet_helper/data/holding_kind.dart';
 import 'package:cashflow_sheet_helper/data/player.dart';
-import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,7 +39,17 @@ class MyApp extends StatelessWidget {
       numChildren: 0,
       // Initial cash = initial cashflow + savings
       balance: 4900.0 + 3500.0,
-      holdings: [],
+      holdings: [
+        // Dummy holding
+        Holding(
+            name: "SFH1",
+            holdingKind: HoldingKind.singleFamilyHouse,
+            numUnits: 1,
+            downPayment: 20000,
+            buyingCost: 220000,
+            mortgage: 200000,
+            cashflow: 400),
+      ],
       assets: [],
     );
 

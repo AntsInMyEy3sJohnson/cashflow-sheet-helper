@@ -5,6 +5,7 @@ import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
+import 'package:cashflow_sheet_helper/state/game/events/holding_sold.dart';
 import 'package:cashflow_sheet_helper/state/game/events/loan_paid_back.dart';
 import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.dart';
@@ -47,14 +48,22 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapShareSplitPerformedToPlayerState(event);
     } else if (event is SharesBackwardSplit) {
       yield await _mapShareBackwardSplitPerformedToPlayerState(event);
+    } else if (event is HoldingSold) {
+      yield await _mapHoldingSoldToPlayerState(event);
     }
+  }
+
+  Future<PlayerState> _mapHoldingSoldToPlayerState(HoldingSold event) async {
+    final List<Holding> holdings = List.from(state.holdings);
+    holdings.remove(event.holding);
+    final double newBalance = state.balance + event.gains;
+    return state.copyWithHoldingsAndBalance(holdings, newBalance);
   }
 
   Future<PlayerState> _mapShareBackwardSplitPerformedToPlayerState(
       SharesBackwardSplit event) async {
     final List<Asset> assets = List.from(state.assets);
-    int index =
-        assets.indexWhere((element) => element.name == event.asset.name);
+    int index = assets.indexOf(event.asset);
     assets[index] = Asset(
       name: event.asset.name,
       numShares: (event.asset.numShares / 2).round(),
@@ -66,8 +75,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   Future<PlayerState> _mapShareSplitPerformedToPlayerState(
       SharesSplit event) async {
     final List<Asset> assets = List.from(state.assets);
-    int index =
-        assets.indexWhere((element) => element.name == event.asset.name);
+    int index = assets.indexOf(event.asset);
     assets[index] = Asset(
       name: event.asset.name,
       numShares: event.asset.numShares * 2,
@@ -79,12 +87,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   Future<PlayerState> _mapSharesSoldToPlayerState(SharesSold event) async {
     final List<Asset> assets = List.from(state.assets);
     final Asset matchingAsset =
-        assets.singleWhere((element) => element.name == event.asset.name);
+        assets.singleWhere((element) => element == event.asset);
     if (event.numSold == matchingAsset.numShares) {
       assets.remove(matchingAsset);
     } else {
-      int index =
-          assets.indexWhere((element) => element.name == event.asset.name);
+      int index = assets.indexOf(event.asset);
       assets[index] = Asset(
           name: matchingAsset.name,
           numShares: matchingAsset.numShares - event.numSold,

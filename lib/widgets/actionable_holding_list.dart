@@ -84,6 +84,14 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
         });
     if (holdingSold != null) {
       _playerBloc.add(holdingSold);
+      ScaffoldMessenger.of(context).showSnackBar(
+        ReusableSnackbar.fromChildren(<Widget>[
+          Text("${holdingSold.holding.name} sold."),
+          Text("Mortgage removed: ${holding.mortgage}"),
+          Text("Cashflow removed: ${holding.cashflow}"),
+          Text("Balance +${holdingSold.gains}"),
+        ]),
+      );
     }
   }
 
