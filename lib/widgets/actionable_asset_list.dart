@@ -9,7 +9,7 @@ import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
-import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
+import 'package:cashflow_sheet_helper/widgets/rows/three_text_field_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

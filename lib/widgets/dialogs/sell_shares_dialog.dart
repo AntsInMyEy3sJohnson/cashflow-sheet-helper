@@ -1,7 +1,7 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
-import 'package:cashflow_sheet_helper/widgets/padded_input_text_field.dart';
-import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
 class SellSharesDialog extends StatelessWidget {

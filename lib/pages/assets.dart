@@ -1,8 +1,8 @@
 import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/widgets/actionable_asset_list.dart';
 import 'package:cashflow_sheet_helper/widgets/actionable_holding_list.dart';
-import 'package:cashflow_sheet_helper/widgets/three_text_field_row.dart';
-import 'package:cashflow_sheet_helper/widgets/two_text_field_row.dart';
+import 'package:cashflow_sheet_helper/widgets/rows/three_text_field_row.dart';
+import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
 import 'package:flutter/material.dart';
 
 class Assets extends StatelessWidget {

@@ -1,7 +1,7 @@
-import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-import 'bordered_text_field.dart';
+import '../textfields/bordered_text_field.dart';
 
 class OverviewRow extends StatelessWidget {
 

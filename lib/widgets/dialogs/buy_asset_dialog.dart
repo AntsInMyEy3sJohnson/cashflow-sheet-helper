@@ -1,5 +1,5 @@
 import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
-import 'package:cashflow_sheet_helper/widgets/padded_input_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:flutter/material.dart';
 
 class BuyAssetDialog extends StatelessWidget {

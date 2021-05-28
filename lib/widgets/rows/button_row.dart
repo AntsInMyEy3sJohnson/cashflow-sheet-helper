@@ -1,4 +1,4 @@
-import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
 class ButtonRow extends StatelessWidget {

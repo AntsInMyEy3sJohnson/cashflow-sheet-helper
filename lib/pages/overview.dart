@@ -8,14 +8,14 @@ import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.d
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
-import 'package:cashflow_sheet_helper/widgets/button_row.dart';
+import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/overview_row.dart';
+import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
-import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

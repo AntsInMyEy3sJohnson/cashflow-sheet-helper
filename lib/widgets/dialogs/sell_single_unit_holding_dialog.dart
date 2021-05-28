@@ -1,7 +1,7 @@
 import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_sold.dart';
-import 'package:cashflow_sheet_helper/widgets/padded_input_text_field.dart';
-import 'package:cashflow_sheet_helper/widgets/variable_size_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
 class SellSingleUnitHolding extends StatefulWidget {
@@ -20,16 +20,13 @@ class _SellSingleUnitHoldingState extends State<SellSingleUnitHolding> {
   ];
   static const String _ABSOLUTE_HINT_TEXT = "Original Price + X";
   static const String _PERCENTAGE_HINT_TEXT = "Original Price + X %";
-  static const String _INITIAL_PREVIEW_TEXT =
-      "Provide an amount to preview your gains";
-  static const String _DYNAMIC_PREVIEW_PREFIX = "Preview: ";
 
   static final List<bool> _sellOptions = <bool>[true, false];
 
   final TextEditingController _priceController = TextEditingController();
 
   late String _inputFieldHintText;
-  late String _gainsPreview;
+  late double _amountOnTop;
   late double _totalGains;
 
   // TODO Dispose controllers!
@@ -37,9 +34,10 @@ class _SellSingleUnitHoldingState extends State<SellSingleUnitHolding> {
   void initState() {
     super.initState();
     _inputFieldHintText = _ABSOLUTE_HINT_TEXT;
-    _gainsPreview = _INITIAL_PREVIEW_TEXT;
     _priceController.addListener(_priceChangeListener);
-    _totalGains = 0.0;
+    _amountOnTop = 0.0;
+    _totalGains =
+        widget.holding.buyingCost + _amountOnTop - widget.holding.mortgage;
   }
 
   @override
@@ -57,7 +55,7 @@ class _SellSingleUnitHoldingState extends State<SellSingleUnitHolding> {
           const VariableSizeTextField(
               "Sell real estate holding", 20, TextAlign.center),
           const VariableSizeTextField(
-              "How much is your buyer willing to pay on top the original price?",
+              "How much is your buyer willing to pay on top of the original price?",
               16,
               TextAlign.center),
           ToggleButtons(
@@ -66,7 +64,11 @@ class _SellSingleUnitHoldingState extends State<SellSingleUnitHolding> {
             isSelected: _sellOptions,
           ),
           PaddedInputTextField(_inputFieldHintText, _priceController),
-          Text(_gainsPreview),
+          // TODO Make this more beautiful -- table?
+          Text("${widget.holding.buyingCost}"),
+          Text("+$_amountOnTop"),
+          Text("-${widget.holding.mortgage}"),
+          Text("=$_totalGains"),
           ElevatedButton(
               onPressed: () => _processConfirm(widget.holding, _totalGains),
               child: const Text("Confirm")),
@@ -86,20 +88,14 @@ class _SellSingleUnitHoldingState extends State<SellSingleUnitHolding> {
 
   void _priceChangeListener() {
     setState(() {
-      _generatePreviewText();
+      _calculatePriceData();
     });
   }
 
-  void _generatePreviewText() {
-    if (_priceController.text.isEmpty) {
-      _gainsPreview = _INITIAL_PREVIEW_TEXT;
-    } else {
-      _totalGains = widget.holding.buyingCost +
-          _calculateAmountOnTop() -
-          widget.holding.mortgage;
-      _gainsPreview =
-          "$_DYNAMIC_PREVIEW_PREFIX: Selling price - mortgage = $_totalGains";
-    }
+  void _calculatePriceData() {
+    _amountOnTop = _calculateAmountOnTop();
+    _totalGains =
+        widget.holding.buyingCost + _amountOnTop - widget.holding.mortgage;
   }
 
   double _calculateAmountOnTop() {
@@ -121,7 +117,7 @@ class _SellSingleUnitHoldingState extends State<SellSingleUnitHolding> {
       setState(() {
         _setSelectedState(selectedIndex);
         _setInputTextFieldHint(selectedIndex);
-        _generatePreviewText();
+        _calculatePriceData();
       });
     }
   }
