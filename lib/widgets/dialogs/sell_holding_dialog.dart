@@ -59,6 +59,7 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
         children: [
           const VariableSizeTextField(
               "Sell real estate holding", 20, TextAlign.center),
+          // TODO Make this text dependent on chosen sell mode
           const VariableSizeTextField(
               "How much is your buyer willing to pay on top of the original price?",
               16,

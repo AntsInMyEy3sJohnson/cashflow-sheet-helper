@@ -2,6 +2,7 @@ import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
+import 'package:cashflow_sheet_helper/state/game/events/balance_manually_modified.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
@@ -50,7 +51,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapShareBackwardSplitPerformedToPlayerState(event);
     } else if (event is HoldingSold) {
       yield await _mapHoldingSoldToPlayerState(event);
+    } else if (event is BalanceManuallyModified) {
+      yield await _mapManualBalanceModificationToPlayerState(event);
     }
+  }
+
+  Future<PlayerState> _mapManualBalanceModificationToPlayerState(BalanceManuallyModified event) async {
+    double modificationAmount = event.amount * (event.increase ? 1 : -1);
+    return state.copyWithBalance(state.balance + modificationAmount);
   }
 
   Future<PlayerState> _mapHoldingSoldToPlayerState(HoldingSold event) async {

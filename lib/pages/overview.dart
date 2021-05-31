@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
+import 'package:cashflow_sheet_helper/state/game/events/balance_manually_modified.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/loan_paid_back.dart';
@@ -8,6 +9,7 @@ import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.d
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
@@ -70,7 +72,7 @@ class _OverviewState extends State<Overview> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: const VariableSizeTextField(
-                          "Cashflow day!", 40, TextAlign.center),
+                          "Cashflow Day!", 40, TextAlign.center),
                     ),
                   ),
                 ),
@@ -89,12 +91,32 @@ class _OverviewState extends State<Overview> {
                   () => _processLoanTaken(),
                   state.bankLoan > 0 ? () => _processLoanPaidBack() : null,
                 ),
+                ElevatedButton(onPressed: _processManualAccountBalanceModification,
+                    child: const VariableSizeTextField("Manual Account Balance Modification", 18, TextAlign.center)),
               ],
             ),
           ),
         );
       },
     );
+  }
+
+  void _processManualAccountBalanceModification() async {
+    final balanceManuallyModified = await showDialog<BalanceManuallyModified>(
+        context: context,
+        builder: (_) => PerformBalanceModificationDialog(),
+    );
+    if (balanceManuallyModified != null) {
+      final String sign = balanceManuallyModified.increase ? "+" : "-";
+      _playerBloc.add(balanceManuallyModified);
+      ScaffoldMessenger.of(context).showSnackBar(
+        ReusableSnackbar.fromChildren(<Widget>[
+          const Text("Account balance adapted."),
+          Text("Balance $sign${balanceManuallyModified.amount}"),
+        ]),
+      );
+    }
+
   }
 
   void _processLoanPaidBack() async {
@@ -210,7 +232,6 @@ class _OverviewState extends State<Overview> {
   void _processDoodad() async {
     final TextEditingController amountController = TextEditingController();
     final doodadBought = await showDialog<DoodadBought>(
-        barrierDismissible: false,
         context: context,
         builder: (context) {
           return BuyDoodadDialog(amountController);
