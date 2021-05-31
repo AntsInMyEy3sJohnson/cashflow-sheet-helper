@@ -40,11 +40,20 @@ class MyApp extends StatelessWidget {
       // Initial cash = initial cashflow + savings
       balance: 4900.0 + 3500.0,
       holdings: [
-        // Dummy holding
+        // Dummy holdings
         Holding(
             name: "SFH1",
             holdingKind: HoldingKind.singleFamilyHouse,
             numUnits: 1,
+            downPayment: 20000,
+            buyingCost: 220000,
+            mortgage: 200000,
+            cashflow: 400),
+        // Dummy holdings
+        Holding(
+            name: "APH1",
+            holdingKind: HoldingKind.apartmentHouse,
+            numUnits: 15,
             downPayment: 20000,
             buyingCost: 220000,
             mortgage: 200000,

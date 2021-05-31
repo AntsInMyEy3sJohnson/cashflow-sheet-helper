@@ -4,7 +4,7 @@ import 'package:cashflow_sheet_helper/state/game/events/holding_sold.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_holding_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/sell_single_unit_holding_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/sell_holding_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/three_text_field_row.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +80,7 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
     final HoldingSold? holdingSold = await showDialog<HoldingSold>(
         context: context,
         builder: (_) {
-          return SellSingleUnitHolding(holding);
+          return SellHoldingDialog(holding);
         });
     if (holdingSold != null) {
       _playerBloc.add(holdingSold);
