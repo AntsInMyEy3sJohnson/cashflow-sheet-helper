@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/balance_manually_modified.dart';
+import 'package:cashflow_sheet_helper/state/game/events/business_boom_occurred.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/loan_paid_back.dart';
@@ -9,14 +10,15 @@ import 'package:cashflow_sheet_helper/state/game/events/money_given_to_charity.d
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/configure_business_boom_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
+import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
+import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,8 +93,11 @@ class _OverviewState extends State<Overview> {
                   () => _processLoanTaken(),
                   state.bankLoan > 0 ? () => _processLoanPaidBack() : null,
                 ),
-                ElevatedButton(onPressed: _processManualAccountBalanceModification,
-                    child: const VariableSizeTextField("Manual Account Balance Modification", 18, TextAlign.center)),
+                ButtonRow(
+                    "Business Boom",
+                    "Manually Modify Balance",
+                    _processBusinessBoom,
+                    _processManualAccountBalanceModification),
               ],
             ),
           ),
@@ -101,10 +106,26 @@ class _OverviewState extends State<Overview> {
     );
   }
 
+  void _processBusinessBoom() async {
+    final BusinessBoomOccurred? businessBoomOccurred =
+        await showDialog<BusinessBoomOccurred>(
+            context: context, builder: (_) => ConfigureBusinessBoomDialog());
+    if (businessBoomOccurred != null) {
+      _playerBloc.add(businessBoomOccurred);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+        const Text("Business boom occurred."),
+        Text(
+            "All business with cashflow of less than ${businessBoomOccurred.affectsBusinessesBelowThreshold} "
+            "increased their cashflow by ${businessBoomOccurred.cashflowIncrease}."),
+      ]));
+    }
+  }
+
   void _processManualAccountBalanceModification() async {
     final balanceManuallyModified = await showDialog<BalanceManuallyModified>(
-        context: context,
-        builder: (_) => PerformBalanceModificationDialog(),
+      context: context,
+      builder: (_) => PerformBalanceModificationDialog(),
     );
     if (balanceManuallyModified != null) {
       final String sign = balanceManuallyModified.increase ? "+" : "-";
@@ -116,7 +137,6 @@ class _OverviewState extends State<Overview> {
         ]),
       );
     }
-
   }
 
   void _processLoanPaidBack() async {
