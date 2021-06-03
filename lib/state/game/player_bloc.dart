@@ -59,19 +59,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  Future<PlayerState> _mapBusinessBoomToPlayerState(BusinessBoomOccurred event) async {
+  Future<PlayerState> _mapBusinessBoomToPlayerState(
+      BusinessBoomOccurred event) async {
     final List<Holding> holdings = List.empty(growable: true);
     state.holdings.forEach((holding) {
-      if(holding.cashflow > event.affectsBusinessesBelowThreshold) {
-        // Simple use case: The object does not have to be modified, can
-        // be added to the result list as-is
-        holdings.add(holding);
-      } else {
-        // The holding is affected by the business boom, meaning its cashflow
-        // has to be increased. Because all of a holding's properties are final,
-        // we have to accomplish this by creating a new object carrying the
-        // properties of the given holding (except the cashflow, which is increased
-        // by the amount given in the event).
+      if (holding.cashflow < event.affectsBusinessesBelowThreshold) {
         holdings.add(Holding(
             name: holding.name,
             holdingKind: holding.holdingKind,
@@ -80,14 +72,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
             buyingCost: holding.buyingCost,
             mortgage: holding.mortgage,
             cashflow: holding.cashflow + event.cashflowIncrease));
+      } else {
+        holdings.add(holding);
       }
     });
     return state.copyWithHoldings(holdings);
   }
 
-
-
-  Future<PlayerState> _mapManualBalanceModificationToPlayerState(BalanceManuallyModified event) async {
+  Future<PlayerState> _mapManualBalanceModificationToPlayerState(
+      BalanceManuallyModified event) async {
     double modificationAmount = event.amount * (event.increase ? 1 : -1);
     return state.copyWithBalance(state.balance + modificationAmount);
   }
