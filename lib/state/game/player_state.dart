@@ -101,6 +101,16 @@ class PlayerState extends Equatable {
     );
   }
 
+  PlayerState copyWithHoldings(List<Holding> holdings) {
+    return PlayerState(
+      bankLoan: this.bankLoan,
+      numChildren: this.numChildren,
+      balance: this.balance,
+      holdings: holdings,
+      assets: this.assets,
+    );
+  }
+
   PlayerState copyWithHoldingsAndBalance(
       List<Holding> holdings, double balance) {
     return PlayerState(
