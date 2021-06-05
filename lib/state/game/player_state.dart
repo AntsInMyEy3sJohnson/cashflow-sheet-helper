@@ -74,6 +74,16 @@ class PlayerState extends Equatable {
             PlayerState._calculateTotalExpenses(bankLoan, numChildren),
         totalIncome = PlayerState._calculateTotalIncome(holdings);
 
+  PlayerState copyWithBalanceAndNumGoldCoins(double balance, int numGoldCoins) {
+    return PlayerState(
+        bankLoan: this.bankLoan,
+        balance: balance,
+        numChildren: this.numChildren,
+        numGoldCoins: numGoldCoins,
+        holdings: this.holdings,
+        assets: this.assets);
+  }
+
   PlayerState copyWithNumChildren(int newNumChildren) {
     return PlayerState(
       bankLoan: this.bankLoan,

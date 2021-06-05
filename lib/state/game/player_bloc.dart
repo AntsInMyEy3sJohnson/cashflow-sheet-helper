@@ -5,6 +5,7 @@ import 'package:cashflow_sheet_helper/state/game/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/game/events/balance_manually_modified.dart';
 import 'package:cashflow_sheet_helper/state/game/events/business_boom_occurred.dart';
 import 'package:cashflow_sheet_helper/state/game/events/cashflow_reached.dart';
+import 'package:cashflow_sheet_helper/state/game/events/coins_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_sold.dart';
@@ -56,7 +57,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       yield await _mapManualBalanceModificationToPlayerState(event);
     } else if (event is BusinessBoomOccurred) {
       yield await _mapBusinessBoomToPlayerState(event);
+    } else if (event is CoinsBought) {
+      yield await _mapCoinsBoughtToPlayerState(event);
     }
+  }
+
+  Future<PlayerState> _mapCoinsBoughtToPlayerState(CoinsBought event) async {
+    final newBalance = state.balance - (event.price * event.amount);
+    final newNumGoldCoins = state.numGoldCoins + event.amount;
+    return state.copyWithBalanceAndNumGoldCoins(newBalance, newNumGoldCoins);
   }
 
   Future<PlayerState> _mapBusinessBoomToPlayerState(
