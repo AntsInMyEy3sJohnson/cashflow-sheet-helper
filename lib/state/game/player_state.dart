@@ -7,8 +7,9 @@ import 'package:equatable/equatable.dart';
 /// can change during a game.
 class PlayerState extends Equatable {
   final double bankLoan;
-  final int numChildren;
   final double balance;
+  final int numChildren;
+  final int numGoldCoins;
   final List<Holding> holdings;
   final List<Asset> assets;
 
@@ -60,8 +61,9 @@ class PlayerState extends Equatable {
 
   PlayerState({
     required this.bankLoan,
-    required this.numChildren,
     required this.balance,
+    required this.numChildren,
+    required this.numGoldCoins,
     required this.holdings,
     required this.assets,
   })   : passiveIncome = PlayerState._calculatePassiveIncome(holdings),
@@ -75,8 +77,9 @@ class PlayerState extends Equatable {
   PlayerState copyWithNumChildren(int newNumChildren) {
     return PlayerState(
       bankLoan: this.bankLoan,
-      numChildren: newNumChildren,
       balance: this.balance,
+      numChildren: newNumChildren,
+      numGoldCoins: this.numGoldCoins,
       holdings: this.holdings,
       assets: this.assets,
     );
@@ -85,17 +88,19 @@ class PlayerState extends Equatable {
   PlayerState copyWithBalanceAndBankLoan(double balance, double bankLoan) {
     return PlayerState(
         bankLoan: bankLoan,
-        numChildren: numChildren,
         balance: balance,
-        holdings: holdings,
-        assets: assets);
+        numChildren: this.numChildren,
+        numGoldCoins: this.numGoldCoins,
+        holdings: this.holdings,
+        assets: this.assets);
   }
 
   PlayerState copyWithBalance(double balance) {
     return PlayerState(
       bankLoan: this.bankLoan,
-      numChildren: this.numChildren,
       balance: balance,
+      numChildren: this.numChildren,
+      numGoldCoins: this.numGoldCoins,
       holdings: this.holdings,
       assets: this.assets,
     );
@@ -104,8 +109,9 @@ class PlayerState extends Equatable {
   PlayerState copyWithHoldings(List<Holding> holdings) {
     return PlayerState(
       bankLoan: this.bankLoan,
-      numChildren: this.numChildren,
       balance: this.balance,
+      numChildren: this.numChildren,
+      numGoldCoins: this.numGoldCoins,
       holdings: holdings,
       assets: this.assets,
     );
@@ -115,8 +121,9 @@ class PlayerState extends Equatable {
       List<Holding> holdings, double balance) {
     return PlayerState(
       bankLoan: this.bankLoan,
-      numChildren: this.numChildren,
       balance: balance,
+      numChildren: this.numChildren,
+      numGoldCoins: this.numGoldCoins,
       holdings: holdings,
       assets: this.assets,
     );
@@ -124,18 +131,20 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithAssets(List<Asset> assets) {
     return PlayerState(
-        bankLoan: bankLoan,
-        numChildren: numChildren,
-        balance: balance,
-        holdings: holdings,
+        bankLoan: this.bankLoan,
+        balance: this.balance,
+        numChildren: this.numChildren,
+        numGoldCoins: this.numGoldCoins,
+        holdings: this.holdings,
         assets: assets);
   }
 
   PlayerState copyWithAssetsAndBalance(List<Asset> assets, double balance) {
     return PlayerState(
       bankLoan: this.bankLoan,
-      numChildren: this.numChildren,
       balance: balance,
+      numChildren: this.numChildren,
+      numGoldCoins: this.numGoldCoins,
       holdings: this.holdings,
       assets: assets,
     );

@@ -54,6 +54,7 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
                 secondaryActions: [
                   IconSlideAction(
                     caption: "Sell",
+                    // TODO Put these into file with constants
                     color: Colors.blueAccent,
                     icon: Icons.monetization_on_outlined,
                     onTap: () => _showSellSharesDialog(asset),
