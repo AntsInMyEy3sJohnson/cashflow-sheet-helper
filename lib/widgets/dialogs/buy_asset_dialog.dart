@@ -14,9 +14,20 @@ class BuyAssetDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // TODO Add some validation to those
-          PaddedInputTextField("Name", _nameController),
-          PaddedInputTextField("Today's price", _priceController),
-          PaddedInputTextField("# shares to buy", _numSharesController),
+          PaddedInputTextField(
+            "Name",
+            _nameController,
+          ),
+          PaddedInputTextField(
+            "Today's price",
+            _priceController,
+            textInputType: TextInputType.number,
+          ),
+          PaddedInputTextField(
+            "# shares to buy",
+            _numSharesController,
+            textInputType: TextInputType.number,
+          ),
           ElevatedButton(
               onPressed: () => _process(context), child: const Text("Confirm"))
         ],

@@ -58,7 +58,11 @@ class _PerformBalanceModificationDialogState
               children: List.of(_MODIFICATION_OPTION_NAMES.map((e) => Text(e))),
               onPressed: (index) => _processModificationKindChanged(index),
               isSelected: _modificationOptions),
-          PaddedInputTextField(_currentHintText, _amountController),
+          PaddedInputTextField(
+            _currentHintText,
+            _amountController,
+            textInputType: TextInputType.number,
+          ),
           ElevatedButton(
               onPressed: _processConfirm, child: const Text("Confirm")),
           ElevatedButton(onPressed: _processAbort, child: const Text("Abort")),
@@ -68,7 +72,10 @@ class _PerformBalanceModificationDialogState
   }
 
   void _processConfirm() {
-    Navigator.pop(context, BalanceManuallyModified(double.parse(_amountController.text), _modificationMode == ModificationMode.increase));
+    Navigator.pop(
+        context,
+        BalanceManuallyModified(double.parse(_amountController.text),
+            _modificationMode == ModificationMode.increase));
   }
 
   void _processAbort() {
@@ -85,7 +92,7 @@ class _PerformBalanceModificationDialogState
   }
 
   void _setHintText() {
-    if(_modificationMode == ModificationMode.increase) {
+    if (_modificationMode == ModificationMode.increase) {
       _currentHintText = _INCREASE_HINT_TEXT;
     } else {
       _currentHintText = _DECREASE_HINT_TEXT;
@@ -95,10 +102,13 @@ class _PerformBalanceModificationDialogState
   ModificationMode _evaluateModificationMode() {
     int selectedIndex = _modificationOptions.indexWhere((element) => element);
     final String currentlySelected = _MODIFICATION_OPTION_NAMES[selectedIndex];
-    switch(currentlySelected) {
-      case "Increase": return ModificationMode.increase;
-      case "Decrease": return ModificationMode.decrease;
-      default: return ModificationMode.increase;
+    switch (currentlySelected) {
+      case "Increase":
+        return ModificationMode.increase;
+      case "Decrease":
+        return ModificationMode.decrease;
+      default:
+        return ModificationMode.increase;
     }
   }
 
@@ -112,10 +122,6 @@ class _PerformBalanceModificationDialogState
     }
     _modificationMode = _evaluateModificationMode();
   }
-
 }
 
-enum ModificationMode {
-  increase,
-  decrease
-}
+enum ModificationMode { increase, decrease }

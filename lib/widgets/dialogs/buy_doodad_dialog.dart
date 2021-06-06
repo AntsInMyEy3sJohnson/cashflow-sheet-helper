@@ -17,10 +17,16 @@ class BuyDoodadDialog extends StatelessWidget {
           const VariableSizeTextField(
               "Here we go again!", 20, TextAlign.center),
           PaddedInputTextField(
-              "Provide amount to deduct from balance", _amountController),
+            "Provide amount to deduct from balance",
+            _amountController,
+            textInputType: TextInputType.number,
+          ),
           ElevatedButton(
-              onPressed: () => _processConfirm(context), child: const Text("Confirm")),
-          ElevatedButton(onPressed: () => _processAbort(context), child: const Text("Abort")),
+              onPressed: () => _processConfirm(context),
+              child: const Text("Confirm")),
+          ElevatedButton(
+              onPressed: () => _processAbort(context),
+              child: const Text("Abort")),
         ],
       ),
     );

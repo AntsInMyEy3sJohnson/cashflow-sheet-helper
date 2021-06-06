@@ -4,9 +4,9 @@ import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_fiel
 import 'package:flutter/material.dart';
 
 class ConfigureBusinessBoomDialog extends StatelessWidget {
-
   final TextEditingController _thresholdController = TextEditingController();
-  final TextEditingController _cashflowIncreaseController = TextEditingController();
+  final TextEditingController _cashflowIncreaseController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +15,36 @@ class ConfigureBusinessBoomDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const VariableSizeTextField("Business Boom!", 20, TextAlign.center),
-          PaddedInputTextField("Cashflow threshold", _thresholdController),
-          PaddedInputTextField("Cashflow increase", _cashflowIncreaseController),
+          PaddedInputTextField(
+            "Cashflow threshold",
+            _thresholdController,
+            textInputType: TextInputType.number,
+          ),
+          PaddedInputTextField(
+            "Cashflow increase",
+            _cashflowIncreaseController,
+            textInputType: TextInputType.number,
+          ),
           // TODO Refactor confirmation and abort buttons into dedicated widget and make dialogs use custom widget button
-          ElevatedButton(onPressed: () => _processConfirm(context), child: const Text("Confirm")),
-          ElevatedButton(onPressed: () => _processAbort(context), child: const Text("Abort")),
+          ElevatedButton(
+              onPressed: () => _processConfirm(context),
+              child: const Text("Confirm")),
+          ElevatedButton(
+              onPressed: () => _processAbort(context),
+              child: const Text("Abort")),
         ],
       ),
     );
   }
 
   void _processConfirm(BuildContext context) {
-    final BusinessBoomOccurred businessBoomOccurred = BusinessBoomOccurred(double.parse(_thresholdController.text), double.parse(_cashflowIncreaseController.text));
+    final BusinessBoomOccurred businessBoomOccurred = BusinessBoomOccurred(
+        double.parse(_thresholdController.text),
+        double.parse(_cashflowIncreaseController.text));
     Navigator.pop(context, businessBoomOccurred);
   }
 
   void _processAbort(BuildContext context) {
     Navigator.pop(context);
   }
-
 }

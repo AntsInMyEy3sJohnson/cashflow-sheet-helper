@@ -15,7 +15,11 @@ class AmountSelectionRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: PaddedInputTextField("Amount", amountController),
+          child: PaddedInputTextField(
+            "Amount",
+            amountController,
+            textInputType: TextInputType.number,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10),
@@ -24,7 +28,8 @@ class AmountSelectionRow extends StatelessWidget {
               children: [
                 // TODO Adapt keyboard types according to type of input
                 RoundIconButton(callbackAmountIncreased, Icons.arrow_circle_up),
-                RoundIconButton(callbackAmountDecreased, Icons.arrow_circle_down),
+                RoundIconButton(
+                    callbackAmountDecreased, Icons.arrow_circle_down),
               ],
             ),
           ),

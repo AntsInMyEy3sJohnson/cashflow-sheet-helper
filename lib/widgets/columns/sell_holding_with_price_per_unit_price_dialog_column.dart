@@ -8,8 +8,12 @@ class SellHoldingWithPricePerUnitPriceDialogColumn extends StatefulWidget {
   final int numUnits;
   final Function updateGainsCallback;
 
-  const SellHoldingWithPricePerUnitPriceDialogColumn(this.inputFieldHintText,
-      this.originalBuyingCost, this.mortgage, this.numUnits, this.updateGainsCallback);
+  const SellHoldingWithPricePerUnitPriceDialogColumn(
+      this.inputFieldHintText,
+      this.originalBuyingCost,
+      this.mortgage,
+      this.numUnits,
+      this.updateGainsCallback);
 
   @override
   _SellHoldingWithPricePerUnitPriceDialogColumnState createState() =>
@@ -46,9 +50,13 @@ class _SellHoldingWithPricePerUnitPriceDialogColumnState
         mainAxisSize: MainAxisSize.min,
         children: [
           PaddedInputTextField(
-              widget.inputFieldHintText, _pricePerUnitController),
+            widget.inputFieldHintText,
+            _pricePerUnitController,
+            textInputType: TextInputType.number,
+          ),
           // TODO Make this more beautiful -- table?
-          Text("Selling for (${widget.numUnits} * $_pricePerUnit = $_totalSellingPrice)"),
+          Text(
+              "Selling for (${widget.numUnits} * $_pricePerUnit = $_totalSellingPrice)"),
           Text("- Mortgage (${widget.mortgage})"),
           Text("= Gains ($_gains)"),
         ],
@@ -66,11 +74,10 @@ class _SellHoldingWithPricePerUnitPriceDialogColumnState
   }
 
   double _getPricePerUnit() {
-
-    final double? pricePerUnitInput = double.tryParse(_pricePerUnitController.text);
+    final double? pricePerUnitInput =
+        double.tryParse(_pricePerUnitController.text);
 
     return pricePerUnitInput ?? 0.0;
-
   }
 
   double _calculateTotalSellingPrice() {

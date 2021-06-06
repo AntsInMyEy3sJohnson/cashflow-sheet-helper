@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     // TODO Put initialization of Player in initialization screen
     Player.createInstance(
         title: "Doctor",
-        dream: "Magnum Ferrari",
+        dream: "Complete financial independence",
         activeIncome: 13200,
         taxes: 3200,
         monthlyMortgageOrRent: 1900,
@@ -40,26 +40,7 @@ class MyApp extends StatelessWidget {
       numGoldCoins: 0,
       // Initial cash = initial cashflow + savings
       balance: 4900.0 + 3500.0,
-      holdings: [
-        // Dummy holdings
-        Holding(
-            name: "SFH1",
-            holdingKind: HoldingKind.singleFamilyHouse,
-            numUnits: 1,
-            downPayment: 20000,
-            buyingCost: 220000,
-            mortgage: 200000,
-            cashflow: 400),
-        // Dummy holdings
-        Holding(
-            name: "APH1",
-            holdingKind: HoldingKind.apartmentHouse,
-            numUnits: 15,
-            downPayment: 20000,
-            buyingCost: 220000,
-            mortgage: 200000,
-            cashflow: 400),
-      ],
+      holdings: [],
       assets: [],
     );
 

@@ -20,8 +20,16 @@ class SellCoinsDialog extends StatelessWidget {
           const VariableSizeTextField("Sell Gold Coins", 20, TextAlign.center),
           VariableSizeTextField(
               "Available: $numCurrentlyAvailable", 16, TextAlign.left),
-          PaddedInputTextField("Number of coins to sell", _amountController),
-          PaddedInputTextField("Price per coin", _priceController),
+          PaddedInputTextField(
+            "Number of coins to sell",
+            _amountController,
+            textInputType: TextInputType.number,
+          ),
+          PaddedInputTextField(
+            "Price per coin",
+            _priceController,
+            textInputType: TextInputType.number,
+          ),
           ElevatedButton(
               onPressed: () => _processConfirm(context),
               child: const Text("Confirm")),

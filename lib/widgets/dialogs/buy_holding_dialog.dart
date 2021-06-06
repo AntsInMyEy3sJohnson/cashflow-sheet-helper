@@ -22,8 +22,6 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
 
   final TextEditingController _cashflowController = TextEditingController();
 
-  late List<PaddedInputTextField> _inputTextFields;
-
   late HoldingKind _holdingKind;
 
   @override

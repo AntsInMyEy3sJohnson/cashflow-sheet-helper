@@ -14,8 +14,16 @@ class BuyCoinsDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const VariableSizeTextField("Buy Gold Coins", 20, TextAlign.center),
-          PaddedInputTextField("Number of coins to buy", _amountController),
-          PaddedInputTextField("Price per coin", _priceController),
+          PaddedInputTextField(
+            "Number of coins to buy",
+            _amountController,
+            textInputType: TextInputType.number,
+          ),
+          PaddedInputTextField(
+            "Price per coin",
+            _priceController,
+            textInputType: TextInputType.number,
+          ),
           ElevatedButton(
               onPressed: () => _processConfirm(context),
               child: const Text("Confirm")),

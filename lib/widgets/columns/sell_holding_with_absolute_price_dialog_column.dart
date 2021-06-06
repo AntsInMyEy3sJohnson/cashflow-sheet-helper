@@ -43,7 +43,10 @@ class _SellHoldingWithAbsolutePriceDialogColumnState
         mainAxisSize: MainAxisSize.min,
         children: [
           PaddedInputTextField(
-              widget.inputFieldHintText, _sellingPriceController),
+            widget.inputFieldHintText,
+            _sellingPriceController,
+            textInputType: TextInputType.number,
+          ),
           // TODO Make this more beautiful -- table?
           Text("Buying cost (${widget.originalBuyingCost})"),
           Text("+ Amount on top ($_amountOnTop)"),
