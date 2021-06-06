@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_sold.dart';
+import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_absolute_price_dialog_column.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_percentage_price_dialog_column.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_price_per_unit_price_dialog_column.dart';
@@ -40,14 +41,21 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
     super.initState();
     _gains = 0.0;
     _absoluteSellModeBody = SellHoldingWithAbsolutePriceDialogColumn(
-        _ABSOLUTE_HINT_TEXT, widget.holding.buyingCost,
-        widget.holding.mortgage, _updateGainsCallBack);
+        _ABSOLUTE_HINT_TEXT,
+        widget.holding.buyingCost,
+        widget.holding.mortgage,
+        _updateGainsCallBack);
     _percentageSellModeBody = SellHoldingWithPercentagePriceDialogColumn(
-        _PERCENTAGE_HINT_TEXT, widget.holding.buyingCost,
-        widget.holding.mortgage, _updateGainsCallBack);
+        _PERCENTAGE_HINT_TEXT,
+        widget.holding.buyingCost,
+        widget.holding.mortgage,
+        _updateGainsCallBack);
     _pricePerUnitSellModeBody = SellHoldingWithPricePerUnitPriceDialogColumn(
-        _PRICE_PER_UNIT_HINT_TEXT, widget.holding.buyingCost,
-        widget.holding.mortgage, widget.holding.numUnits, _updateGainsCallBack);
+        _PRICE_PER_UNIT_HINT_TEXT,
+        widget.holding.buyingCost,
+        widget.holding.mortgage,
+        widget.holding.numUnits,
+        _updateGainsCallBack);
     _currentSellModeBody = _absoluteSellModeBody;
   }
 
@@ -70,10 +78,10 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
             isSelected: _sellOptions,
           ),
           _currentSellModeBody,
-          ElevatedButton(
-              onPressed: () => _processConfirm(widget.holding, _gains),
-              child: const Text("Confirm")),
-          ElevatedButton(onPressed: _processAbort, child: const Text("Abort")),
+          ConfirmAbortButtonBar(
+            () => _processConfirm(widget.holding, _gains),
+            _processAbort,
+          ),
         ],
       ),
     );

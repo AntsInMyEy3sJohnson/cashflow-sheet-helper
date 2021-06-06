@@ -1,4 +1,5 @@
 import 'package:cashflow_sheet_helper/state/game/events/business_boom_occurred.dart';
+import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +26,10 @@ class ConfigureBusinessBoomDialog extends StatelessWidget {
             _cashflowIncreaseController,
             textInputType: TextInputType.number,
           ),
-          // TODO Refactor confirmation and abort buttons into dedicated widget and make dialogs use custom widget button
-          ElevatedButton(
-              onPressed: () => _processConfirm(context),
-              child: const Text("Confirm")),
-          ElevatedButton(
-              onPressed: () => _processAbort(context),
-              child: const Text("Abort")),
+          ConfirmAbortButtonBar(
+                () => _processConfirm(context),
+                () => _processAbort(context),
+          ),
         ],
       ),
     );

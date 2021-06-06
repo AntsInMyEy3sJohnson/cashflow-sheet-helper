@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/data/holding_kind.dart';
 import 'package:cashflow_sheet_helper/helpers/holding_kind_helper.dart';
 import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
+import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -47,14 +48,35 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
             // TODO Pre-populate name field base on selected type
             PaddedInputTextField("Name", _nameController),
             // TODO Hide this if selected type cannot contain more than one unit
-            PaddedInputTextField("# Units", _numUnitsController),
-            PaddedInputTextField("Down payment", _downPaymentController),
-            PaddedInputTextField("Buying cost", _buyingCostController),
-            PaddedInputTextField("Mortgage", _mortgageController),
-            PaddedInputTextField("Cashflow", _cashflowController),
-            ElevatedButton(
-                onPressed: () => _processPurchaseConfirmed(context),
-                child: const Text("Confirm")),
+            PaddedInputTextField(
+              "# Units",
+              _numUnitsController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Down payment",
+              _downPaymentController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Buying cost",
+              _buyingCostController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Mortgage",
+              _mortgageController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Cashflow",
+              _cashflowController,
+              textInputType: TextInputType.number,
+            ),
+            ConfirmAbortButtonBar(
+              () => _processConfirm(context),
+              () => _processAbort(context),
+            ),
           ],
         ),
       ),
@@ -75,7 +97,11 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
     }
   }
 
-  void _processPurchaseConfirmed(BuildContext context) {
+  void _processAbort(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _processConfirm(BuildContext context) {
     final holdingBought = HoldingBought(
         _nameController.text,
         _holdingKind,

@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/amount_selection_row.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,10 @@ class SelectAmountDialog extends StatelessWidget {
             ),
           ),
           Text(infoBoxText),
-          ElevatedButton(
-              onPressed: () => callbackDialogConfirmed(),
-              child: const Text("Confirm")),
-          ElevatedButton(
-              onPressed: () => callbackDialogAborted(),
-              child: const Text("Abort")),
+          ConfirmAbortButtonBar(
+                callbackDialogConfirmed,
+                callbackDialogAborted,
+          ),
         ],
       ),
     );

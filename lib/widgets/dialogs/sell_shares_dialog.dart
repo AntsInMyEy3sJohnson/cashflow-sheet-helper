@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
+import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +29,10 @@ class SellSharesDialog extends StatelessWidget {
             _amountController,
             textInputType: TextInputType.number,
           ),
-          ElevatedButton(
-              onPressed: () => _processConfirm(context),
-              child: const Text("Confirm")),
-          ElevatedButton(
-              onPressed: () => _processAbort(context),
-              child: const Text("Abort"))
+          ConfirmAbortButtonBar(
+                () => _processConfirm(context),
+                () => _processAbort(context),
+          ),
         ],
       ),
     );

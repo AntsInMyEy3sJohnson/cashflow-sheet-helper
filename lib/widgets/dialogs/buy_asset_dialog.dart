@@ -1,4 +1,5 @@
 import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
+import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -28,14 +29,16 @@ class BuyAssetDialog extends StatelessWidget {
             _numSharesController,
             textInputType: TextInputType.number,
           ),
-          ElevatedButton(
-              onPressed: () => _process(context), child: const Text("Confirm"))
+          ConfirmAbortButtonBar(
+            () => _processConfirm(context),
+            () => _processAbort(context),
+          ),
         ],
       ),
     );
   }
 
-  void _process(BuildContext context) {
+  void _processConfirm(BuildContext context) {
     final numShares = int.parse(_numSharesController.text);
     final price = double.parse(_priceController.text);
     final assetBought = AssetBought(
@@ -45,5 +48,9 @@ class BuyAssetDialog extends StatelessWidget {
       numShares * price,
     );
     Navigator.pop(context, assetBought);
+  }
+
+  void _processAbort(BuildContext context) {
+    Navigator.pop(context);
   }
 }
