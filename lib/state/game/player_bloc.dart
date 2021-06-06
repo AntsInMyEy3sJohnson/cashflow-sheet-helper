@@ -19,11 +19,11 @@ import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/game/events/shares_split.dart';
 import 'package:cashflow_sheet_helper/state/game/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'events/asset_bought.dart';
 
-class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
+class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
   PlayerBloc(PlayerState initialState) : super(initialState);
 
   @override
@@ -217,4 +217,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     final newBalance = state.balance - event.totalCost;
     return state.copyWithAssetsAndBalance(assets, newBalance);
   }
+
+  @override
+  PlayerState? fromJson(Map<String, dynamic> json) => PlayerState.fromJson(json);
+
+  @override
+  Map<String, dynamic>? toJson(PlayerState state) => state.toJson();
+
 }

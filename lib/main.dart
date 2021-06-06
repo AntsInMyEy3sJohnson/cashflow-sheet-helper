@@ -1,15 +1,24 @@
 import 'package:cashflow_sheet_helper/body_scaffold.dart';
-import 'package:cashflow_sheet_helper/data/holding.dart';
-import 'package:cashflow_sheet_helper/data/holding_kind.dart';
 import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/game/player_state.dart';
 import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+Future<void> main() async {
+  await _initHydratedBloc();
   runApp(MyApp());
+}
+
+Future<void> _initHydratedBloc() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory(),
+  );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Hard-coded for now
     // TODO Put initialization of Player in initialization screen
-    Player.createInstance(
+    final Player player = Player.createInstance(
         title: "Doctor",
         dream: "Complete financial independence",
         activeIncome: 13200,
@@ -33,8 +42,8 @@ class MyApp extends StatelessWidget {
         totalStudentLoan: 150000,
         totalCarLoan: 19000,
         totalCreditCardDebt: 10000);
-
     final PlayerState _playerState = PlayerState(
+      player: player,
       bankLoan: 0,
       numChildren: 0,
       numGoldCoins: 0,
@@ -43,6 +52,7 @@ class MyApp extends StatelessWidget {
       holdings: [],
       assets: [],
     );
+
 
     return MaterialApp(
       title: "Cashflow Sheet Helper",

@@ -2,10 +2,15 @@ import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'player_state.g.dart';
 
 /// Encapsulates all pieces of state about the player that
 /// can change during a game.
+@JsonSerializable(explicitToJson: true)
 class PlayerState extends Equatable {
+  final Player player;
   final double bankLoan;
   final double balance;
   final int numChildren;
@@ -15,7 +20,6 @@ class PlayerState extends Equatable {
 
   late final double cashflow;
   late final double passiveIncome;
-  late final double monthlyBankLoan;
   late final double totalChildExpenses;
   late final double totalExpenses;
   late final double totalIncome;
@@ -60,6 +64,7 @@ class PlayerState extends Equatable {
   }
 
   PlayerState({
+    required this.player,
     required this.bankLoan,
     required this.balance,
     required this.numChildren,
@@ -76,6 +81,7 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithBalanceAndNumGoldCoins(double balance, int numGoldCoins) {
     return PlayerState(
+        player: this.player,
         bankLoan: this.bankLoan,
         balance: balance,
         numChildren: this.numChildren,
@@ -86,6 +92,7 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithNumChildren(int newNumChildren) {
     return PlayerState(
+      player: this.player,
       bankLoan: this.bankLoan,
       balance: this.balance,
       numChildren: newNumChildren,
@@ -97,6 +104,7 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithBalanceAndBankLoan(double balance, double bankLoan) {
     return PlayerState(
+        player: this.player,
         bankLoan: bankLoan,
         balance: balance,
         numChildren: this.numChildren,
@@ -107,6 +115,7 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithBalance(double balance) {
     return PlayerState(
+      player: this.player,
       bankLoan: this.bankLoan,
       balance: balance,
       numChildren: this.numChildren,
@@ -118,6 +127,7 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithHoldings(List<Holding> holdings) {
     return PlayerState(
+      player: this.player,
       bankLoan: this.bankLoan,
       balance: this.balance,
       numChildren: this.numChildren,
@@ -130,6 +140,7 @@ class PlayerState extends Equatable {
   PlayerState copyWithHoldingsAndBalance(
       List<Holding> holdings, double balance) {
     return PlayerState(
+      player: this.player,
       bankLoan: this.bankLoan,
       balance: balance,
       numChildren: this.numChildren,
@@ -141,6 +152,7 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithAssets(List<Asset> assets) {
     return PlayerState(
+        player: this.player,
         bankLoan: this.bankLoan,
         balance: this.balance,
         numChildren: this.numChildren,
@@ -151,6 +163,7 @@ class PlayerState extends Equatable {
 
   PlayerState copyWithAssetsAndBalance(List<Asset> assets, double balance) {
     return PlayerState(
+      player: this.player,
       bankLoan: this.bankLoan,
       balance: balance,
       numChildren: this.numChildren,
@@ -160,10 +173,16 @@ class PlayerState extends Equatable {
     );
   }
 
+  factory PlayerState.fromJson(Map<String, dynamic> json) => _$PlayerStateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlayerStateToJson(this);
+
   @override
   List<Object> get props => [
+        player,
         bankLoan,
         numChildren,
+        numGoldCoins,
         totalChildExpenses,
         passiveIncome,
         totalIncome,

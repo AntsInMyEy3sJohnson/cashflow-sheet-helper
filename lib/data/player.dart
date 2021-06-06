@@ -1,7 +1,13 @@
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'player.g.dart';
+
 /// Contains all properties about the player that
 /// cannot change during a game, but are set only once
 /// at the game's beginning.
-class Player {
+@JsonSerializable()
+class Player extends Equatable {
   final String title;
   final String dream;
   final double activeIncome;
@@ -36,22 +42,22 @@ class Player {
       required double totalStudentLoan,
       required double totalCarLoan,
       required double totalCreditCardDebt}) {
-      _theInstance = Player._(
-          title: title,
-          dream: dream,
-          activeIncome: activeIncome,
-          taxes: taxes,
-          monthlyMortgageOrRent: monthlyMortgageOrRent,
-          monthlyStudentLoan: monthlyStudentLoan,
-          monthlyCarLoan: monthlyCarLoan,
-          monthlyCreditCardExpenses: monthlyCreditCardLoan,
-          monthlyChildExpenses: monthlyChildExpenses,
-          monthlyOtherExpenses: monthlyOtherExpenses,
-          savings: savings,
-          totalMortgage: totalMortgage,
-          totalStudentLoan: totalStudentLoan,
-          totalCarLoan: totalCarLoan,
-          totalCreditCardDebt: totalCreditCardDebt);
+    _theInstance = Player(
+        title: title,
+        dream: dream,
+        activeIncome: activeIncome,
+        taxes: taxes,
+        monthlyMortgageOrRent: monthlyMortgageOrRent,
+        monthlyStudentLoan: monthlyStudentLoan,
+        monthlyCarLoan: monthlyCarLoan,
+        monthlyCreditCardExpenses: monthlyCreditCardLoan,
+        monthlyChildExpenses: monthlyChildExpenses,
+        monthlyOtherExpenses: monthlyOtherExpenses,
+        savings: savings,
+        totalMortgage: totalMortgage,
+        totalStudentLoan: totalStudentLoan,
+        totalCarLoan: totalCarLoan,
+        totalCreditCardDebt: totalCreditCardDebt);
     return _theInstance!;
   }
 
@@ -59,7 +65,9 @@ class Player {
     return _theInstance!;
   }
 
-  const Player._({
+  // Public constructor necessary for 'json_serializable' to generate parts file
+  // for this class
+  const Player({
     required this.title,
     required this.dream,
     required this.activeIncome,
@@ -76,4 +84,27 @@ class Player {
     required this.totalCarLoan,
     required this.totalCreditCardDebt,
   });
+
+  factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PlayerToJson(this);
+
+  @override
+  List<Object?> get props => [
+        title,
+        dream,
+        activeIncome,
+        taxes,
+        monthlyMortgageOrRent,
+        monthlyStudentLoan,
+        monthlyCarLoan,
+        monthlyCreditCardExpenses,
+        monthlyChildExpenses,
+        monthlyOtherExpenses,
+        savings,
+        totalMortgage,
+        totalStudentLoan,
+        totalCarLoan,
+        totalCreditCardDebt,
+      ];
 }
