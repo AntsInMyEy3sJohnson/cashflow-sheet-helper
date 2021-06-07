@@ -26,6 +26,7 @@ class Income extends StatelessWidget {
             ),
           ),
           TwoTextFieldRow("Salary:", "4200", 19),
+          // TODO Make this dependent on player state
           TwoTextFieldRow("Interests & dividends:", "400", 19),
           Padding(
             padding: const EdgeInsets.only(top: 19),

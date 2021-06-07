@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
       assets: [],
     );
 
-
     return MaterialApp(
       title: "Cashflow Sheet Helper",
       home: MultiBlocProvider(

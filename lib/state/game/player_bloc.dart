@@ -24,6 +24,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'events/asset_bought.dart';
 
 class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
+
   PlayerBloc(PlayerState initialState) : super(initialState);
 
   @override
@@ -219,9 +220,24 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
   }
 
   @override
-  PlayerState? fromJson(Map<String, dynamic> json) => PlayerState.fromJson(json);
+  PlayerState? fromJson(Map<String, dynamic> json) {
+    try {
+      return PlayerState.fromJson(json);
+    } catch (_) {
+      print("Unable to load PlayerState object from device.");
+      return null;
+    }
+  }
+
 
   @override
-  Map<String, dynamic>? toJson(PlayerState state) => state.toJson();
+  Map<String, dynamic>? toJson(PlayerState state) {
+    try {
+      return state.toJson();
+    } catch (_) {
+      print("Unable to serialize PlayerState object to JSON.");
+      return null;
+    }
+  }
 
 }
