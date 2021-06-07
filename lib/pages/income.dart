@@ -1,5 +1,5 @@
-import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
-import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
+import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';

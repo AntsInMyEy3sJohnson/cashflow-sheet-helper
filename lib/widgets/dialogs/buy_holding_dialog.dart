@@ -1,6 +1,6 @@
 import 'package:cashflow_sheet_helper/data/holding_kind.dart';
 import 'package:cashflow_sheet_helper/helpers/holding_kind_helper.dart';
-import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
+import 'package:cashflow_sheet_helper/state/player/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:flutter/material.dart';

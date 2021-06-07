@@ -1,6 +1,6 @@
-import 'package:cashflow_sheet_helper/state/game/events/loan_paid_back.dart';
-import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
-import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/state/player/events/loan_paid_back.dart';
+import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
+import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/select_amount_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

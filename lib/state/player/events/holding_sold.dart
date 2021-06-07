@@ -1,5 +1,5 @@
 import 'package:cashflow_sheet_helper/data/holding.dart';
-import 'package:cashflow_sheet_helper/state/game/events/player_event.dart';
+import 'package:cashflow_sheet_helper/state/player/events/player_event.dart';
 
 class HoldingSold extends PlayerEvent {
 

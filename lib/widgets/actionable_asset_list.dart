@@ -1,10 +1,10 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
-import 'package:cashflow_sheet_helper/state/game/events/asset_bought.dart';
-import 'package:cashflow_sheet_helper/state/game/events/shares_backward_split.dart';
-import 'package:cashflow_sheet_helper/state/game/events/shares_sold.dart';
-import 'package:cashflow_sheet_helper/state/game/events/shares_split.dart';
-import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
-import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/state/player/events/asset_bought.dart';
+import 'package:cashflow_sheet_helper/state/player/events/shares_backward_split.dart';
+import 'package:cashflow_sheet_helper/state/player/events/shares_sold.dart';
+import 'package:cashflow_sheet_helper/state/player/events/shares_split.dart';
+import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
+import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';

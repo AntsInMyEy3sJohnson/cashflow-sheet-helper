@@ -1,7 +1,7 @@
-import 'package:cashflow_sheet_helper/state/game/events/coins_bought.dart';
-import 'package:cashflow_sheet_helper/state/game/events/coins_sold.dart';
-import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
-import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/state/player/events/coins_bought.dart';
+import 'package:cashflow_sheet_helper/state/player/events/coins_sold.dart';
+import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
+import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_coins_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_coins_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';

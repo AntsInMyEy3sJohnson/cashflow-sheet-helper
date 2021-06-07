@@ -1,4 +1,4 @@
-import 'package:cashflow_sheet_helper/state/game/events/business_boom_occurred.dart';
+import 'package:cashflow_sheet_helper/state/player/events/business_boom_occurred.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';

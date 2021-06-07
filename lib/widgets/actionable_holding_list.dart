@@ -1,8 +1,8 @@
 import 'package:cashflow_sheet_helper/data/holding.dart';
-import 'package:cashflow_sheet_helper/state/game/events/holding_bought.dart';
-import 'package:cashflow_sheet_helper/state/game/events/holding_sold.dart';
-import 'package:cashflow_sheet_helper/state/game/player_bloc.dart';
-import 'package:cashflow_sheet_helper/state/game/player_state.dart';
+import 'package:cashflow_sheet_helper/state/player/events/holding_bought.dart';
+import 'package:cashflow_sheet_helper/state/player/events/holding_sold.dart';
+import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
+import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_holding_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_holding_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';

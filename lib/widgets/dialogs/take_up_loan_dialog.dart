@@ -1,4 +1,4 @@
-import 'package:cashflow_sheet_helper/state/game/events/loan_taken.dart';
+import 'package:cashflow_sheet_helper/state/player/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/select_amount_dialog.dart';
 import 'package:flutter/material.dart';
 

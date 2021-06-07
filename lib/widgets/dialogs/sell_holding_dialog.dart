@@ -1,5 +1,5 @@
 import 'package:cashflow_sheet_helper/data/holding.dart';
-import 'package:cashflow_sheet_helper/state/game/events/holding_sold.dart';
+import 'package:cashflow_sheet_helper/state/player/events/holding_sold.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_absolute_price_dialog_column.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_percentage_price_dialog_column.dart';
