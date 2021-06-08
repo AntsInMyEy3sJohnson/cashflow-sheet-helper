@@ -3,10 +3,12 @@ import 'package:cashflow_sheet_helper/pages/expenses.dart';
 import 'package:cashflow_sheet_helper/pages/income.dart';
 import 'package:cashflow_sheet_helper/pages/liabilities.dart';
 import 'package:cashflow_sheet_helper/pages/overview.dart';
+import 'package:cashflow_sheet_helper/state/navigation/events/navigation_event.dart';
+import 'package:cashflow_sheet_helper/state/navigation/events/page_switched.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PageBloc extends Bloc<String, Widget> {
+class PageBloc extends Bloc<NavigationEvent, Widget> {
 
   static final Map<String, Widget> _pages = <String, Widget>{
     Overview.ROUTE_ID: const Overview(),
@@ -19,7 +21,9 @@ class PageBloc extends Bloc<String, Widget> {
   PageBloc() : super(_pages[Overview.ROUTE_ID]!);
 
   @override
-  Stream<Widget> mapEventToState(String event) async* {
-    yield _pages[event]!;
+  Stream<Widget> mapEventToState(NavigationEvent event) async* {
+    if(event is PageSwitched) {
+      yield _pages[event.targetPageRoute]!;
+    }
   }
 }

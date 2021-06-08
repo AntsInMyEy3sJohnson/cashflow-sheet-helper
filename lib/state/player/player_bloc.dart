@@ -1,6 +1,5 @@
 import 'package:cashflow_sheet_helper/data/asset.dart';
 import 'package:cashflow_sheet_helper/data/holding.dart';
-import 'package:cashflow_sheet_helper/data/player.dart';
 import 'package:cashflow_sheet_helper/state/player/events/baby_born.dart';
 import 'package:cashflow_sheet_helper/state/player/events/balance_manually_modified.dart';
 import 'package:cashflow_sheet_helper/state/player/events/business_boom_occurred.dart';
