@@ -31,17 +31,19 @@ class PlayerState extends Equatable {
         .reduce((value, element) => value + element);
   }
 
-  static double _calculateTotalIncome(double activeIncome, List<Holding> holdings) {
+  static double _calculateTotalIncome(
+      double activeIncome, List<Holding> holdings) {
     return activeIncome + _calculatePassiveIncome(holdings);
   }
 
-  static double _calculateCashflow(
-      Player player, List<Holding> holdings, double totalBankLoan, int numChildren) {
+  static double _calculateCashflow(Player player, List<Holding> holdings,
+      double totalBankLoan, int numChildren) {
     return _calculateTotalIncome(player.activeIncome, holdings) -
         _calculateTotalExpenses(player, totalBankLoan, numChildren);
   }
 
-  static double _calculateTotalExpenses(Player player, double totalBankLoan, int numChildren) {
+  static double _calculateTotalExpenses(
+      Player player, double totalBankLoan, int numChildren) {
     final staticExpenses = player.taxes +
         player.monthlyMortgageOrRent +
         player.monthlyStudentLoan +
@@ -53,12 +55,42 @@ class PlayerState extends Equatable {
     return staticExpenses + dynamicExpenses;
   }
 
-  static double _calculateChildExpenses(double monthlyChildExpenses, int numChildren) {
+  static double _calculateChildExpenses(
+      double monthlyChildExpenses, int numChildren) {
     return monthlyChildExpenses * numChildren;
   }
 
   static double _calculateMonthlyBankLoan(double totalBankLoan) {
     return totalBankLoan * 0.1;
+  }
+
+  factory PlayerState.fromProfessionData(Map<String, dynamic> professionData) {
+    final Player player = Player(
+        title: professionData["title"] as String,
+        dream: professionData["dream"] as String,
+        activeIncome: professionData["activeIncome"] as double,
+        taxes: professionData["taxes"] as double,
+        monthlyMortgageOrRent:
+            professionData["monthlyMortgageOrRent"] as double,
+        monthlyStudentLoan: professionData["monthlyStudentLoan"],
+        monthlyCarLoan: professionData["monthlyCarLoan"],
+        monthlyCreditCardLoan: professionData["monthlyCreditCardLoan"],
+        monthlyChildExpenses: professionData["monthlyChildExpenses"],
+        monthlyOtherExpenses: professionData["monthlyOtherExpenses"],
+        savings: professionData["savings"],
+        totalMortgage: professionData["totalMortgage"],
+        totalStudentLoan: professionData["totalStudentLoan"],
+        totalCarLoan: professionData["totalCarLoan"],
+        totalCreditCardDebt: professionData["totalCreditCardDebt"]);
+    final PlayerState playerState = PlayerState(
+        player: player,
+        bankLoan: professionData["bankLoan"],
+        balance: professionData["balance"],
+        numChildren: professionData["numChildren"],
+        numGoldCoins: professionData["numGoldCoins"],
+        holdings: professionData["holdings"],
+        assets: professionData["assets"]);
+    return playerState;
   }
 
   PlayerState({
@@ -70,12 +102,14 @@ class PlayerState extends Equatable {
     required this.holdings,
     required this.assets,
   })   : passiveIncome = PlayerState._calculatePassiveIncome(holdings),
-        cashflow =
-            PlayerState._calculateCashflow(player, holdings, bankLoan, numChildren),
-        totalChildExpenses = PlayerState._calculateChildExpenses(player.monthlyChildExpenses, numChildren),
+        cashflow = PlayerState._calculateCashflow(
+            player, holdings, bankLoan, numChildren),
+        totalChildExpenses = PlayerState._calculateChildExpenses(
+            player.monthlyChildExpenses, numChildren),
         totalExpenses =
             PlayerState._calculateTotalExpenses(player, bankLoan, numChildren),
-        totalIncome = PlayerState._calculateTotalIncome(player.activeIncome, holdings);
+        totalIncome =
+            PlayerState._calculateTotalIncome(player.activeIncome, holdings);
 
   PlayerState copyWithBalanceAndNumGoldCoins(double balance, int numGoldCoins) {
     return PlayerState(
@@ -171,7 +205,8 @@ class PlayerState extends Equatable {
     );
   }
 
-  factory PlayerState.fromJson(Map<String, dynamic> json) => _$PlayerStateFromJson(json);
+  factory PlayerState.fromJson(Map<String, dynamic> json) =>
+      _$PlayerStateFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlayerStateToJson(this);
 

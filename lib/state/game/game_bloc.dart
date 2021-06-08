@@ -8,12 +8,13 @@ import 'package:cashflow_sheet_helper/state/game/game_state.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class GameBloc extends HydratedBloc<GameEvent, GameState> {
+
   GameBloc(GameState state) : super(state);
 
   @override
   Stream<GameState> mapEventToState(GameEvent event) async* {
     if (event is ProfessionChosen) {
-      yield await _mapProfessionChosenToGameState();
+      yield await _mapProfessionChosenToGameState(event.professionData);
     } else if (event is GameStarted) {
       yield await _mapGameStartedToGameState(event);
     } else if (event is GameRestarted) {
@@ -36,8 +37,8 @@ class GameBloc extends HydratedBloc<GameEvent, GameState> {
     return state.copyWithPageRoute(InitPage.ROUTE_ID);
   }
 
-  Future<GameState> _mapProfessionChosenToGameState() async {
-    return state.copyWithPageRoute(Overview.ROUTE_ID);
+  Future<GameState> _mapProfessionChosenToGameState(Map<String, dynamic> professionData) async {
+    return state.copyWithPageRouteAndProfessionData(Overview.ROUTE_ID, professionData);
   }
 
   @override
