@@ -31,32 +31,30 @@ class PlayerState extends Equatable {
         .reduce((value, element) => value + element);
   }
 
-  static double _calculateTotalIncome(List<Holding> holdings) {
-    return Player.getInstance().activeIncome +
-        _calculatePassiveIncome(holdings);
+  static double _calculateTotalIncome(double activeIncome, List<Holding> holdings) {
+    return activeIncome + _calculatePassiveIncome(holdings);
   }
 
   static double _calculateCashflow(
-      List<Holding> holdings, double totalBankLoan, int numChildren) {
-    return _calculateTotalIncome(holdings) -
-        _calculateTotalExpenses(totalBankLoan, numChildren);
+      Player player, List<Holding> holdings, double totalBankLoan, int numChildren) {
+    return _calculateTotalIncome(player.activeIncome, holdings) -
+        _calculateTotalExpenses(player, totalBankLoan, numChildren);
   }
 
-  static double _calculateTotalExpenses(double totalBankLoan, int numChildren) {
-    final player = Player.getInstance();
+  static double _calculateTotalExpenses(Player player, double totalBankLoan, int numChildren) {
     final staticExpenses = player.taxes +
         player.monthlyMortgageOrRent +
         player.monthlyStudentLoan +
         player.monthlyCarLoan +
-        player.monthlyCreditCardExpenses +
+        player.monthlyCreditCardLoan +
         player.monthlyOtherExpenses;
     final dynamicExpenses = _calculateMonthlyBankLoan(totalBankLoan) +
-        _calculateChildExpenses(numChildren);
+        _calculateChildExpenses(player.monthlyChildExpenses, numChildren);
     return staticExpenses + dynamicExpenses;
   }
 
-  static double _calculateChildExpenses(int numChildren) {
-    return Player.getInstance().monthlyChildExpenses * numChildren;
+  static double _calculateChildExpenses(double monthlyChildExpenses, int numChildren) {
+    return monthlyChildExpenses * numChildren;
   }
 
   static double _calculateMonthlyBankLoan(double totalBankLoan) {
@@ -73,11 +71,11 @@ class PlayerState extends Equatable {
     required this.assets,
   })   : passiveIncome = PlayerState._calculatePassiveIncome(holdings),
         cashflow =
-            PlayerState._calculateCashflow(holdings, bankLoan, numChildren),
-        totalChildExpenses = PlayerState._calculateChildExpenses(numChildren),
+            PlayerState._calculateCashflow(player, holdings, bankLoan, numChildren),
+        totalChildExpenses = PlayerState._calculateChildExpenses(player.monthlyChildExpenses, numChildren),
         totalExpenses =
-            PlayerState._calculateTotalExpenses(bankLoan, numChildren),
-        totalIncome = PlayerState._calculateTotalIncome(holdings);
+            PlayerState._calculateTotalExpenses(player, bankLoan, numChildren),
+        totalIncome = PlayerState._calculateTotalIncome(player.activeIncome, holdings);
 
   PlayerState copyWithBalanceAndNumGoldCoins(double balance, int numGoldCoins) {
     return PlayerState(

@@ -24,7 +24,6 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'events/asset_bought.dart';
 
 class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
-
   PlayerBloc(PlayerState initialState) : super(initialState);
 
   @override
@@ -40,7 +39,7 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
     } else if (event is DoodadBought) {
       yield await _mapDoodadBoughtToPlayerState(event);
     } else if (event is BabyBorn) {
-      yield await _mapBabyBornToPlayerState(event, Player.getInstance());
+      yield await _mapBabyBornToPlayerState(event);
     } else if (event is UnemploymentIncurred) {
       yield await _mapUnemploymentIncurredToPlayerState();
     } else if (event is LoanTaken) {
@@ -169,8 +168,7 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
     return state.copyWithBalance(newBalance);
   }
 
-  Future<PlayerState> _mapBabyBornToPlayerState(
-      BabyBorn event, Player player) async {
+  Future<PlayerState> _mapBabyBornToPlayerState(BabyBorn event) async {
     final newNumChildren = state.numChildren + 1;
     return state.copyWithNumChildren(newNumChildren);
   }
@@ -229,7 +227,6 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
     }
   }
 
-
   @override
   Map<String, dynamic>? toJson(PlayerState state) {
     try {
@@ -239,5 +236,4 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
       return null;
     }
   }
-
 }

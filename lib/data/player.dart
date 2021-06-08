@@ -15,7 +15,7 @@ class Player extends Equatable {
   final double monthlyMortgageOrRent;
   final double monthlyStudentLoan;
   final double monthlyCarLoan;
-  final double monthlyCreditCardExpenses;
+  final double monthlyCreditCardLoan;
   final double monthlyChildExpenses;
   final double monthlyOtherExpenses;
   final double savings;
@@ -24,49 +24,6 @@ class Player extends Equatable {
   final double totalCarLoan;
   final double totalCreditCardDebt;
 
-  static Player? _theInstance;
-
-  static Player createInstance(
-      {required String title,
-      required String dream,
-      required double activeIncome,
-      required double taxes,
-      required double monthlyMortgageOrRent,
-      required double monthlyStudentLoan,
-      required double monthlyCarLoan,
-      required double monthlyCreditCardLoan,
-      required double monthlyChildExpenses,
-      required double monthlyOtherExpenses,
-      required double savings,
-      required double totalMortgage,
-      required double totalStudentLoan,
-      required double totalCarLoan,
-      required double totalCreditCardDebt}) {
-    _theInstance = Player(
-        title: title,
-        dream: dream,
-        activeIncome: activeIncome,
-        taxes: taxes,
-        monthlyMortgageOrRent: monthlyMortgageOrRent,
-        monthlyStudentLoan: monthlyStudentLoan,
-        monthlyCarLoan: monthlyCarLoan,
-        monthlyCreditCardExpenses: monthlyCreditCardLoan,
-        monthlyChildExpenses: monthlyChildExpenses,
-        monthlyOtherExpenses: monthlyOtherExpenses,
-        savings: savings,
-        totalMortgage: totalMortgage,
-        totalStudentLoan: totalStudentLoan,
-        totalCarLoan: totalCarLoan,
-        totalCreditCardDebt: totalCreditCardDebt);
-    return _theInstance!;
-  }
-
-  static Player getInstance() {
-    return _theInstance!;
-  }
-
-  // Public constructor necessary for 'json_serializable' to generate parts file
-  // for this class
   const Player({
     required this.title,
     required this.dream,
@@ -75,7 +32,7 @@ class Player extends Equatable {
     required this.monthlyMortgageOrRent,
     required this.monthlyStudentLoan,
     required this.monthlyCarLoan,
-    required this.monthlyCreditCardExpenses,
+    required this.monthlyCreditCardLoan,
     required this.monthlyChildExpenses,
     required this.monthlyOtherExpenses,
     required this.savings,
@@ -98,7 +55,7 @@ class Player extends Equatable {
         monthlyMortgageOrRent,
         monthlyStudentLoan,
         monthlyCarLoan,
-        monthlyCreditCardExpenses,
+        monthlyCreditCardLoan,
         monthlyChildExpenses,
         monthlyOtherExpenses,
         savings,

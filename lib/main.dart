@@ -18,7 +18,6 @@ Future<void> _initHydratedBloc() async {
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory(),
   );
-
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Hard-coded for now
     // TODO Put initialization of Player in initialization screen
-    final Player player = Player.createInstance(
+    final Player player = Player(
         title: "Doctor",
         dream: "Complete financial independence",
         activeIncome: 13200,
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
         totalStudentLoan: 150000,
         totalCarLoan: 19000,
         totalCreditCardDebt: 10000);
-    final PlayerState _playerState = PlayerState(
+    final PlayerState playerState = PlayerState(
       player: player,
       bankLoan: 0,
       numChildren: 0,
@@ -58,7 +57,7 @@ class MyApp extends StatelessWidget {
       home: MultiBlocProvider(
         providers: [
           BlocProvider<PageBloc>(create: (_) => PageBloc()),
-          BlocProvider<PlayerBloc>(create: (_) => PlayerBloc(_playerState)),
+          BlocProvider<PlayerBloc>(create: (_) => PlayerBloc(playerState)),
         ],
         child: const BodyScaffold(),
       ),

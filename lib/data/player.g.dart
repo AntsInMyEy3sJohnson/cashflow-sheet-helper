@@ -15,7 +15,7 @@ Player _$PlayerFromJson(Map<String, dynamic> json) {
     monthlyMortgageOrRent: (json['monthlyMortgageOrRent'] as num).toDouble(),
     monthlyStudentLoan: (json['monthlyStudentLoan'] as num).toDouble(),
     monthlyCarLoan: (json['monthlyCarLoan'] as num).toDouble(),
-    monthlyCreditCardExpenses:
+    monthlyCreditCardLoan:
         (json['monthlyCreditCardExpenses'] as num).toDouble(),
     monthlyChildExpenses: (json['monthlyChildExpenses'] as num).toDouble(),
     monthlyOtherExpenses: (json['monthlyOtherExpenses'] as num).toDouble(),
@@ -35,7 +35,7 @@ Map<String, dynamic> _$PlayerToJson(Player instance) => <String, dynamic>{
       'monthlyMortgageOrRent': instance.monthlyMortgageOrRent,
       'monthlyStudentLoan': instance.monthlyStudentLoan,
       'monthlyCarLoan': instance.monthlyCarLoan,
-      'monthlyCreditCardExpenses': instance.monthlyCreditCardExpenses,
+      'monthlyCreditCardExpenses': instance.monthlyCreditCardLoan,
       'monthlyChildExpenses': instance.monthlyChildExpenses,
       'monthlyOtherExpenses': instance.monthlyOtherExpenses,
       'savings': instance.savings,

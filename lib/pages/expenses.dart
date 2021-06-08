@@ -12,9 +12,9 @@ class Expenses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final player = Player.getInstance();
 
     return BlocBuilder<PlayerBloc, PlayerState>(builder: (context, state) {
+      final player = state.player;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -25,7 +25,7 @@ class Expenses extends StatelessWidget {
           TwoTextFieldRow("Student loan", "${player.monthlyStudentLoan}", 19),
           TwoTextFieldRow("Car loan", "${player.monthlyCarLoan}", 19),
           TwoTextFieldRow(
-              "Credit card loan", "${player.monthlyCreditCardExpenses}", 19),
+              "Credit card loan", "${player.monthlyCreditCardLoan}", 19),
           TwoTextFieldRow(
               "Other expenses", "${player.monthlyOtherExpenses}", 19),
           TwoTextFieldRow("Bank loans", "${state.bankLoan}", 19),

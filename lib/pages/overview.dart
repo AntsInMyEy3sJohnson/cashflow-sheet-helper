@@ -44,10 +44,9 @@ class _OverviewState extends State<Overview> {
   @override
   Widget build(BuildContext context) {
     // TODO Make dimensions dynamic with 'MediaQuery.of()'
-    final player = Player.getInstance();
-
     return BlocBuilder<PlayerBloc, PlayerState>(
       builder: (context, state) {
+        final player = state.player;
         return SingleChildScrollView(
           child: Center(
             child: Column(

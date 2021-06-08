@@ -12,9 +12,8 @@ class Liabilities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final player = Player.getInstance();
-
     return BlocBuilder<PlayerBloc, PlayerState>(builder: (context, state) {
+      final player = state.player;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
