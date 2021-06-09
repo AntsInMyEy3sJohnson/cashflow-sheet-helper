@@ -51,8 +51,6 @@ class InitPage extends StatelessWidget {
       "numGoldCoins": 0,
       // Initial cash = initial cashflow + savings
       "balance": 4900.0 + 3500.0,
-      "holdings": <Holding>[],
-      "assets": <Asset>[],
     };
 
     gameBloc.add(ProfessionChosen(professionData));

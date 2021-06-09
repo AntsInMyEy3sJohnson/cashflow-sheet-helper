@@ -19,12 +19,7 @@ PlayerState _$PlayerStateFromJson(Map<String, dynamic> json) {
     assets: (json['assets'] as List<dynamic>)
         .map((e) => Asset.fromJson(e as Map<String, dynamic>))
         .toList(),
-  )
-    ..cashflow = (json['cashflow'] as num).toDouble()
-    ..passiveIncome = (json['passiveIncome'] as num).toDouble()
-    ..totalChildExpenses = (json['totalChildExpenses'] as num).toDouble()
-    ..totalExpenses = (json['totalExpenses'] as num).toDouble()
-    ..totalIncome = (json['totalIncome'] as num).toDouble();
+  );
 }
 
 Map<String, dynamic> _$PlayerStateToJson(PlayerState instance) =>
@@ -36,9 +31,4 @@ Map<String, dynamic> _$PlayerStateToJson(PlayerState instance) =>
       'numGoldCoins': instance.numGoldCoins,
       'holdings': instance.holdings.map((e) => e.toJson()).toList(),
       'assets': instance.assets.map((e) => e.toJson()).toList(),
-      'cashflow': instance.cashflow,
-      'passiveIncome': instance.passiveIncome,
-      'totalChildExpenses': instance.totalChildExpenses,
-      'totalExpenses': instance.totalExpenses,
-      'totalIncome': instance.totalIncome,
     };

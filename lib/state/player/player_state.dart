@@ -18,10 +18,19 @@ class PlayerState extends Equatable {
   final List<Holding> holdings;
   final List<Asset> assets;
 
+  @JsonKey(ignore: true)
   late final double cashflow;
+
+  @JsonKey(ignore: true)
   late final double passiveIncome;
+
+  @JsonKey(ignore: true)
   late final double totalChildExpenses;
+
+  @JsonKey(ignore: true)
   late final double totalExpenses;
+
+  @JsonKey(ignore: true)
   late final double totalIncome;
 
   static double _calculatePassiveIncome(List<Holding> holdings) {
@@ -66,30 +75,31 @@ class PlayerState extends Equatable {
 
   factory PlayerState.fromProfessionData(Map<String, dynamic> professionData) {
     final Player player = Player(
-        title: professionData["title"] as String,
-        dream: professionData["dream"] as String,
-        activeIncome: professionData["activeIncome"],
-        taxes: professionData["taxes"] as double,
-        monthlyMortgageOrRent:
-            professionData["monthlyMortgageOrRent"] as double,
-        monthlyStudentLoan: professionData["monthlyStudentLoan"] as double,
-        monthlyCarLoan: professionData["monthlyCarLoan"] as double,
-        monthlyCreditCardLoan: professionData["monthlyCreditCardLoan"] as double,
-        monthlyChildExpenses: professionData["monthlyChildExpenses"] as double,
-        monthlyOtherExpenses: professionData["monthlyOtherExpenses"] as double,
-        savings: professionData["savings"] as double,
-        totalMortgage: professionData["totalMortgage"] as double,
-        totalStudentLoan: professionData["totalStudentLoan"] as double,
-        totalCarLoan: professionData["totalCarLoan"] as double,
-        totalCreditCardDebt: professionData["totalCreditCardDebt"] as double);
+      title: professionData["title"] as String,
+      dream: professionData["dream"] as String,
+      activeIncome: professionData["activeIncome"],
+      taxes: professionData["taxes"] as double,
+      monthlyMortgageOrRent: professionData["monthlyMortgageOrRent"] as double,
+      monthlyStudentLoan: professionData["monthlyStudentLoan"] as double,
+      monthlyCarLoan: professionData["monthlyCarLoan"] as double,
+      monthlyCreditCardLoan: professionData["monthlyCreditCardLoan"] as double,
+      monthlyChildExpenses: professionData["monthlyChildExpenses"] as double,
+      monthlyOtherExpenses: professionData["monthlyOtherExpenses"] as double,
+      savings: professionData["savings"] as double,
+      totalMortgage: professionData["totalMortgage"] as double,
+      totalStudentLoan: professionData["totalStudentLoan"] as double,
+      totalCarLoan: professionData["totalCarLoan"] as double,
+      totalCreditCardDebt: professionData["totalCreditCardDebt"] as double,
+    );
     final PlayerState playerState = PlayerState(
-        player: player,
-        bankLoan: professionData["bankLoan"] as double,
-        balance: professionData["balance"] as double,
-        numChildren: professionData["numChildren"] as int,
-        numGoldCoins: professionData["numGoldCoins"] as int,
-        holdings: professionData["holdings"],
-        assets: professionData["assets"]);
+      player: player,
+      bankLoan: professionData["bankLoan"] as double,
+      balance: professionData["balance"] as double,
+      numChildren: professionData["numChildren"] as int,
+      numGoldCoins: professionData["numGoldCoins"] as int,
+      holdings: <Holding>[],
+      assets: <Asset>[],
+    );
     return playerState;
   }
 

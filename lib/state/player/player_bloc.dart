@@ -220,7 +220,7 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
   PlayerState? fromJson(Map<String, dynamic> json) {
     try {
       return PlayerState.fromJson(json);
-    } catch (_) {
+    } catch (e) {
       print("Unable to load PlayerState object from device.");
       return null;
     }
