@@ -18,8 +18,9 @@ class Body extends StatelessWidget {
           child: BlocBuilder<GameBloc, GameState>(
             builder: (context, gameBlocState) {
               return BlocProvider<PlayerBloc>(
-                create: (_) => PlayerBloc(PlayerState.fromProfessionData(
-                    gameBlocState.professionData)),
+                create: (_) => PlayerBloc(
+                  PlayerState.fromProfessionData(gameBlocState.professionData),
+                ),
                 child: pageBlocState,
               );
             },

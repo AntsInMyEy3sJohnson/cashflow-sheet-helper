@@ -68,26 +68,26 @@ class PlayerState extends Equatable {
     final Player player = Player(
         title: professionData["title"] as String,
         dream: professionData["dream"] as String,
-        activeIncome: professionData["activeIncome"] as double,
+        activeIncome: professionData["activeIncome"],
         taxes: professionData["taxes"] as double,
         monthlyMortgageOrRent:
             professionData["monthlyMortgageOrRent"] as double,
-        monthlyStudentLoan: professionData["monthlyStudentLoan"],
-        monthlyCarLoan: professionData["monthlyCarLoan"],
-        monthlyCreditCardLoan: professionData["monthlyCreditCardLoan"],
-        monthlyChildExpenses: professionData["monthlyChildExpenses"],
-        monthlyOtherExpenses: professionData["monthlyOtherExpenses"],
-        savings: professionData["savings"],
-        totalMortgage: professionData["totalMortgage"],
-        totalStudentLoan: professionData["totalStudentLoan"],
-        totalCarLoan: professionData["totalCarLoan"],
-        totalCreditCardDebt: professionData["totalCreditCardDebt"]);
+        monthlyStudentLoan: professionData["monthlyStudentLoan"] as double,
+        monthlyCarLoan: professionData["monthlyCarLoan"] as double,
+        monthlyCreditCardLoan: professionData["monthlyCreditCardLoan"] as double,
+        monthlyChildExpenses: professionData["monthlyChildExpenses"] as double,
+        monthlyOtherExpenses: professionData["monthlyOtherExpenses"] as double,
+        savings: professionData["savings"] as double,
+        totalMortgage: professionData["totalMortgage"] as double,
+        totalStudentLoan: professionData["totalStudentLoan"] as double,
+        totalCarLoan: professionData["totalCarLoan"] as double,
+        totalCreditCardDebt: professionData["totalCreditCardDebt"] as double);
     final PlayerState playerState = PlayerState(
         player: player,
-        bankLoan: professionData["bankLoan"],
-        balance: professionData["balance"],
-        numChildren: professionData["numChildren"],
-        numGoldCoins: professionData["numGoldCoins"],
+        bankLoan: professionData["bankLoan"] as double,
+        balance: professionData["balance"] as double,
+        numChildren: professionData["numChildren"] as int,
+        numGoldCoins: professionData["numGoldCoins"] as int,
         holdings: professionData["holdings"],
         assets: professionData["assets"]);
     return playerState;

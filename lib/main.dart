@@ -8,9 +8,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
-  final Storage storage = await _initHydratedBloc();
-  storage.delete('PlayerBloc');
-  storage.delete('GameBloc');
+  await _initHydratedBloc();
   runApp(const MyApp());
 }
 
