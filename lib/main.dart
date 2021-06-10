@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Cashflow Sheet Helper",
       home: BlocProvider<GameBloc>(
-        create: (_) => GameBloc(GameState(InitPage.ROUTE_ID, {})),
+        create: (_) => GameBloc(GameState(InitPage.ROUTE_ID)),
         child: const BodyScaffold(),
       ),
     );

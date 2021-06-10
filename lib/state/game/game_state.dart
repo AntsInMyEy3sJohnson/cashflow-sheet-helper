@@ -6,16 +6,11 @@ part 'game_state.g.dart';
 @JsonSerializable()
 class GameState extends Equatable {
   final String currentPageRoute;
-  final Map<String, dynamic> professionData;
 
-  GameState(this.currentPageRoute, this.professionData);
+  GameState(this.currentPageRoute);
 
   GameState copyWithPageRoute(String pageRoute) {
-    return GameState(pageRoute, this.professionData);
-  }
-
-  GameState copyWithPageRouteAndProfessionData(String pageRoute, Map<String, dynamic> professionData) {
-    return GameState(pageRoute, professionData);
+    return GameState(pageRoute);
   }
 
   factory GameState.fromJson(Map<String, dynamic> json) =>

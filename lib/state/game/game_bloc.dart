@@ -14,7 +14,7 @@ class GameBloc extends HydratedBloc<GameEvent, GameState> {
   @override
   Stream<GameState> mapEventToState(GameEvent event) async* {
     if (event is ProfessionChosen) {
-      yield await _mapProfessionChosenToGameState(event.professionData);
+      yield await _mapProfessionChosenToGameState();
     } else if (event is GameStarted) {
       yield await _mapGameStartedToGameState(event);
     } else if (event is GameRestarted) {
@@ -37,8 +37,8 @@ class GameBloc extends HydratedBloc<GameEvent, GameState> {
     return state.copyWithPageRoute(InitPage.ROUTE_ID);
   }
 
-  Future<GameState> _mapProfessionChosenToGameState(Map<String, dynamic> professionData) async {
-    return state.copyWithPageRouteAndProfessionData(Overview.ROUTE_ID, professionData);
+  Future<GameState> _mapProfessionChosenToGameState() async {
+    return state.copyWithPageRoute(Overview.ROUTE_ID);
   }
 
   @override

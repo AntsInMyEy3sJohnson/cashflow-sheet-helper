@@ -10,6 +10,8 @@ part 'player_state.g.dart';
 /// can change during a game.
 @JsonSerializable(explicitToJson: true)
 class PlayerState extends Equatable {
+  static const String _PLACEHOLDER = "Unspecified";
+
   final Player player;
   final double bankLoan;
   final double balance;
@@ -71,6 +73,33 @@ class PlayerState extends Equatable {
 
   static double _calculateMonthlyBankLoan(double totalBankLoan) {
     return totalBankLoan * 0.1;
+  }
+
+  factory PlayerState.dummyState() {
+    return PlayerState(
+        player: Player(
+          title: _PLACEHOLDER,
+          dream: _PLACEHOLDER,
+          activeIncome: 0.0,
+          taxes: 0.0,
+          monthlyMortgageOrRent: 0.0,
+          monthlyStudentLoan: 0.0,
+          monthlyCarLoan: 0.0,
+          monthlyCreditCardLoan: 0.0,
+          monthlyChildExpenses: 0.0,
+          monthlyOtherExpenses: 0.0,
+          savings: 0.0,
+          totalMortgage: 0.0,
+          totalStudentLoan: 0.0,
+          totalCarLoan: 0.0,
+          totalCreditCardDebt: 0.0,
+        ),
+        bankLoan: 0.0,
+        balance: 0.0,
+        numChildren: 0,
+        numGoldCoins: 0,
+        holdings: <Holding>[],
+        assets: <Asset>[]);
   }
 
   factory PlayerState.fromProfessionData(Map<String, dynamic> professionData) {

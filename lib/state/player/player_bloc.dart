@@ -13,6 +13,8 @@ import 'package:cashflow_sheet_helper/state/player/events/loan_paid_back.dart';
 import 'package:cashflow_sheet_helper/state/player/events/loan_taken.dart';
 import 'package:cashflow_sheet_helper/state/player/events/money_given_to_charity.dart';
 import 'package:cashflow_sheet_helper/state/player/events/player_event.dart';
+import 'package:cashflow_sheet_helper/state/player/events/player_state_cleared.dart';
+import 'package:cashflow_sheet_helper/state/player/events/profession_initialized.dart';
 import 'package:cashflow_sheet_helper/state/player/events/shares_backward_split.dart';
 import 'package:cashflow_sheet_helper/state/player/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/events/shares_split.dart';
@@ -27,7 +29,9 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
 
   @override
   Stream<PlayerState> mapEventToState(PlayerEvent event) async* {
-    if (event is AssetBought) {
+    if (event is ProfessionInitialized) {
+      yield await _mapProfessionInitializedToPlayerState(event);
+    } else if (event is AssetBought) {
       yield await _mapAssetBoughtToPlayerState(event);
     } else if (event is HoldingBought) {
       yield await _mapHoldingBoughtToPlayerState(event);
@@ -61,7 +65,17 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
       yield await _mapCoinsBoughtToPlayerState(event);
     } else if (event is CoinsSold) {
       yield await _mapCoinsSoldToPlayerState(event);
+    } else if (event is PlayerStateCleared) {
+      yield await _mapStateClearedToDummyState();
     }
+  }
+
+  Future<PlayerState> _mapProfessionInitializedToPlayerState(ProfessionInitialized event) async {
+    return PlayerState.fromProfessionData(event.professionData);
+  }
+
+  Future<PlayerState> _mapStateClearedToDummyState() async {
+    return PlayerState.dummyState();
   }
 
   Future<PlayerState> _mapCoinsSoldToPlayerState(CoinsSold event) async {

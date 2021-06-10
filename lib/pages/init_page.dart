@@ -1,11 +1,10 @@
-import 'package:cashflow_sheet_helper/data/asset.dart';
-import 'package:cashflow_sheet_helper/data/holding.dart';
 import 'package:cashflow_sheet_helper/pages/overview.dart';
 import 'package:cashflow_sheet_helper/state/game/events/profession_chosen.dart';
 import 'package:cashflow_sheet_helper/state/game/game_bloc.dart';
-import 'package:cashflow_sheet_helper/state/navigation/events/navigation_event.dart';
 import 'package:cashflow_sheet_helper/state/navigation/events/page_switched.dart';
 import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
+import 'package:cashflow_sheet_helper/state/player/events/profession_initialized.dart';
+import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,16 +18,17 @@ class InitPage extends StatelessWidget {
 
     final gameBloc = context.watch<GameBloc>();
     final pageBloc = context.watch<PageBloc>();
+    final playerBloc = context.watch<PlayerBloc>();
 
     return Center(
       child: ElevatedButton(
-        onPressed: () => _processGameStart(gameBloc, pageBloc),
+        onPressed: () => _processGameStart(playerBloc, gameBloc, pageBloc),
         child: const Text("Start Game!"),
       ),
     );
   }
 
-  void _processGameStart(GameBloc gameBloc, PageBloc pageBloc) {
+  void _processGameStart(PlayerBloc playerBloc, GameBloc gameBloc, PageBloc pageBloc) {
 
     Map<String, dynamic> professionData = {
       "title": "Doctor",
@@ -53,8 +53,10 @@ class InitPage extends StatelessWidget {
       "balance": 4900.0 + 3500.0,
     };
 
-    gameBloc.add(ProfessionChosen(professionData));
+    gameBloc.add(const ProfessionChosen());
+    playerBloc.add(ProfessionInitialized(professionData));
     pageBloc.add(const PageSwitched(Overview.ROUTE_ID));
 
   }
+
 }
