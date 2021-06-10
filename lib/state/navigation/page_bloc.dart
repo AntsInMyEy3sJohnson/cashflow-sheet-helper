@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PageBloc extends Bloc<NavigationEvent, Widget> {
 
   static final Map<String, Widget> _pages = <String, Widget>{
-    InitPage.ROUTE_ID: const InitPage(),
+    InitPage.ROUTE_ID: InitPage(),
     Overview.ROUTE_ID: const Overview(),
     Income.ROUTE_ID: const Income(),
     Expenses.ROUTE_ID: const Expenses(),
