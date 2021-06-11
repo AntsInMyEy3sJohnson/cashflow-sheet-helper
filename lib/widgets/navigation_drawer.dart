@@ -93,6 +93,7 @@ class NavigationDrawer extends StatelessWidget {
 
   void _processGameRestartPressed(
       BuildContext context, GameBloc gameBloc, PageBloc pageBloc, PlayerBloc playerBloc) async {
+    // TODO Replace all 'showDialog()' invocations with 'Navigator.push()'
     final result = await Navigator.push(
       context,
       PageRouteBuilder(

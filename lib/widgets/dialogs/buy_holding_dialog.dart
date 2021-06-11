@@ -48,11 +48,12 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
             // TODO Pre-populate name field base on selected type
             PaddedInputTextField("Name", _nameController),
             // TODO Hide this if selected type cannot contain more than one unit
-            PaddedInputTextField(
-              "# Units",
-              _numUnitsController,
-              textInputType: TextInputType.number,
-            ),
+            if (!HoldingKindHelper.isSingleUnitHolding(_holdingKind))
+              PaddedInputTextField(
+                "# Units",
+                _numUnitsController,
+                textInputType: TextInputType.number,
+              ),
             PaddedInputTextField(
               "Down payment",
               _downPaymentController,
@@ -93,6 +94,13 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
     if (value != null) {
       setState(() {
         _holdingKind = HoldingKindHelper.fromHumanReadableName(value);
+        if (_holdingKind == HoldingKind.twoFamilyHouse) {
+          _numUnitsController.text = "2";
+        } else if (HoldingKindHelper.isSingleUnitHolding(_holdingKind)) {
+          _numUnitsController.text = "1";
+        } else {
+          _numUnitsController.text = "";
+        }
       });
     }
   }
@@ -102,10 +110,11 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   }
 
   void _processConfirm(BuildContext context) {
+    final int numUnits = _numUnitsController.text.isEmpty ? 1 : int.parse(_numUnitsController.text);
     final holdingBought = HoldingBought(
         _nameController.text,
         _holdingKind,
-        int.parse(_numUnitsController.text),
+        numUnits,
         double.parse(_downPaymentController.text),
         double.parse(_buyingCostController.text),
         double.parse(_mortgageController.text),

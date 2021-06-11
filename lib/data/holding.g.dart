@@ -56,7 +56,9 @@ K _$enumDecode<K, V>(
 
 const _$HoldingKindEnumMap = {
   HoldingKind.singleFamilyHouse: 'singleFamilyHouse',
+  HoldingKind.twoFamilyHouse: 'twoFamilyHouse',
   HoldingKind.multiFamilyHouse: 'multiFamilyHouse',
   HoldingKind.apartmentHouse: 'apartmentHouse',
   HoldingKind.condominium: 'condominium',
+  HoldingKind.business: 'business',
 };
