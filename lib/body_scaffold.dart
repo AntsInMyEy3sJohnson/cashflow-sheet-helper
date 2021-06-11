@@ -19,7 +19,7 @@ class BodyScaffold extends StatelessWidget {
       return MultiBlocProvider(
           providers: [
             BlocProvider<PageBloc>(
-              create: (_) => PageBloc(InitPage.ROUTE_ID),
+              create: (_) => PageBloc(state.currentPageRoute),
             ),
             BlocProvider<PlayerBloc>(
               create: (_) => PlayerBloc(PlayerState.dummyState()),
