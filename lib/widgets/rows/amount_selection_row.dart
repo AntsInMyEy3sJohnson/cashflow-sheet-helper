@@ -1,4 +1,5 @@
 import 'package:cashflow_sheet_helper/widgets/buttons/round_icon_button.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/icon_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +27,10 @@ class AmountSelectionRow extends StatelessWidget {
           child: Container(
             child: Column(
               children: [
-                // TODO Adapt keyboard types according to type of input
-                RoundIconButton(callbackAmountIncreased, Icons.arrow_circle_up),
                 RoundIconButton(
-                    callbackAmountDecreased, Icons.arrow_circle_down),
+                    callbackAmountIncreased, IconConstants.INCREASE),
+                RoundIconButton(
+                    callbackAmountDecreased, IconConstants.DECREASE),
               ],
             ),
           ),

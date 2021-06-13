@@ -5,7 +5,7 @@ import 'package:cashflow_sheet_helper/widgets/actionable_holding_list.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/actionable_gold_coins_row.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/three_text_field_row.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
-import 'package:cashflow_sheet_helper/widgets/text_size_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

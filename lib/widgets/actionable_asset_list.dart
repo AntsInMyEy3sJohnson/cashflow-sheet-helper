@@ -5,7 +5,8 @@ import 'package:cashflow_sheet_helper/state/player/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/events/shares_split.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
-import 'package:cashflow_sheet_helper/widgets/color_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/color_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/icon_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
@@ -56,21 +57,20 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
                 secondaryActions: [
                   IconSlideAction(
                     caption: "Sell",
-                    // TODO Put these into file with constants
                     color: ColorConstants.SELL_ITEM,
-                    icon: Icons.monetization_on_outlined,
+                    icon: IconConstants.SELL,
                     onTap: () => _showSellSharesDialog(asset),
                   ),
                   IconSlideAction(
                     caption: "Split",
                     color: ColorConstants.SHARES_FORWARD_SPLIT,
-                    icon: Icons.arrow_upward,
+                    icon: IconConstants.FORWARD_SPLIT,
                     onTap: () => _showSplitSharesDialog(asset),
                   ),
                   IconSlideAction(
                     caption: "Backward split",
                     color: ColorConstants.SHARES_BACKWARD_SPLIT,
-                    icon: Icons.arrow_downward,
+                    icon: IconConstants.BACKWARD_SPLIT,
                     // TODO Disable this button if player holds only one share by this company
                     onTap: () => _showBackwardSplitSharesDialog(asset),
                   ),

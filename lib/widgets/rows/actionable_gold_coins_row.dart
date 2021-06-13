@@ -2,7 +2,8 @@ import 'package:cashflow_sheet_helper/state/player/events/coins_bought.dart';
 import 'package:cashflow_sheet_helper/state/player/events/coins_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
-import 'package:cashflow_sheet_helper/widgets/color_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/color_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/icon_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_coins_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_coins_dialog.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../text_size_constants.dart';
+import '../constants/text_size_constants.dart';
 
 class ActionableGoldCoinsRow extends StatefulWidget {
   const ActionableGoldCoinsRow();
@@ -45,7 +46,7 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
           IconSlideAction(
             caption: "Buy",
             color: ColorConstants.BUY_ITEM,
-            icon: Icons.shopping_cart_outlined,
+            icon: IconConstants.BUY,
             onTap: _showBuyCoinsDialog,
           ),
         ],
@@ -53,7 +54,7 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
           IconSlideAction(
             caption: "Sell",
             color: ColorConstants.SELL_ITEM,
-            icon: Icons.monetization_on_outlined,
+            icon: IconConstants.SELL,
             onTap: () => _showSellCoinsDialog(state.numGoldCoins),
           )
         ],
