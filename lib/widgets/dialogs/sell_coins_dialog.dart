@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/state/player/events/coins_sold.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,10 @@ class SellCoinsDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const VariableSizeTextField("Sell Gold Coins", 20, TextAlign.center),
-          VariableSizeTextField(
-              "Available: $numCurrentlyAvailable", 16, TextAlign.left),
+          const VariableSizeTextField("Sell Gold Coins",
+              TextSizeConstants.DIALOG_HEADING, TextAlign.center),
+          VariableSizeTextField("Available: $numCurrentlyAvailable",
+              TextSizeConstants.DIALOG_INFO_TEXT, TextAlign.left),
           PaddedInputTextField(
             "Number of coins to sell",
             _amountController,
@@ -32,8 +34,8 @@ class SellCoinsDialog extends StatelessWidget {
             textInputType: TextInputType.number,
           ),
           ConfirmAbortButtonBar(
-                () => _processConfirm(context),
-                () => _processAbort(context),
+            () => _processConfirm(context),
+            () => _processAbort(context),
           ),
         ],
       ),

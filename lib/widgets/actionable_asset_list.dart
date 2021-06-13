@@ -93,7 +93,7 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
 
   void _showBackwardSplitSharesDialog(Asset asset) async {
     final bool? dialogResult = await DialogHelper<bool?>().displayDialog(context, YesNoAlertDialog(
-      "Share Backward Split",
+      "Split Shares (Backward Split)",
       Text(
           "Perform backward split on ${asset.name} shares? This will halve "
               "the number of shares you own by this company."),
@@ -112,7 +112,7 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
   void _showSplitSharesDialog(Asset asset) async {
     // TODO Upper-case all dialog titles
     final bool? dialogResult = await DialogHelper<bool?>().displayDialog(context, YesNoAlertDialog(
-      "Share Split",
+      "Split Shares (Forward Split)",
       Text("Perform split for ${asset.name} shares? This will double "
           "the number of shares you hold by this company."),
     ));

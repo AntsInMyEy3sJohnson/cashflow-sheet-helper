@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/state/player/events/balance_manually_modified.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +26,11 @@ class _PerformBalanceModificationDialogState
   static final List<bool> _modificationOptions = <bool>[true, false];
 
   late String _currentHintText;
-  late double _modificationAmount;
   late ModificationMode _modificationMode;
 
   @override
   void initState() {
     super.initState();
-    _modificationAmount = 0.0;
     _currentHintText = _INCREASE_HINT_TEXT;
     _modificationMode = _evaluateModificationMode();
   }
@@ -48,8 +47,8 @@ class _PerformBalanceModificationDialogState
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const VariableSizeTextField(
-              "Manual account balance modification", 20, TextAlign.center),
+          const VariableSizeTextField("Manual Account Balance Modification",
+              TextSizeConstants.DIALOG_HEADING, TextAlign.center),
           const VariableSizeTextField(
             "Which kind of action would you like to perform?",
             16,
@@ -65,8 +64,8 @@ class _PerformBalanceModificationDialogState
             textInputType: TextInputType.number,
           ),
           ConfirmAbortButtonBar(
-                _processConfirm,
-                _processAbort,
+            _processConfirm,
+            _processAbort,
           ),
         ],
       ),

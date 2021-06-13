@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/state/player/events/coins_bought.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ class BuyCoinsDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const VariableSizeTextField("Buy Gold Coins", 20, TextAlign.center),
+          const VariableSizeTextField("Buy Gold Coins",
+              TextSizeConstants.DIALOG_HEADING, TextAlign.center),
           PaddedInputTextField(
             "Number of coins to buy",
             _amountController,

@@ -4,6 +4,7 @@ import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.d
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_absolute_price_dialog_column.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_percentage_price_dialog_column.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_price_per_unit_price_dialog_column.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -66,13 +67,12 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const VariableSizeTextField(
-              "Sell real estate holding", 20, TextAlign.center),
-          // TODO Make this text dependent on chosen sell mode
+              "Sell Real Estate", TextSizeConstants.DIALOG_HEADING, TextAlign.center),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: const VariableSizeTextField(
                 "How much is your buyer willing to pay on top of the original price?",
-                16,
+                TextSizeConstants.DIALOG_INFO_TEXT,
                 TextAlign.center),
           ),
           ToggleButtons(

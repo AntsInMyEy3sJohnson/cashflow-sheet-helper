@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/state/player/events/business_boom_occurred.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class ConfigureBusinessBoomDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const VariableSizeTextField("Business Boom!", 20, TextAlign.center),
+          const VariableSizeTextField("Business Boom", TextSizeConstants.DIALOG_HEADING, TextAlign.center),
           PaddedInputTextField(
             "Cashflow threshold",
             _thresholdController,

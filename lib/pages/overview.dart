@@ -175,7 +175,7 @@ class _OverviewState extends State<Overview> {
     final dialogResult = await DialogHelper<bool?>().displayDialog(
         context,
         YesNoAlertDialog(
-          "Oh no!",
+          "Unemployment",
           Text("Enter unemployed state for two rounds? This will deduct "
               "your total expenses (${state.totalExpenses}) from your account once."),
         ));
@@ -196,7 +196,7 @@ class _OverviewState extends State<Overview> {
     final dialogResult = await DialogHelper<bool?>().displayDialog(
         context,
         YesNoAlertDialog(
-            "Get baby",
+            "Get Baby",
             Text(
                 "Get a baby? This will increase your monthly child expenses from $currentChildExpenses to $newChildExpenses.")));
     if (dialogResult ?? false) {
@@ -223,7 +223,7 @@ class _OverviewState extends State<Overview> {
     final dialogResult = await DialogHelper<bool?>().displayDialog(
         context,
         YesNoAlertDialog(
-            "Give money to charity",
+            "Give Money To Charity",
             Text(
                 "Give 10 % of your total income ($charityAmount) to charity?")));
     if (dialogResult ?? false) {

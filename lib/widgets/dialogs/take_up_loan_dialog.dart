@@ -22,7 +22,7 @@ class _TakeUpLoanDialogState extends State<TakeUpLoanDialog> {
   @override
   Widget build(BuildContext context) {
     return SelectAmountDialog(
-      title: "Provide amount to be loaned",
+      title: "Take Up Loan",
       infoBoxText: "Monthly expenses +${_step * 100}",
       amountController: _amountController,
       callbackAmountIncreased: _processAmountIncreased,

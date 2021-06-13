@@ -27,7 +27,8 @@ class _PayBackLoanDialogState extends State<PayBackLoanDialog> {
     return BlocBuilder<PlayerBloc, PlayerState>(
       builder: (context, state) {
         return SelectAmountDialog(
-          title: "Choose amount to be paid back",
+          // TODO Disable amount increase and decrease buttons
+          title: "Pay Back Loan",
           infoBoxText: "Monthly expenses -${_step * 100}",
           amountController: _amountController,
           callbackAmountIncreased: () => _processAmountIncreased(state),
