@@ -5,6 +5,7 @@ import 'package:cashflow_sheet_helper/state/player/events/shares_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/events/shares_split.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/color_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
@@ -56,19 +57,19 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
                   IconSlideAction(
                     caption: "Sell",
                     // TODO Put these into file with constants
-                    color: Colors.blueAccent,
+                    color: ColorConstants.SELL_ITEM,
                     icon: Icons.monetization_on_outlined,
                     onTap: () => _showSellSharesDialog(asset),
                   ),
                   IconSlideAction(
                     caption: "Split",
-                    color: Colors.greenAccent,
+                    color: ColorConstants.SHARES_FORWARD_SPLIT,
                     icon: Icons.arrow_upward,
                     onTap: () => _showSplitSharesDialog(asset),
                   ),
                   IconSlideAction(
                     caption: "Backward split",
-                    color: Colors.redAccent,
+                    color: ColorConstants.SHARES_BACKWARD_SPLIT,
                     icon: Icons.arrow_downward,
                     // TODO Disable this button if player holds only one share by this company
                     onTap: () => _showBackwardSplitSharesDialog(asset),

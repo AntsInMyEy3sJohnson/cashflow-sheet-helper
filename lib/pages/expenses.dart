@@ -20,15 +20,18 @@ class Expenses extends StatelessWidget {
         children: [
           TwoTextFieldRow("Taxes", "${player.taxes}",
               TextSizeConstants.TEXT_FIELD_ROW_ITEM),
-          TwoTextFieldRow(
-              "Mortgage/rent", "${player.monthlyMortgageOrRent}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
-          TwoTextFieldRow("Student loan", "${player.monthlyStudentLoan}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
-          TwoTextFieldRow("Car loan", "${player.monthlyCarLoan}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
-          TwoTextFieldRow(
-              "Credit card loan", "${player.monthlyCreditCardLoan}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
-          TwoTextFieldRow(
-              "Other expenses", "${player.monthlyOtherExpenses}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
-          TwoTextFieldRow("Bank loans", "${state.bankLoan}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Mortgage/rent", "${player.monthlyMortgageOrRent}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Student loan", "${player.monthlyStudentLoan}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Car loan", "${player.monthlyCarLoan}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Credit card loan", "${player.monthlyCreditCardLoan}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Other expenses", "${player.monthlyOtherExpenses}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Bank loans", "${state.bankLoan}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
           TwoTextFieldRow(
               "Child expenses (${state.numChildren}x${player.monthlyChildExpenses})",
               "${state.totalChildExpenses}",

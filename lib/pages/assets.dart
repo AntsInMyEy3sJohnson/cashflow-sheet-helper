@@ -21,8 +21,8 @@ class Assets extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          TwoTextFieldRow(
-              "Savings:", "${state.player.savings}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Savings:", "${state.player.savings}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
           const ActionableGoldCoinsRow(),
           ThreeTextFieldRow("Shares & fonds:", "# shares:", "Cost per share:",
               TextSizeConstants.TEXT_FIELD_ROW_ITEM),

@@ -3,6 +3,7 @@ import 'package:cashflow_sheet_helper/state/player/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/state/player/events/holding_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/color_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_holding_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_holding_dialog.dart';
@@ -51,7 +52,7 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
                 secondaryActions: [
                   IconSlideAction(
                     caption: "Sell",
-                    color: Colors.blueAccent,
+                    color: ColorConstants.SELL_ITEM,
                     icon: Icons.monetization_on_outlined,
                     onTap: () => _showSellHoldingDialog(holding),
                   )

@@ -2,6 +2,7 @@ import 'package:cashflow_sheet_helper/state/player/events/coins_bought.dart';
 import 'package:cashflow_sheet_helper/state/player/events/coins_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/color_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_coins_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_coins_dialog.dart';
@@ -43,7 +44,7 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
         actions: [
           IconSlideAction(
             caption: "Buy",
-            color: Colors.purpleAccent,
+            color: ColorConstants.BUY_ITEM,
             icon: Icons.shopping_cart_outlined,
             onTap: _showBuyCoinsDialog,
           ),
@@ -51,7 +52,7 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
         secondaryActions: [
           IconSlideAction(
             caption: "Sell",
-            color: Colors.blueAccent,
+            color: ColorConstants.SELL_ITEM,
             icon: Icons.monetization_on_outlined,
             onTap: () => _showSellCoinsDialog(state.numGoldCoins),
           )
