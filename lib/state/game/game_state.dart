@@ -20,4 +20,5 @@ class GameState extends Equatable {
 
   @override
   List<Object?> get props => [currentPageRoute];
+
 }

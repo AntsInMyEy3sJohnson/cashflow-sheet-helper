@@ -4,6 +4,7 @@ import 'package:cashflow_sheet_helper/state/player/events/holding_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_holding_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_holding_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/three_text_field_row.dart';
@@ -77,11 +78,8 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
   }
 
   void _showSellHoldingDialog(Holding holding) async {
-    final HoldingSold? holdingSold = await showDialog<HoldingSold>(
-        context: context,
-        builder: (_) {
-          return SellHoldingDialog(holding);
-        });
+    final HoldingSold? holdingSold = await DialogHelper<HoldingSold?>()
+        .showDialog(context, SellHoldingDialog(holding));
     if (holdingSold != null) {
       _playerBloc.add(holdingSold);
       ScaffoldMessenger.of(context).showSnackBar(

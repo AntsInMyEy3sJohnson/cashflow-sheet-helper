@@ -10,6 +10,7 @@ import 'package:cashflow_sheet_helper/state/navigation/events/page_switched.dart
 import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/events/player_state_cleared.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,19 +95,12 @@ class NavigationDrawer extends StatelessWidget {
   void _processGameRestartPressed(
       BuildContext context, GameBloc gameBloc, PageBloc pageBloc, PlayerBloc playerBloc) async {
     // TODO Replace all 'showDialog()' invocations with 'Navigator.push()'
-    final result = await Navigator.push(
-      context,
-      PageRouteBuilder(
-        barrierDismissible: true,
-        opaque: false,
-        pageBuilder: (context, animation1, animation2) => YesNoAlertDialog(
-          "Game Restart",
-          const Text(
-              "Are you sure you would like to restart the game? This will clear the current "
+    final result = await DialogHelper<bool?>().showDialog(context, YesNoAlertDialog(
+      "Game Restart",
+      const Text(
+          "Are you sure you would like to restart the game? This will clear the current "
               "game state and redirect you to the profession configuration screen."),
-        ),
-      ),
-    );
+    ));
     if (result ?? false) {
       gameBloc.add(const GameRestarted());
       playerBloc.add(const PlayerStateCleared());
