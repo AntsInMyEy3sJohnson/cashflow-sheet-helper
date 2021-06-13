@@ -59,17 +59,7 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
               );
             }
             return ElevatedButton(
-                onPressed: () async {
-                  HoldingBought? holdingBought =
-                      await showDialog<HoldingBought>(
-                          context: context,
-                          builder: (_) {
-                            return BuyHoldingDialog();
-                          });
-                  if (holdingBought != null) {
-                    _addHolding(context, holdingBought);
-                  }
-                },
+                onPressed: _showBuyHoldingDialog,
                 child: const Text("Buy"));
           },
         );
@@ -77,9 +67,24 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
     );
   }
 
+  void _showBuyHoldingDialog() async {
+    final HoldingBought? holdingBought = await DialogHelper<HoldingBought?>()
+        .displayDialog(context, BuyHoldingDialog());
+    if (holdingBought != null) {
+      _playerBloc.add(holdingBought);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+        const Text("Holding bought"),
+        Text("Cash -${holdingBought.downPayment}"),
+        Text("Liabilities +${holdingBought.mortgage}"),
+        Text("Cashflow +${holdingBought.cashflow}")
+      ]));
+    }
+  }
+
   void _showSellHoldingDialog(Holding holding) async {
     final HoldingSold? holdingSold = await DialogHelper<HoldingSold?>()
-        .showDialog(context, SellHoldingDialog(holding));
+        .displayDialog(context, SellHoldingDialog(holding));
     if (holdingSold != null) {
       _playerBloc.add(holdingSold);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -93,14 +98,4 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
     }
   }
 
-  void _addHolding(BuildContext context, HoldingBought holdingBought) {
-    _playerBloc.add(holdingBought);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-      const Text("Holding bought"),
-      Text("Cash -${holdingBought.downPayment}"),
-      Text("Liabilities +${holdingBought.mortgage}"),
-      Text("Cashflow +${holdingBought.cashflow}")
-    ]));
-  }
 }

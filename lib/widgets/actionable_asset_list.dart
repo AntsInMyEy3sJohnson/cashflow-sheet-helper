@@ -6,6 +6,7 @@ import 'package:cashflow_sheet_helper/state/player/events/shares_split.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
@@ -77,11 +78,7 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
             }
             return ElevatedButton(
                 onPressed: () async {
-                  AssetBought? assetBought = await showDialog<AssetBought>(
-                      context: context,
-                      builder: (_) {
-                        return BuyAssetDialog();
-                      });
+                  AssetBought? assetBought = await DialogHelper<AssetBought?>().displayDialog(context, BuyAssetDialog());
                   if (assetBought != null) {
                     _addAsset(context, assetBought);
                   }
@@ -94,16 +91,12 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
   }
 
   void _showBackwardSplitSharesDialog(Asset asset) async {
-    final bool? dialogResult = await showDialog<bool>(
-        context: context,
-        builder: (_) {
-          return YesNoAlertDialog(
-            "Share Backward Split",
-            Text(
-                "Perform backward split on ${asset.name} shares? This will halve "
-                "the number of shares you own by this company."),
-          );
-        });
+    final bool? dialogResult = await DialogHelper<bool?>().displayDialog(context, YesNoAlertDialog(
+      "Share Backward Split",
+      Text(
+          "Perform backward split on ${asset.name} shares? This will halve "
+              "the number of shares you own by this company."),
+    ));
     if (dialogResult ?? false) {
       _playerBloc.add(SharesBackwardSplit(asset));
       ScaffoldMessenger.of(context).showSnackBar(
@@ -116,16 +109,12 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
   }
 
   void _showSplitSharesDialog(Asset asset) async {
-    final bool? dialogResult = await showDialog<bool>(
-        context: context,
-        builder: (_) {
-          // TODO Upper-case all dialog title
-          return YesNoAlertDialog(
-            "Share Split",
-            Text("Perform split for ${asset.name} shares? This will double "
-                "the number of shares you hold by this company."),
-          );
-        });
+    // TODO Upper-case all dialog titles
+    final bool? dialogResult = await DialogHelper<bool?>().displayDialog(context, YesNoAlertDialog(
+      "Share Split",
+      Text("Perform split for ${asset.name} shares? This will double "
+          "the number of shares you hold by this company."),
+    ));
     if (dialogResult ?? false) {
       _playerBloc.add(SharesSplit(asset));
       ScaffoldMessenger.of(context).showSnackBar(
@@ -138,11 +127,7 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
   }
 
   void _showSellSharesDialog(Asset asset) async {
-    final SharesSold? sharesSold = await showDialog<SharesSold>(
-        context: context,
-        builder: (context) {
-          return SellSharesDialog(asset);
-        });
+    final SharesSold? sharesSold = await DialogHelper<SharesSold?>().displayDialog(context, SellSharesDialog(asset));
     if (sharesSold != null) {
       _playerBloc.add(sharesSold);
       ScaffoldMessenger.of(context).showSnackBar(

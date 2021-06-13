@@ -94,8 +94,7 @@ class NavigationDrawer extends StatelessWidget {
 
   void _processGameRestartPressed(
       BuildContext context, GameBloc gameBloc, PageBloc pageBloc, PlayerBloc playerBloc) async {
-    // TODO Replace all 'showDialog()' invocations with 'Navigator.push()'
-    final result = await DialogHelper<bool?>().showDialog(context, YesNoAlertDialog(
+    final result = await DialogHelper<bool?>().displayDialog(context, YesNoAlertDialog(
       "Game Restart",
       const Text(
           "Are you sure you would like to restart the game? This will clear the current "

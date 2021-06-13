@@ -4,7 +4,7 @@ class DialogHelper<T> {
 
   const DialogHelper();
 
-  Future<T?> showDialog(BuildContext context, Widget dialog) {
+  Future<T?> displayDialog(BuildContext context, Widget dialog) {
     return Navigator.push(
       context,
       PageRouteBuilder(

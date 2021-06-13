@@ -12,14 +12,12 @@ class PayBackLoanDialog extends StatefulWidget {
 
 class _PayBackLoanDialogState extends State<PayBackLoanDialog> {
   final TextEditingController _amountController = TextEditingController();
-  late final PlayerBloc _playerBloc;
 
   late double _step;
 
   @override
   void initState() {
     super.initState();
-    _playerBloc = context.read<PlayerBloc>();
     _step = 1;
     _amountController.text = "${_step * 1000}";
   }

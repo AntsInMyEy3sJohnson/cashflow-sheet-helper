@@ -3,6 +3,7 @@ import 'package:cashflow_sheet_helper/state/player/events/coins_sold.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_coins_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_coins_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
@@ -57,11 +58,7 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
   }
 
   void _showBuyCoinsDialog() async {
-    final CoinsBought? coinsBought = await showDialog<CoinsBought>(
-        context: context,
-        builder: (_) {
-          return BuyCoinsDialog();
-        });
+    final CoinsBought? coinsBought = await DialogHelper<CoinsBought?>().displayDialog(context, BuyCoinsDialog());
     if (coinsBought != null) {
       _playerBloc.add(coinsBought);
       ScaffoldMessenger.of(context)
@@ -74,11 +71,7 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
   }
 
   void _showSellCoinsDialog(int numGoldCoinsInPossession) async {
-    final CoinsSold? coinsSold = await showDialog<CoinsSold>(
-        context: context,
-        builder: (_) {
-          return SellCoinsDialog(numGoldCoinsInPossession);
-        });
+    final CoinsSold? coinsSold = await DialogHelper<CoinsSold?>().displayDialog(context, SellCoinsDialog(numGoldCoinsInPossession));
     if (coinsSold != null) {
       _playerBloc.add(coinsSold);
       ScaffoldMessenger.of(context).showSnackBar(

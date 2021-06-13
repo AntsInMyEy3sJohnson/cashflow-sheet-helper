@@ -12,6 +12,7 @@ import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/configure_business_boom_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
@@ -107,8 +108,8 @@ class _OverviewState extends State<Overview> {
 
   void _processBusinessBoom() async {
     final BusinessBoomOccurred? businessBoomOccurred =
-        await showDialog<BusinessBoomOccurred>(
-            context: context, builder: (_) => ConfigureBusinessBoomDialog());
+        await DialogHelper<BusinessBoomOccurred?>()
+            .displayDialog(context, ConfigureBusinessBoomDialog());
     if (businessBoomOccurred != null) {
       _playerBloc.add(businessBoomOccurred);
       ScaffoldMessenger.of(context)
@@ -122,10 +123,9 @@ class _OverviewState extends State<Overview> {
   }
 
   void _processManualAccountBalanceModification() async {
-    final balanceManuallyModified = await showDialog<BalanceManuallyModified>(
-      context: context,
-      builder: (_) => PerformBalanceModificationDialog(),
-    );
+    final balanceManuallyModified =
+        await DialogHelper<BalanceManuallyModified?>()
+            .displayDialog(context, PerformBalanceModificationDialog());
     if (balanceManuallyModified != null) {
       final String sign = balanceManuallyModified.increase ? "+" : "-";
       _playerBloc.add(balanceManuallyModified);
@@ -139,14 +139,12 @@ class _OverviewState extends State<Overview> {
   }
 
   void _processLoanPaidBack() async {
-    final loanPaidBack = await showDialog<LoanPaidBack>(
-        context: context,
-        builder: (context) {
-          return BlocProvider<PlayerBloc>.value(
-            value: _playerBloc,
-            child: PayBackLoanDialog(),
-          );
-        });
+    final loanPaidBack = await DialogHelper<LoanPaidBack?>().displayDialog(
+        context,
+        BlocProvider<PlayerBloc>.value(
+          value: _playerBloc,
+          child: PayBackLoanDialog(),
+        ));
     if (loanPaidBack != null) {
       _playerBloc.add(loanPaidBack);
       ScaffoldMessenger.of(context)
@@ -159,11 +157,8 @@ class _OverviewState extends State<Overview> {
   }
 
   void _processLoanTaken() async {
-    final loanTaken = await showDialog<LoanTaken>(
-        context: context,
-        builder: (context) {
-          return TakeUpLoanDialog();
-        });
+    final loanTaken = await DialogHelper<LoanTaken?>()
+        .displayDialog(context, TakeUpLoanDialog());
     if (loanTaken != null) {
       _playerBloc.add(loanTaken);
       ScaffoldMessenger.of(context)
@@ -176,15 +171,13 @@ class _OverviewState extends State<Overview> {
   }
 
   void _processUnemployment(PlayerState state) async {
-    final dialogResult = await showDialog<bool>(
-        context: context,
-        builder: (_) {
-          return YesNoAlertDialog(
-            "Oh no!",
-            Text("Enter unemployed state for two rounds? This will deduct "
-                "your total expenses (${state.totalExpenses}) from your account once."),
-          );
-        });
+    final dialogResult = await DialogHelper<bool?>().displayDialog(
+        context,
+        YesNoAlertDialog(
+          "Oh no!",
+          Text("Enter unemployed state for two rounds? This will deduct "
+              "your total expenses (${state.totalExpenses}) from your account once."),
+        ));
     if (dialogResult ?? false) {
       _playerBloc.add(const UnemploymentIncurred());
       ScaffoldMessenger.of(context).showSnackBar(
@@ -199,14 +192,12 @@ class _OverviewState extends State<Overview> {
   void _processChildBorn(Player player, PlayerState state) async {
     final currentChildExpenses = state.totalChildExpenses;
     final newChildExpenses = currentChildExpenses + player.monthlyChildExpenses;
-    final dialogResult = await showDialog<bool>(
-        context: context,
-        builder: (_) {
-          return YesNoAlertDialog(
-              "Get baby",
-              Text(
-                  "Get a baby? This will increase your monthly child expenses from $currentChildExpenses to $newChildExpenses."));
-        });
+    final dialogResult = await DialogHelper<bool?>().displayDialog(
+        context,
+        YesNoAlertDialog(
+            "Get baby",
+            Text(
+                "Get a baby? This will increase your monthly child expenses from $currentChildExpenses to $newChildExpenses.")));
     if (dialogResult ?? false) {
       _playerBloc.add(const BabyBorn());
       ScaffoldMessenger.of(context)
@@ -228,16 +219,12 @@ class _OverviewState extends State<Overview> {
 
   void _processCharity(PlayerState state) async {
     final charityAmount = state.totalIncome * 0.1;
-    final dialogResult = await showDialog<bool>(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) {
-          return YesNoAlertDialog(
-              "Give money to charity",
-              Text(
-                  "Give 10 % of your total income ($charityAmount) to charity?"));
-        });
-
+    final dialogResult = await DialogHelper<bool?>().displayDialog(
+        context,
+        YesNoAlertDialog(
+            "Give money to charity",
+            Text(
+                "Give 10 % of your total income ($charityAmount) to charity?")));
     if (dialogResult ?? false) {
       _playerBloc.add(const MoneyGivenToCharity());
       ScaffoldMessenger.of(context)
@@ -250,11 +237,8 @@ class _OverviewState extends State<Overview> {
 
   void _processDoodad() async {
     final TextEditingController amountController = TextEditingController();
-    final doodadBought = await showDialog<DoodadBought>(
-        context: context,
-        builder: (context) {
-          return BuyDoodadDialog(amountController);
-        });
+    final doodadBought = await DialogHelper<DoodadBought?>()
+        .displayDialog(context, BuyDoodadDialog(amountController));
     if (doodadBought != null) {
       _playerBloc.add(doodadBought);
       ScaffoldMessenger.of(context)
