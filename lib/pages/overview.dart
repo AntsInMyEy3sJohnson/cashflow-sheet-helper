@@ -20,6 +20,7 @@ import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
+import 'package:cashflow_sheet_helper/widgets/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +56,7 @@ class _OverviewState extends State<Overview> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: const VariableSizeTextField(
-                      "Income and balance overview", 25, TextAlign.center),
+                      "Income and balance overview", TextSizeConstants.TEXT_FIELD_HEADING, TextAlign.center),
                 ),
                 OverviewRow("Income",
                     "${player.activeIncome} + ${state.passiveIncome}"),
@@ -65,7 +66,7 @@ class _OverviewState extends State<Overview> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: const VariableSizeTextField(
-                      "Actions", 25, TextAlign.center),
+                      "Actions", TextSizeConstants.TEXT_FIELD_HEADING, TextAlign.center),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -74,7 +75,7 @@ class _OverviewState extends State<Overview> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: const VariableSizeTextField(
-                          "Cashflow Day!", 40, TextAlign.center),
+                          "Cashflow Day!", TextSizeConstants.BUTTON_LARGE, TextAlign.center),
                     ),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
+import 'package:cashflow_sheet_helper/widgets/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,17 +23,16 @@ class Income extends StatelessWidget {
             child: const TwoTextFieldRow(
               "Kind",
               "Cashflow",
-              32
+              TextSizeConstants.TEXT_FIELD_TABLE_HEADING,
             ),
           ),
-          TwoTextFieldRow("Salary:", "4200", 19),
-          // TODO Make this dependent on player state
-          TwoTextFieldRow("Interests & dividends:", "400", 19),
+          TwoTextFieldRow("Salary:", "${state.player.activeIncome}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
+          TwoTextFieldRow("Interests & dividends:", "${state.passiveIncome}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
           Padding(
             padding: const EdgeInsets.only(top: 19),
             child: VariableSizeTextField(
               "Real estate & company holdings:",
-              25,
+              TextSizeConstants.TEXT_FIELD_LIST_HEADING,
               TextAlign.left,
             ),
           ),
@@ -45,7 +45,7 @@ class Income extends StatelessWidget {
                   title: TwoTextFieldRow(
                     "${holding.name}",
                     "${holding.cashflow}",
-                    18,
+                    TextSizeConstants.TEXT_FIELD_ROW_ITEM,
                   ),
                 );
               },

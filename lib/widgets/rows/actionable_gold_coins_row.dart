@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../text_size_constants.dart';
+
 class ActionableGoldCoinsRow extends StatefulWidget {
   const ActionableGoldCoinsRow();
 
@@ -35,7 +37,8 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
         actionExtentRatio: 0.25,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: TwoTextFieldRow("Gold coins:", "${state.numGoldCoins}", 19),
+          child: TwoTextFieldRow("Gold coins:", "${state.numGoldCoins}",
+              TextSizeConstants.TEXT_FIELD_ROW_ITEM),
         ),
         actions: [
           IconSlideAction(
@@ -58,7 +61,8 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
   }
 
   void _showBuyCoinsDialog() async {
-    final CoinsBought? coinsBought = await DialogHelper<CoinsBought?>().displayDialog(context, BuyCoinsDialog());
+    final CoinsBought? coinsBought = await DialogHelper<CoinsBought?>()
+        .displayDialog(context, BuyCoinsDialog());
     if (coinsBought != null) {
       _playerBloc.add(coinsBought);
       ScaffoldMessenger.of(context)
@@ -71,7 +75,8 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
   }
 
   void _showSellCoinsDialog(int numGoldCoinsInPossession) async {
-    final CoinsSold? coinsSold = await DialogHelper<CoinsSold?>().displayDialog(context, SellCoinsDialog(numGoldCoinsInPossession));
+    final CoinsSold? coinsSold = await DialogHelper<CoinsSold?>()
+        .displayDialog(context, SellCoinsDialog(numGoldCoinsInPossession));
     if (coinsSold != null) {
       _playerBloc.add(coinsSold);
       ScaffoldMessenger.of(context).showSnackBar(

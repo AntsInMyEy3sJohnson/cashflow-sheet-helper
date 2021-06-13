@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/widgets/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class OverviewRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          VariableSizeTextField(label, 18, TextAlign.left),
+          VariableSizeTextField(label, TextSizeConstants.TEXT_FIELD_ROW_ITEM, TextAlign.left),
           BorderedTextField(text),
         ],
       ),

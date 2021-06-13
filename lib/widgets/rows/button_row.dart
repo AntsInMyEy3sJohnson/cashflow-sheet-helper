@@ -1,3 +1,4 @@
+import 'package:cashflow_sheet_helper/widgets/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,8 @@ class ButtonRow extends StatelessWidget {
               onPressed: callbackLeft == null ? null : () => callbackLeft!(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                child: VariableSizeTextField(textLeft, 18, TextAlign.center),
+                child: VariableSizeTextField(textLeft,
+                    TextSizeConstants.BUTTON_MEDIUM, TextAlign.center),
               ),
             ),
           ),
@@ -35,7 +37,8 @@ class ButtonRow extends StatelessWidget {
               onPressed: callbackRight == null ? null : () => callbackRight!(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
-                child: VariableSizeTextField(textRight, 18, TextAlign.center),
+                child: VariableSizeTextField(textRight,
+                    TextSizeConstants.BUTTON_MEDIUM, TextAlign.center),
               ),
             ),
           ),
