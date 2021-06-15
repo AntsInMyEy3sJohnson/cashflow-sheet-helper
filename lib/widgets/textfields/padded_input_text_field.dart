@@ -1,3 +1,5 @@
+import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:flutter/material.dart';
 
 class PaddedInputTextField extends StatelessWidget {
@@ -10,8 +12,8 @@ class PaddedInputTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(8),
+    return AdjustablePadding(
+      paddingKind: PaddingKind.small,
       child: TextField(
         controller: _textEditingController,
         keyboardType: textInputType,

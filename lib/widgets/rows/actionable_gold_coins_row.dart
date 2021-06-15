@@ -7,6 +7,8 @@ import 'package:cashflow_sheet_helper/widgets/constants/icon_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_coins_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_coins_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +39,8 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
       return Slidable(
         actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.25,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+        child: AdjustablePadding(
+          paddingKind: PaddingKind.medium,
           child: TwoTextFieldRow("Gold coins:", "${state.numGoldCoins}",
               TextSizeConstants.TEXT_FIELD_ROW_ITEM),
         ),

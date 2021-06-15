@@ -1,4 +1,6 @@
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +15,8 @@ class OverviewRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return AdjustablePadding(
+      paddingKind: PaddingKind.large,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

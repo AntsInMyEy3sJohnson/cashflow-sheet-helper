@@ -1,4 +1,7 @@
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/amount_selection_row.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +31,8 @@ class SelectAmountDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           VariableSizeTextField(title, 20, TextAlign.center),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          AdjustablePadding(
+            paddingKind: PaddingKind.large,
             child: AmountSelectionRow(
               amountController,
               callbackAmountIncreased,
@@ -38,8 +41,8 @@ class SelectAmountDialog extends StatelessWidget {
           ),
           Text(infoBoxText),
           ConfirmAbortButtonBar(
-                callbackDialogConfirmed,
-                callbackDialogAborted,
+            callbackDialogConfirmed,
+            callbackDialogAborted,
           ),
         ],
       ),

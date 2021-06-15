@@ -5,6 +5,8 @@ import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_absolute
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_percentage_price_dialog_column.dart';
 import 'package:cashflow_sheet_helper/widgets/columns/sell_holding_with_price_per_unit_price_dialog_column.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
+import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -68,8 +70,8 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
         children: [
           const VariableSizeTextField(
               "Sell Real Estate", TextSizeConstants.DIALOG_HEADING, TextAlign.center),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+          AdjustablePadding(
+            paddingKind: PaddingKind.medium,
             child: const VariableSizeTextField(
                 "How much is your buyer willing to pay on top of the original price?",
                 TextSizeConstants.DIALOG_INFO_TEXT,

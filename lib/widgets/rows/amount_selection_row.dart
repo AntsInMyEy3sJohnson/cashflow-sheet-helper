@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/widgets/buttons/round_icon_button.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/icon_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,8 @@ class AmountSelectionRow extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 10),
+          padding: EdgeInsets.only(
+              left: DimensionHelper.smallVerticalPadding(context)),
           child: Container(
             child: Column(
               children: [
