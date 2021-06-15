@@ -4,13 +4,36 @@ import 'package:flutter/material.dart';
 class DimensionsHelper {
   DimensionsHelper._();
 
-  static double verticalPadding(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return size.width / DimensionConstants.VERTICAL_PADDING_DIVISOR;
+  static double largeVerticalPadding(BuildContext context) {
+    return _width(context) / DimensionConstants.VERTICAL_PADDING_DIVISOR_LARGE;
   }
 
-  static double horizontalPadding(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return size.height / DimensionConstants.HORIZONTAL_PADDING_DIVISOR;
+  static double largeHorizontalPadding(BuildContext context) {
+    return _height(context) / DimensionConstants.HORIZONTAL_PADDING_DIVISOR_LARGE;
   }
+
+  static double mediumVerticalPadding(BuildContext context) {
+    return _width(context) / DimensionConstants.VERTICAL_PADDING_DIVISOR_MEDIUM;
+  }
+
+  static double mediumHorizontalPadding(BuildContext context) {
+    return _height(context) / DimensionConstants.HORIZONTAL_PADDING_DIVISOR_MEDIUM;
+  }
+
+  static double smallVerticalPadding(BuildContext context) {
+    return _width(context) / DimensionConstants.VERTICAL_PADDING_DIVISOR_SMALL;
+  }
+
+  static double smallHorizontalPadding(BuildContext context) {
+    return _height(context) / DimensionConstants.HORIZONTAL_PADDING_DIVISOR_SMALL;
+  }
+
+  static double _width(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  static double _height(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+
 }
