@@ -10,7 +10,7 @@ import 'package:cashflow_sheet_helper/state/navigation/events/page_switched.dart
 import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/events/player_state_cleared.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

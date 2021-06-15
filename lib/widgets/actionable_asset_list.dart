@@ -8,7 +8,7 @@ import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/color_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/icon_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';

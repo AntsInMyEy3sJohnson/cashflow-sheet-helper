@@ -10,13 +10,15 @@ import 'package:cashflow_sheet_helper/state/player/events/money_given_to_charity
 import 'package:cashflow_sheet_helper/state/player/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/dimension_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/configure_business_boom_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/dialog_helper.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dimensions_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
@@ -45,6 +47,9 @@ class _OverviewState extends State<Overview> {
 
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
+    final Size size = MediaQuery.of(context).size;
+
     // TODO Make dimensions dynamic with 'MediaQuery.of()'
     return BlocBuilder<PlayerBloc, PlayerState>(
       builder: (context, state) {
@@ -54,9 +59,13 @@ class _OverviewState extends State<Overview> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: DimensionsHelper.verticalPadding(context),
+                      horizontal: DimensionsHelper.horizontalPadding(context)),
                   child: const VariableSizeTextField(
-                      "Income and balance overview", TextSizeConstants.TEXT_FIELD_HEADING, TextAlign.center),
+                      "Income and balance overview",
+                      TextSizeConstants.TEXT_FIELD_HEADING,
+                      TextAlign.center),
                 ),
                 OverviewRow("Income",
                     "${player.activeIncome} + ${state.passiveIncome}"),
@@ -65,8 +74,8 @@ class _OverviewState extends State<Overview> {
                 OverviewRow("Account balance", "${state.balance}"),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: const VariableSizeTextField(
-                      "Actions", TextSizeConstants.TEXT_FIELD_HEADING, TextAlign.center),
+                  child: const VariableSizeTextField("Actions",
+                      TextSizeConstants.TEXT_FIELD_HEADING, TextAlign.center),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -74,8 +83,8 @@ class _OverviewState extends State<Overview> {
                     onPressed: () => _processCashflowDay(state),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: const VariableSizeTextField(
-                          "Cashflow Day!", TextSizeConstants.BUTTON_LARGE, TextAlign.center),
+                      child: const VariableSizeTextField("Cashflow Day!",
+                          TextSizeConstants.BUTTON_LARGE, TextAlign.center),
                     ),
                   ),
                 ),
