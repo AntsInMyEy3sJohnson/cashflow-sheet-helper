@@ -1,8 +1,16 @@
 import 'package:cashflow_sheet_helper/widgets/constants/dimension_constants.dart';
 import 'package:flutter/material.dart';
 
-class DimensionsHelper {
-  DimensionsHelper._();
+class DimensionHelper {
+  DimensionHelper._();
+
+  static double veryLargeVerticalPadding(BuildContext context) {
+    return _width(context) / DimensionConstants.VERTICAL_PADDING_DIVISOR_VERY_LARGE;
+  }
+
+  static double veryLargeHorizontalPadding(BuildContext context) {
+    return _height(context) / DimensionConstants.HORIZONTAL_PADDING_DIVISOR_VERY_LARGE;
+  }
 
   static double largeVerticalPadding(BuildContext context) {
     return _width(context) / DimensionConstants.VERTICAL_PADDING_DIVISOR_LARGE;

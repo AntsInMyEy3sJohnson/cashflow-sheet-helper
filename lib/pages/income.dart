@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
@@ -19,7 +20,7 @@ class Income extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 20),
+            padding: EdgeInsets.only(bottom: DimensionHelper.veryLargeVerticalPadding(context)),
             child: const TwoTextFieldRow(
               "Kind",
               "Cashflow",
@@ -29,7 +30,7 @@ class Income extends StatelessWidget {
           TwoTextFieldRow("Salary:", "${state.player.activeIncome}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
           TwoTextFieldRow("Interests & dividends:", "${state.passiveIncome}", TextSizeConstants.TEXT_FIELD_ROW_ITEM),
           Padding(
-            padding: const EdgeInsets.only(top: 19),
+            padding: EdgeInsets.only(top: DimensionHelper.veryLargeVerticalPadding(context)),
             child: VariableSizeTextField(
               "Real estate & company holdings:",
               TextSizeConstants.TEXT_FIELD_LIST_HEADING,

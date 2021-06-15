@@ -1,4 +1,4 @@
-import 'package:cashflow_sheet_helper/widgets/helpers/dimensions_helper.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:flutter/material.dart';
 
@@ -20,18 +20,18 @@ class AdjustablePadding extends StatelessWidget {
     switch (paddingKind) {
       case PaddingKind.large:
         return EdgeInsets.symmetric(
-          vertical: DimensionsHelper.largeVerticalPadding(context),
-          horizontal: DimensionsHelper.largeHorizontalPadding(context),
+          vertical: DimensionHelper.largeVerticalPadding(context),
+          horizontal: DimensionHelper.largeHorizontalPadding(context),
         );
       case PaddingKind.medium:
         return EdgeInsets.symmetric(
-          vertical: DimensionsHelper.mediumVerticalPadding(context),
-          horizontal: DimensionsHelper.mediumHorizontalPadding(context),
+          vertical: DimensionHelper.mediumVerticalPadding(context),
+          horizontal: DimensionHelper.mediumHorizontalPadding(context),
         );
       default:
         return EdgeInsets.symmetric(
-          vertical: DimensionsHelper.smallVerticalPadding(context),
-          horizontal: DimensionsHelper.smallHorizontalPadding(context),
+          vertical: DimensionHelper.smallVerticalPadding(context),
+          horizontal: DimensionHelper.smallHorizontalPadding(context),
         );
     }
   }

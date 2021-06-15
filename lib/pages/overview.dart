@@ -18,7 +18,7 @@ import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart'
 import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/helpers/dimensions_helper.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
