@@ -20,6 +20,12 @@ class _TakeUpLoanDialogState extends State<TakeUpLoanDialog> {
   }
 
   @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SelectAmountDialog(
       title: "Take Up Loan",

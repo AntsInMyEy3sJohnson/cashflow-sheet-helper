@@ -14,15 +14,10 @@ class BuyHoldingDialog extends StatefulWidget {
 
 class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _numUnitsController = TextEditingController();
-
   final TextEditingController _downPaymentController = TextEditingController();
-
   final TextEditingController _buyingCostController = TextEditingController();
-
   final TextEditingController _mortgageController = TextEditingController();
-
   final TextEditingController _cashflowController = TextEditingController();
 
   late HoldingKind _holdingKind;
@@ -31,6 +26,12 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   void initState() {
     super.initState();
     _holdingKind = HoldingKind.singleFamilyHouse;
+  }
+
+  @override
+  void dispose() {
+    _disposeControllers();
+    super.dispose();
   }
 
   @override
@@ -126,5 +127,14 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
         double.parse(_mortgageController.text),
         double.parse(_cashflowController.text));
     Navigator.pop(context, holdingBought);
+  }
+
+  void _disposeControllers() {
+    _nameController.dispose();
+    _numUnitsController.dispose();
+    _downPaymentController.dispose();
+    _buyingCostController.dispose();
+    _mortgageController.dispose();
+    _cashflowController.dispose();
   }
 }

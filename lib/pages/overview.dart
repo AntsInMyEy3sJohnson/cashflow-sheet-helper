@@ -10,21 +10,19 @@ import 'package:cashflow_sheet_helper/state/player/events/money_given_to_charity
 import 'package:cashflow_sheet_helper/state/player/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
-import 'package:cashflow_sheet_helper/widgets/constants/dimension_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/configure_business_boom_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
+import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
-import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -254,5 +252,6 @@ class _OverviewState extends State<Overview> {
         Text("Cash -${doodadBought.amount}"),
       ]));
     }
+    amountController.dispose();
   }
 }

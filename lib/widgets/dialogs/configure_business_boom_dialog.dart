@@ -5,10 +5,22 @@ import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-class ConfigureBusinessBoomDialog extends StatelessWidget {
+class ConfigureBusinessBoomDialog extends StatefulWidget {
+  @override
+  _ConfigureBusinessBoomDialogState createState() => _ConfigureBusinessBoomDialogState();
+}
+
+class _ConfigureBusinessBoomDialogState extends State<ConfigureBusinessBoomDialog> {
   final TextEditingController _thresholdController = TextEditingController();
   final TextEditingController _cashflowIncreaseController =
       TextEditingController();
+
+  @override
+  void dispose() {
+    _thresholdController.dispose();
+    _cashflowIncreaseController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
