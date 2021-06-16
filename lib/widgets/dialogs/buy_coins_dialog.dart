@@ -5,10 +5,21 @@ import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-class BuyCoinsDialog extends StatelessWidget {
+class BuyCoinsDialog extends StatefulWidget {
+  @override
+  _BuyCoinsDialogState createState() => _BuyCoinsDialogState();
+}
+
+class _BuyCoinsDialogState extends State<BuyCoinsDialog> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
 
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _priceController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Dialog(

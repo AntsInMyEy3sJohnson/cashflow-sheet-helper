@@ -5,13 +5,25 @@ import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-class SellCoinsDialog extends StatelessWidget {
-  final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
-
+class SellCoinsDialog extends StatefulWidget {
   final int numCurrentlyAvailable;
 
   SellCoinsDialog(this.numCurrentlyAvailable);
+
+  @override
+  _SellCoinsDialogState createState() => _SellCoinsDialogState();
+}
+
+class _SellCoinsDialogState extends State<SellCoinsDialog> {
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _priceController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +33,7 @@ class SellCoinsDialog extends StatelessWidget {
         children: [
           const VariableSizeTextField("Sell Gold Coins",
               TextSizeConstants.DIALOG_HEADING, TextAlign.center),
-          VariableSizeTextField("Available: $numCurrentlyAvailable",
+          VariableSizeTextField("Available: ${widget.numCurrentlyAvailable}",
               TextSizeConstants.DIALOG_INFO_TEXT, TextAlign.left),
           PaddedInputTextField(
             "Number of coins to sell",

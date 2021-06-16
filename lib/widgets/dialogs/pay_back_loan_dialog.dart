@@ -23,6 +23,12 @@ class _PayBackLoanDialogState extends State<PayBackLoanDialog> {
   }
 
   @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerBloc, PlayerState>(
       builder: (context, state) {

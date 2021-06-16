@@ -6,12 +6,25 @@ import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-class SellSharesDialog extends StatelessWidget {
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _amountController = TextEditingController();
+class SellSharesDialog extends StatefulWidget {
   final Asset asset;
 
   SellSharesDialog(this.asset);
+
+  @override
+  _SellSharesDialogState createState() => _SellSharesDialogState();
+}
+
+class _SellSharesDialogState extends State<SellSharesDialog> {
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    _priceController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +54,7 @@ class SellSharesDialog extends StatelessWidget {
   }
 
   void _processConfirm(BuildContext context) {
-    final SharesSold sharesSold = SharesSold(asset,
+    final SharesSold sharesSold = SharesSold(widget.asset,
         int.parse(_amountController.text), double.parse(_priceController.text));
     Navigator.pop(context, sharesSold);
   }
