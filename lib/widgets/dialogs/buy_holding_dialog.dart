@@ -3,6 +3,7 @@ import 'package:cashflow_sheet_helper/helpers/holding_kind_helper.dart';
 import 'package:cashflow_sheet_helper/state/player/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/padded_form_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   final TextEditingController _buyingCostController = TextEditingController();
   final TextEditingController _mortgageController = TextEditingController();
   final TextEditingController _cashflowController = TextEditingController();
+
+  final _key = GlobalKey<FormState>();
 
   late HoldingKind _holdingKind;
 
@@ -38,55 +41,37 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const VariableSizeTextField("Buy Real Estate Or Business",
-                TextSizeConstants.DIALOG_HEADING, TextAlign.center),
-            DropdownButton<String>(
-              value: HoldingKindHelper.toHumanReadableName(_holdingKind),
-              items: _holdingKindsToDropdownMenuItems(),
-              hint: const Text("Kind of real estate"),
-              onChanged: (String? value) =>
-                  _processHoldingKindSelectionChanged(value),
-            ),
-            // TODO Pre-populate name field base on selected type
-            PaddedInputTextField("Name", _nameController),
-            // TODO Hide this if selected type cannot contain more than one unit
-            if (!HoldingKindHelper.isSingleUnitHolding(_holdingKind))
-              PaddedInputTextField(
-                "# Units",
-                _numUnitsController,
-                textInputType: TextInputType.number,
+        child: Form(
+          key: _key,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const VariableSizeTextField("Buy Real Estate Or Business",
+                  TextSizeConstants.DIALOG_HEADING, TextAlign.center),
+              DropdownButton<String>(
+                value: HoldingKindHelper.toHumanReadableName(_holdingKind),
+                items: _holdingKindsToDropdownMenuItems(),
+                hint: const Text("Kind of real estate"),
+                onChanged: (String? value) =>
+                    _processHoldingKindSelectionChanged(value),
               ),
-            PaddedInputTextField(
-              "Down payment",
-              _downPaymentController,
-              textInputType: TextInputType.number,
-            ),
-            PaddedInputTextField(
-              "Buying cost",
-              _buyingCostController,
-              textInputType: TextInputType.number,
-            ),
-            PaddedInputTextField(
-              "Mortgage",
-              _mortgageController,
-              textInputType: TextInputType.number,
-            ),
-            PaddedInputTextField(
-              "Cashflow",
-              _cashflowController,
-              textInputType: TextInputType.number,
-            ),
-            ConfirmAbortButtonBar(
-              () => _processConfirm(context),
-              () => _processAbort(context),
-            ),
-          ],
+              PaddedFormField(_nameController, "Name", _validateName),
+              ConfirmAbortButtonBar(
+                () => _processConfirm(context),
+                () => _processAbort(context),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  String? _validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Name must not be empty";
+    }
+    return null;
   }
 
   List<DropdownMenuItem<String>> _holdingKindsToDropdownMenuItems() {
@@ -115,18 +100,20 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   }
 
   void _processConfirm(BuildContext context) {
-    final int numUnits = _numUnitsController.text.isEmpty
-        ? 1
-        : int.parse(_numUnitsController.text);
-    final holdingBought = HoldingBought(
-        _nameController.text,
-        _holdingKind,
-        numUnits,
-        double.parse(_downPaymentController.text),
-        double.parse(_buyingCostController.text),
-        double.parse(_mortgageController.text),
-        double.parse(_cashflowController.text));
-    Navigator.pop(context, holdingBought);
+    if(_key.currentState?.validate() ?? false) {
+      final int numUnits = _numUnitsController.text.isEmpty
+          ? 1
+          : int.parse(_numUnitsController.text);
+      final holdingBought = HoldingBought(
+          _nameController.text,
+          _holdingKind,
+          numUnits,
+          double.parse(_downPaymentController.text),
+          double.parse(_buyingCostController.text),
+          double.parse(_mortgageController.text),
+          double.parse(_cashflowController.text));
+      Navigator.pop(context, holdingBought);
+    }
   }
 
   void _disposeControllers() {
