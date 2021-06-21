@@ -31,6 +31,8 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
 
   static final List<bool> _sellOptions = <bool>[true, false, false];
 
+  final _formKey = GlobalKey<FormState>();
+
   late Widget _absoluteSellModeBody;
   late Widget _percentageSellModeBody;
   late Widget _pricePerUnitSellModeBody;
@@ -38,7 +40,6 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
 
   late double _gains;
 
-  // TODO Dispose controllers!
   @override
   void initState() {
     super.initState();
@@ -65,29 +66,32 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const VariableSizeTextField(
-              "Sell Real Estate", TextSizeConstants.DIALOG_HEADING, TextAlign.center),
-          AdjustablePadding(
-            paddingKind: PaddingKind.medium,
-            child: const VariableSizeTextField(
-                "How much is your buyer willing to pay on top of the original price?",
-                TextSizeConstants.DIALOG_INFO_TEXT,
-                TextAlign.center),
-          ),
-          ToggleButtons(
-            children: List.of(_SELL_OPTION_NAMES.map((e) => Text(e))),
-            onPressed: (index) => _processSellOptionChanged(index),
-            isSelected: _sellOptions,
-          ),
-          _currentSellModeBody,
-          ConfirmAbortButtonBar(
-            () => _processConfirm(widget.holding, _gains),
-            _processAbort,
-          ),
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const VariableSizeTextField("Sell Real Estate",
+                TextSizeConstants.DIALOG_HEADING, TextAlign.center),
+            AdjustablePadding(
+              paddingKind: PaddingKind.medium,
+              child: const VariableSizeTextField(
+                  "How much is your buyer willing to pay on top of the original price?",
+                  TextSizeConstants.DIALOG_INFO_TEXT,
+                  TextAlign.center),
+            ),
+            ToggleButtons(
+              children: List.of(_SELL_OPTION_NAMES.map((e) => Text(e))),
+              onPressed: (index) => _processSellOptionChanged(index),
+              isSelected: _sellOptions,
+            ),
+            _currentSellModeBody,
+            ConfirmAbortButtonBar(
+              () => _processConfirm(widget.holding, _gains),
+              _processAbort,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -97,7 +101,9 @@ class _SellHoldingDialogState extends State<SellHoldingDialog> {
   }
 
   void _processConfirm(Holding holding, double gains) {
-    Navigator.pop(context, HoldingSold(holding, gains));
+    if (_formKey.currentState?.validate() ?? false) {
+      Navigator.pop(context, HoldingSold(holding, gains));
+    }
   }
 
   void _processAbort() {

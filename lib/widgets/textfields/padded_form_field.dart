@@ -7,8 +7,9 @@ class PaddedFormField extends StatelessWidget {
   final TextEditingController _controller;
   final String _hintText;
   final String? Function(String?)? _validationFunction;
+  final TextInputType textInputType;
 
-  const PaddedFormField(this._controller, this._hintText, this._validationFunction);
+  const PaddedFormField(this._controller, this._hintText, this._validationFunction, {this.textInputType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +17,7 @@ class PaddedFormField extends StatelessWidget {
         paddingKind: PaddingKind.small,
       child: TextFormField(
         controller: _controller,
+        keyboardType: textInputType,
         decoration: InputDecoration(
           hintText: _hintText,
           border: OutlineInputBorder(),

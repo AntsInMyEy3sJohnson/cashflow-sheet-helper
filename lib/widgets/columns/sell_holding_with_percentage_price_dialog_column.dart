@@ -1,3 +1,5 @@
+import 'package:cashflow_sheet_helper/helpers/input_validation/sell_holding_input_validation.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/padded_form_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -42,9 +44,10 @@ class _SellHoldingWithPercentagePriceDialogColumnState
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          PaddedInputTextField(
-            widget.inputFieldHintText,
+          PaddedFormField(
             _sellingPriceController,
+            widget.inputFieldHintText,
+            SellHoldingInputValidation.validatePercentagePrice,
             textInputType: TextInputType.number,
           ),
           // TODO Make this more beautiful -- table?

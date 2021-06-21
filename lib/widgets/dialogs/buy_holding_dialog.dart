@@ -5,7 +5,6 @@ import 'package:cashflow_sheet_helper/state/player/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_form_field.dart';
-import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +21,7 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   final TextEditingController _mortgageController = TextEditingController();
   final TextEditingController _cashflowController = TextEditingController();
 
-  final _key = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   late HoldingKind _holdingKind;
 
@@ -43,7 +42,7 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
     return Dialog(
       child: SingleChildScrollView(
         child: Form(
-          key: _key,
+          key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -56,13 +55,39 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
                 onChanged: (String? value) =>
                     _processHoldingKindSelectionChanged(value),
               ),
-              PaddedFormField(_nameController, "Name", BuyHoldingInputValidation.validateName),
-              if(!HoldingKindHelper.isSingleUnitHolding(_holdingKind))
-                PaddedFormField(_numUnitsController, "# Units", BuyHoldingInputValidation.validateNumUnits),
-              PaddedFormField(_downPaymentController, "Down Payment", BuyHoldingInputValidation.validateDownPayment),
-              PaddedFormField(_buyingCostController, "Buying Cost", BuyHoldingInputValidation.validateBuyingCost),
-              PaddedFormField(_mortgageController, "Mortgage", BuyHoldingInputValidation.validateMortgage),
-              PaddedFormField(_cashflowController, "Monthly Cashflow", BuyHoldingInputValidation.validateMonthlyCashflow),
+              PaddedFormField(_nameController, "Name",
+                  BuyHoldingInputValidation.validateName),
+              if (!HoldingKindHelper.isSingleUnitHolding(_holdingKind))
+                PaddedFormField(
+                  _numUnitsController,
+                  "# Units",
+                  BuyHoldingInputValidation.validateNumUnits,
+                  textInputType: TextInputType.number,
+                ),
+              PaddedFormField(
+                _downPaymentController,
+                "Down Payment",
+                BuyHoldingInputValidation.validateDownPayment,
+                textInputType: TextInputType.number,
+              ),
+              PaddedFormField(
+                _buyingCostController,
+                "Buying Cost",
+                BuyHoldingInputValidation.validateBuyingCost,
+                textInputType: TextInputType.number,
+              ),
+              PaddedFormField(
+                _mortgageController,
+                "Mortgage",
+                BuyHoldingInputValidation.validateMortgage,
+                textInputType: TextInputType.number,
+              ),
+              PaddedFormField(
+                _cashflowController,
+                "Monthly Cashflow",
+                BuyHoldingInputValidation.validateMonthlyCashflow,
+                textInputType: TextInputType.number,
+              ),
               ConfirmAbortButtonBar(
                 () => _processConfirm(context),
                 () => _processAbort(context),
@@ -100,7 +125,7 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
   }
 
   void _processConfirm(BuildContext context) {
-    if(_key.currentState?.validate() ?? false) {
+    if (_formKey.currentState?.validate() ?? false) {
       final int numUnits = _numUnitsController.text.isEmpty
           ? 1
           : int.parse(_numUnitsController.text);
