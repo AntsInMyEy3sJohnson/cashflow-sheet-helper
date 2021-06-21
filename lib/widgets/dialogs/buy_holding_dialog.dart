@@ -1,5 +1,6 @@
 import 'package:cashflow_sheet_helper/data/holding_kind.dart';
-import 'package:cashflow_sheet_helper/helpers/holding_kind_helper.dart';
+import 'package:cashflow_sheet_helper/helpers/conversion/holding_kind_helper.dart';
+import 'package:cashflow_sheet_helper/helpers/input_validation/buy_holding_input_validation.dart';
 import 'package:cashflow_sheet_helper/state/player/events/holding_bought.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
@@ -55,7 +56,13 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
                 onChanged: (String? value) =>
                     _processHoldingKindSelectionChanged(value),
               ),
-              PaddedFormField(_nameController, "Name", _validateName),
+              PaddedFormField(_nameController, "Name", BuyHoldingInputValidation.validateName),
+              if(!HoldingKindHelper.isSingleUnitHolding(_holdingKind))
+                PaddedFormField(_numUnitsController, "# Units", BuyHoldingInputValidation.validateNumUnits),
+              PaddedFormField(_downPaymentController, "Down Payment", BuyHoldingInputValidation.validateDownPayment),
+              PaddedFormField(_buyingCostController, "Buying Cost", BuyHoldingInputValidation.validateBuyingCost),
+              PaddedFormField(_mortgageController, "Mortgage", BuyHoldingInputValidation.validateMortgage),
+              PaddedFormField(_cashflowController, "Monthly Cashflow", BuyHoldingInputValidation.validateMonthlyCashflow),
               ConfirmAbortButtonBar(
                 () => _processConfirm(context),
                 () => _processAbort(context),
@@ -65,13 +72,6 @@ class _BuyHoldingDialogState extends State<BuyHoldingDialog> {
         ),
       ),
     );
-  }
-
-  String? _validateName(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Name must not be empty";
-    }
-    return null;
   }
 
   List<DropdownMenuItem<String>> _holdingKindsToDropdownMenuItems() {
