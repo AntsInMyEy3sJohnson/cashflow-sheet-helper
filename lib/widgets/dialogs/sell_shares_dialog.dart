@@ -40,6 +40,7 @@ class _SellSharesDialogState extends State<SellSharesDialog> {
           children: [
             const VariableSizeTextField("Sell Shares",
                 TextSizeConstants.DIALOG_HEADING, TextAlign.center),
+            VariableSizeTextField("Currently in possession: ${widget.asset.numShares} shares", TextSizeConstants.TEXT_FIELD_CONTENT_MEDIUM, TextAlign.center),
             PaddedFormField(
               _priceController,
               "Price To Sell For",
