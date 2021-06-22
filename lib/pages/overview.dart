@@ -14,7 +14,7 @@ import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/configure_business_boom_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/perform_balance_modification_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/modify_balance_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
@@ -129,7 +129,7 @@ class _OverviewState extends State<Overview> {
   void _processManualAccountBalanceModification() async {
     final balanceManuallyModified =
         await DialogHelper<BalanceManuallyModified?>()
-            .displayDialog(context, PerformBalanceModificationDialog());
+            .displayDialog(context, ModifyBalanceDialog());
     if (balanceManuallyModified != null) {
       final String sign = balanceManuallyModified.increase ? "+" : "-";
       _playerBloc.add(balanceManuallyModified);

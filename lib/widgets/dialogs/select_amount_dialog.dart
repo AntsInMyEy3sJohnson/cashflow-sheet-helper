@@ -32,6 +32,7 @@ class SelectAmountDialog extends StatelessWidget {
         children: [
           VariableSizeTextField(title, 20, TextAlign.center),
           AdjustablePadding(
+            // TODO This input text field must be enabled, but not directly editable!
             paddingKind: PaddingKind.large,
             child: AmountSelectionRow(
               amountController,

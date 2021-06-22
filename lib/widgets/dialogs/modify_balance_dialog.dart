@@ -1,18 +1,18 @@
+import 'package:cashflow_sheet_helper/helpers/input_validation/modify_balance_input_validation.dart';
 import 'package:cashflow_sheet_helper/state/player/events/balance_manually_modified.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/padded_form_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_input_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 
-class PerformBalanceModificationDialog extends StatefulWidget {
+class ModifyBalanceDialog extends StatefulWidget {
   @override
-  _PerformBalanceModificationDialogState createState() =>
-      _PerformBalanceModificationDialogState();
+  _ModifyBalanceDialogState createState() => _ModifyBalanceDialogState();
 }
 
-class _PerformBalanceModificationDialogState
-    extends State<PerformBalanceModificationDialog> {
+class _ModifyBalanceDialogState extends State<ModifyBalanceDialog> {
   static const List<String> _MODIFICATION_OPTION_NAMES = <String>[
     "Increase",
     "Decrease"
@@ -21,9 +21,10 @@ class _PerformBalanceModificationDialogState
   static const String _INCREASE_HINT_TEXT = "Current balance +X";
   static const String _DECREASE_HINT_TEXT = "Current balance -X";
 
-  final TextEditingController _amountController = TextEditingController();
-
   static final List<bool> _modificationOptions = <bool>[true, false];
+
+  final TextEditingController _amountController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   late String _currentHintText;
   late ModificationMode _modificationMode;
@@ -44,39 +45,46 @@ class _PerformBalanceModificationDialogState
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const VariableSizeTextField("Manual Account Balance Modification",
-              TextSizeConstants.DIALOG_HEADING, TextAlign.center),
-          const VariableSizeTextField(
-            "Which kind of action would you like to perform?",
-            16,
-            TextAlign.center,
-          ),
-          ToggleButtons(
-              children: List.of(_MODIFICATION_OPTION_NAMES.map((e) => Text(e))),
-              onPressed: (index) => _processModificationKindChanged(index),
-              isSelected: _modificationOptions),
-          PaddedInputTextField(
-            _currentHintText,
-            _amountController,
-            textInputType: TextInputType.number,
-          ),
-          ConfirmAbortButtonBar(
-            _processConfirm,
-            _processAbort,
-          ),
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const VariableSizeTextField("Manual Account Balance Modification",
+                TextSizeConstants.DIALOG_HEADING, TextAlign.center),
+            const VariableSizeTextField(
+              "Which kind of action would you like to perform?",
+              16,
+              TextAlign.center,
+            ),
+            ToggleButtons(
+                children:
+                    List.of(_MODIFICATION_OPTION_NAMES.map((e) => Text(e))),
+                onPressed: (index) => _processModificationKindChanged(index),
+                isSelected: _modificationOptions),
+            PaddedFormField(
+              _amountController,
+              _currentHintText,
+              ModifyBalanceInputValidation.validateAmount,
+              textInputType: TextInputType.number,
+            ),
+            ConfirmAbortButtonBar(
+              _processConfirm,
+              _processAbort,
+            ),
+          ],
+        ),
       ),
     );
   }
 
   void _processConfirm() {
-    Navigator.pop(
-        context,
-        BalanceManuallyModified(double.parse(_amountController.text),
-            _modificationMode == ModificationMode.increase));
+    if (_formKey.currentState?.validate() ?? false) {
+      Navigator.pop(
+          context,
+          BalanceManuallyModified(double.parse(_amountController.text),
+              _modificationMode == ModificationMode.increase));
+    }
   }
 
   void _processAbort() {
