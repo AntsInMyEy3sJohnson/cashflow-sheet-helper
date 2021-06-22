@@ -7,7 +7,7 @@ import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/color_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/icon_constants.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/buy_asset_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/buy_shares_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/simple_info_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
@@ -85,7 +85,7 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
             return ElevatedButton(
                 onPressed: () async {
                   AssetBought? assetBought = await DialogHelper<AssetBought?>()
-                      .displayDialog(context, BuyAssetDialog());
+                      .displayDialog(context, BuySharesDialog());
                   if (assetBought != null) {
                     _addAsset(context, assetBought);
                   }

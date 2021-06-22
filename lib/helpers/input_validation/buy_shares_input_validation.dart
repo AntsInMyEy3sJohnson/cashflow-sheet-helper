@@ -1,8 +1,8 @@
 import 'package:cashflow_sheet_helper/helpers/input_validation/generic_input_validation.dart';
 
-class BuyAssetInputValidation {
+class BuySharesInputValidation {
 
-  BuyAssetInputValidation._();
+  BuySharesInputValidation._();
 
   static String? validateName(String? value) {
     return GenericInputValidation.stringValidation(value);
