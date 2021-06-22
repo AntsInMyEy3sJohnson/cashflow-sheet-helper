@@ -240,9 +240,8 @@ class _OverviewState extends State<Overview> {
   }
 
   void _processDoodad() async {
-    final TextEditingController amountController = TextEditingController();
     final doodadBought = await DialogHelper<DoodadBought?>()
-        .displayDialog(context, BuyDoodadDialog(amountController));
+        .displayDialog(context, BuyDoodadDialog());
     if (doodadBought != null) {
       _playerBloc.add(doodadBought);
       ScaffoldMessenger.of(context)
@@ -251,6 +250,5 @@ class _OverviewState extends State<Overview> {
         Text("Cash -${doodadBought.amount}"),
       ]));
     }
-    amountController.dispose();
   }
 }
