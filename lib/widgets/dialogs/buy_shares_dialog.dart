@@ -34,12 +34,26 @@ class _BuySharesDialogState extends State<BuySharesDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const VariableSizeTextField(
-                "Buy Shares", TextSizeConstants.DIALOG_HEADING, TextAlign.center),
+            const VariableSizeTextField("Buy Shares",
+                TextSizeConstants.DIALOG_HEADING, TextAlign.center),
             PaddedFormField(
-                _nameController, "Name", BuySharesInputValidation.validateName),
-            PaddedFormField(_priceController, "Today's Price", BuySharesInputValidation.validatePrice),
-            PaddedFormField(_numSharesController, "# Shares To Buy", BuySharesInputValidation.validateNumShares),
+              _nameController,
+              "Name",
+              BuySharesInputValidation.validateName,
+              textInputType: TextInputType.number,
+            ),
+            PaddedFormField(
+              _priceController,
+              "Today's Price",
+              BuySharesInputValidation.validatePrice,
+              textInputType: TextInputType.number,
+            ),
+            PaddedFormField(
+              _numSharesController,
+              "# Shares To Buy",
+              BuySharesInputValidation.validateNumShares,
+              textInputType: TextInputType.number,
+            ),
             ConfirmAbortButtonBar(
               () => _processConfirm(context),
               () => _processAbort(context),
@@ -51,7 +65,7 @@ class _BuySharesDialogState extends State<BuySharesDialog> {
   }
 
   void _processConfirm(BuildContext context) {
-    if(_formKey.currentState?.validate() ?? false) {
+    if (_formKey.currentState?.validate() ?? false) {
       final numShares = int.parse(_numSharesController.text);
       final price = double.parse(_priceController.text);
       final assetBought = AssetBought(
