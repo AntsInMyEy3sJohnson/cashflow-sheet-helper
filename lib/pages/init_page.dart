@@ -69,26 +69,66 @@ class _InitPageState extends State<InitPage> {
               _activeIncomeController,
               textInputType: TextInputType.number,
             ),
-            PaddedInputTextField("Monthly Taxes", _monthlyTaxesController),
             PaddedInputTextField(
-                "Monthly Mortgage Or Rent", _monthlyMortgageOrRentController),
+              "Monthly Taxes",
+              _monthlyTaxesController,
+              textInputType: TextInputType.number,
+            ),
             PaddedInputTextField(
-                "Monthly Student Loan", _monthlyStudentLoanController),
+              "Monthly Mortgage Or Rent",
+              _monthlyMortgageOrRentController,
+              textInputType: TextInputType.number,
+            ),
             PaddedInputTextField(
-                "Monthly Car Expenses", _monthlyCarExpensesController),
+              "Monthly Student Loan",
+              _monthlyStudentLoanController,
+              textInputType: TextInputType.number,
+            ),
             PaddedInputTextField(
-                "Monthly Credit Card Loan", _monthlyCreditCardLoanController),
+              "Monthly Car Expenses",
+              _monthlyCarExpensesController,
+              textInputType: TextInputType.number,
+            ),
             PaddedInputTextField(
-                "Monthly Other Expenses", _monthlyOtherExpensesController),
+              "Monthly Credit Card Loan",
+              _monthlyCreditCardLoanController,
+              textInputType: TextInputType.number,
+            ),
             PaddedInputTextField(
-                "Monthly Child Expenses", _monthlyChildExpensesController),
-            PaddedInputTextField("Savings", _savingsController),
-            PaddedInputTextField("Total Mortgages", _totalMortgageController),
+              "Monthly Other Expenses",
+              _monthlyOtherExpensesController,
+              textInputType: TextInputType.number,
+            ),
             PaddedInputTextField(
-                "Total Student Loan", _totalStudentLoanController),
-            PaddedInputTextField("Total Car Loan", _totalCarLoanController),
+              "Monthly Child Expenses",
+              _monthlyChildExpensesController,
+              textInputType: TextInputType.number,
+            ),
             PaddedInputTextField(
-                "Total Credit Card Debt", _totalCreditCardDebtController),
+              "Savings",
+              _savingsController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Total Mortgages",
+              _totalMortgageController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Total Student Loan",
+              _totalStudentLoanController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Total Car Loan",
+              _totalCarLoanController,
+              textInputType: TextInputType.number,
+            ),
+            PaddedInputTextField(
+              "Total Credit Card Debt",
+              _totalCreditCardDebtController,
+              textInputType: TextInputType.number,
+            ),
             ElevatedButton(
               onPressed: () =>
                   _processGameStart(playerBloc, gameBloc, pageBloc),

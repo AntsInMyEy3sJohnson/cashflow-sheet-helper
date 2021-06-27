@@ -40,7 +40,6 @@ class _BuySharesDialogState extends State<BuySharesDialog> {
               _nameController,
               "Name",
               BuySharesInputValidation.validateName,
-              textInputType: TextInputType.number,
             ),
             PaddedFormField(
               _priceController,
