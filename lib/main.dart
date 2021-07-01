@@ -6,7 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-
+// TODO Provide checks for account balance
+// TODO On dialog to buy coins: Ask player for total buying price rather than price per coin
+// TODO Grey out business boom when player does not own any businesses
+// TODO Provide decimal point for number input
+// TODO Fix overflows (one currently on buy holding dialog)
+// TODO Adapt order of fields on buy holding dialog
+// TODO Pre-populate real estate name
+// TODO Include additional selling mode for real estate: Absolute price
+// TODO Implement undo
+// TODO Write asset names in caps
+// TODO "Last pressed" field for cashflow day button
+// TODO Sounds! :)
+// TODO Color good stuff in green, bad stuff in red (e. g. balance increase should be displayed in green)
+// TODO Put "Confirm" button on right-hand side of dialog
+// TODO Put information currently loaned amount on dialog to pay back loan
+// TODO Display difference between passive income and expenses as a kind of "counter to win"
 Future<void> main() async {
   await _initHydratedBloc();
   runApp(const MyApp());
