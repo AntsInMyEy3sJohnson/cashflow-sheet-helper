@@ -14,6 +14,8 @@ import 'package:cashflow_sheet_helper/widgets/dialogs/sell_shares_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/three_text_field_row.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -120,9 +122,11 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
       _playerBloc.add(SharesBackwardSplit(asset));
       ScaffoldMessenger.of(context).showSnackBar(
         ReusableSnackbar.fromChildren(<Widget>[
-          Text("Performed backward split on ${asset.name} shares."),
-          Text(
-              "Number of ${asset.name} shares: -${(asset.numShares / 2).round()}"),
+          InfoText("Performed backward split on ${asset.name} shares."),
+          InfoText(
+            "Number of ${asset.name} shares: -${(asset.numShares / 2).round()}",
+            infoTextKind: InfoTextKind.BAD,
+          ),
         ]),
       );
     }
@@ -140,8 +144,11 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
       _playerBloc.add(SharesSplit(asset));
       ScaffoldMessenger.of(context).showSnackBar(
         ReusableSnackbar.fromChildren(<Widget>[
-          Text("Performed split on ${asset.name} shares."),
-          Text("Number of ${asset.name} shares +${asset.numShares}"),
+          InfoText("Performed split on ${asset.name} shares."),
+          InfoText(
+            "Number of ${asset.name} shares +${asset.numShares}",
+            infoTextKind: InfoTextKind.GOOD,
+          ),
         ]),
       );
     }
@@ -154,20 +161,25 @@ class _ActionableAssetListState extends State<ActionableAssetList> {
       _playerBloc.add(sharesSold);
       ScaffoldMessenger.of(context).showSnackBar(
         ReusableSnackbar.fromChildren(<Widget>[
-          Text("${sharesSold.numSold} shares sold."),
-          Text("Balance +${sharesSold.numSold * sharesSold.price}"),
+          InfoText("${sharesSold.numSold} shares sold."),
+          InfoText(
+            "Balance +${sharesSold.numSold * sharesSold.price}",
+            infoTextKind: InfoTextKind.GOOD,
+          ),
         ]),
       );
     }
   }
 
   void _addAsset(BuildContext context, AssetBought assetBought) {
-    // Hard-coded asset for now
     _playerBloc.add(assetBought);
     ScaffoldMessenger.of(context)
         .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-      const Text("Asset bought."),
-      Text("Balance -${assetBought.totalCost}"),
+      InfoText("Asset bought."),
+      InfoText(
+        "Balance -${assetBought.totalCost}",
+        infoTextKind: InfoTextKind.BAD,
+      ),
     ]));
   }
 }

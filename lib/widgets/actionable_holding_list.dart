@@ -10,6 +10,8 @@ import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/sell_holding_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/three_text_field_row.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -61,8 +63,7 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
               );
             }
             return ElevatedButton(
-                onPressed: _showBuyHoldingDialog,
-                child: const Text("Buy"));
+                onPressed: _showBuyHoldingDialog, child: const Text("Buy"));
           },
         );
       },
@@ -76,10 +77,19 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
       _playerBloc.add(holdingBought);
       ScaffoldMessenger.of(context)
           .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-        const Text("Holding bought"),
-        Text("Cash -${holdingBought.downPayment}"),
-        Text("Liabilities +${holdingBought.mortgage}"),
-        Text("Cashflow +${holdingBought.cashflow}")
+        InfoText("Holding bought."),
+        InfoText(
+          "Cash -${holdingBought.downPayment}",
+          infoTextKind: InfoTextKind.BAD,
+        ),
+        InfoText(
+          "Liabilities +${holdingBought.mortgage}",
+          infoTextKind: InfoTextKind.BAD,
+        ),
+        InfoText(
+          "Cashflow +${holdingBought.cashflow}",
+          infoTextKind: InfoTextKind.GOOD,
+        )
       ]));
     }
   }
@@ -91,13 +101,12 @@ class _ActionableHoldingListState extends State<ActionableHoldingList> {
       _playerBloc.add(holdingSold);
       ScaffoldMessenger.of(context).showSnackBar(
         ReusableSnackbar.fromChildren(<Widget>[
-          Text("${holdingSold.holding.name} sold."),
-          Text("Mortgage removed: ${holding.mortgage}"),
-          Text("Cashflow removed: ${holding.cashflow}"),
-          Text("Balance +${holdingSold.gains}"),
+          InfoText("${holdingSold.holding.name} sold."),
+          InfoText("Liabilities -${holding.mortgage}", infoTextKind: InfoTextKind.BAD,),
+          InfoText("Cashflow -${holding.cashflow}", infoTextKind: InfoTextKind.BAD),
+          InfoText("Balance +${holdingSold.gains}", infoTextKind: InfoTextKind.GOOD,),
         ]),
       );
     }
   }
-
 }
