@@ -23,6 +23,8 @@ import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text_field.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -118,10 +120,11 @@ class _OverviewState extends State<Overview> {
       _playerBloc.add(businessBoomOccurred);
       ScaffoldMessenger.of(context)
           .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-        const Text("Business boom occurred."),
-        Text(
+        InfoTextField("Business Boom occurred."),
+        InfoTextField(
             "All business with cashflow of less than ${businessBoomOccurred.affectsBusinessesBelowThreshold} "
-            "increased their cashflow by ${businessBoomOccurred.cashflowIncrease}."),
+            "increased their cashflow by ${businessBoomOccurred.cashflowIncrease}.",
+            infoTextKind: InfoTextKind.GOOD)
       ]));
     }
   }
@@ -132,11 +135,17 @@ class _OverviewState extends State<Overview> {
             .displayDialog(context, ModifyBalanceDialog());
     if (balanceManuallyModified != null) {
       final String sign = balanceManuallyModified.increase ? "+" : "-";
+      final InfoTextKind newsKind = balanceManuallyModified.increase
+          ? InfoTextKind.GOOD
+          : InfoTextKind.BAD;
       _playerBloc.add(balanceManuallyModified);
       ScaffoldMessenger.of(context).showSnackBar(
         ReusableSnackbar.fromChildren(<Widget>[
-          const Text("Account balance adapted."),
-          Text("Balance $sign${balanceManuallyModified.amount}"),
+          InfoTextField("Account balance adapted"),
+          InfoTextField(
+            "Balance $sign${balanceManuallyModified.amount}",
+            infoTextKind: newsKind,
+          ),
         ]),
       );
     }
@@ -153,7 +162,7 @@ class _OverviewState extends State<Overview> {
       _playerBloc.add(loanPaidBack);
       ScaffoldMessenger.of(context)
           .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-        const Text("Loan amount reduced."),
+        InfoTextField("Loan amount reduced."),
         Text("Balance -${loanPaidBack.amount}"),
         Text("Monthly expenses -${loanPaidBack.amount * 0.1}"),
       ]));
@@ -234,7 +243,10 @@ class _OverviewState extends State<Overview> {
       ScaffoldMessenger.of(context)
           .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
         const Text("10 % of income given to charity."),
-        Text("Cash -$charityAmount"),
+        Text(
+          "Cash -$charityAmount",
+          style: TextStyle(color: Colors.red),
+        ),
       ]));
     }
   }
