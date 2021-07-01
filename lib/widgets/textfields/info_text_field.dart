@@ -1,12 +1,12 @@
 import 'package:cashflow_sheet_helper/widgets/constants/color_constants.dart';
-import 'package:cashflow_sheet_helper/widgets/textfields/info_text_kind.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text.dart';
 import 'package:flutter/material.dart';
 
-class InfoTextField extends StatelessWidget {
+class InfoText extends StatelessWidget {
   final String data;
   late final Color textColor;
 
-  InfoTextField(this.data, {InfoTextKind infoTextKind = InfoTextKind.NEUTRAL}) {
+  InfoText(this.data, {InfoTextKind infoTextKind = InfoTextKind.NEUTRAL}) {
     textColor = _resolveTextColorFromInfoKind(infoTextKind);
   }
 
@@ -14,6 +14,7 @@ class InfoTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       data,
+      textAlign: TextAlign.center,
       style: TextStyle(color: textColor),
     );
   }
