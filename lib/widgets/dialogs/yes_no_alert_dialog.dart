@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class YesNoAlertDialog extends StatelessWidget {
-
   final String title;
   final Widget content;
 
@@ -14,15 +13,12 @@ class YesNoAlertDialog extends StatelessWidget {
       content: content,
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text("Confirm")),
-        TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Text("Abort")),
+        TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Confirm")),
       ],
     );
   }
-
-
-
 }
