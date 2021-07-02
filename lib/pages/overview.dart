@@ -14,8 +14,9 @@ import 'package:cashflow_sheet_helper/widgets/buttons/style_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/configure_business_boom_dialog.dart';
-import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/modify_balance_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/pay_back_loan_dialog.dart';
+import 'package:cashflow_sheet_helper/widgets/dialogs/simple_info_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/take_up_loan_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/yes_no_alert_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/helpers/dialog_helper.dart';
@@ -24,8 +25,8 @@ import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/button_row.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/overview_row.dart';
-import 'package:cashflow_sheet_helper/widgets/textfields/info_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/info_text.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,8 +81,12 @@ class _OverviewState extends State<Overview> {
                     onPressed: () => _processCashflowDay(state),
                     child: AdjustablePadding(
                       paddingKind: PaddingKind.large,
-                      child: const VariableSizeTextField("Cashflow Day!",
-                          TextSizeConstants.BUTTON_LARGE, TextAlign.center, textColor: Colors.white,),
+                      child: const VariableSizeTextField(
+                        "Cashflow Day!",
+                        TextSizeConstants.BUTTON_LARGE,
+                        TextAlign.center,
+                        textColor: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -91,7 +96,7 @@ class _OverviewState extends State<Overview> {
                     StyleKind.ENABLED,
                     StyleKind.ENABLED,
                     () => _processCharity(state),
-                    () => _processDoodad()),
+                    _processDoodad),
                 ButtonRow(
                   "Child (Current: ${state.numChildren})",
                   "Unemployed",
@@ -107,15 +112,15 @@ class _OverviewState extends State<Overview> {
                   "Pay back loan",
                   StyleKind.ENABLED,
                   state.bankLoan > 0 ? StyleKind.ENABLED : StyleKind.DISABLED,
-                  () => _processLoanTaken(),
-                  () => _processLoanPaidBack(),
+                  _processLoanTaken,
+                  () => _processLoanPaidBack(state),
                 ),
                 ButtonRow(
                     "Business Boom",
                     "Manually Modify Balance",
+                    state.holdings.isNotEmpty ? StyleKind.ENABLED : StyleKind.DISABLED,
                     StyleKind.ENABLED,
-                    StyleKind.ENABLED,
-                    _processBusinessBoom,
+                    () => _processBusinessBoom(state),
                     _processManualAccountBalanceModification),
               ],
             ),
@@ -125,19 +130,26 @@ class _OverviewState extends State<Overview> {
     );
   }
 
-  void _processBusinessBoom() async {
-    final BusinessBoomOccurred? businessBoomOccurred =
-        await DialogHelper<BusinessBoomOccurred?>()
-            .displayDialog(context, ConfigureBusinessBoomDialog());
-    if (businessBoomOccurred != null) {
-      _playerBloc.add(businessBoomOccurred);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-        InfoText("Business Boom occurred."),
-        InfoText(
-            "All business with cashflow of less than ${businessBoomOccurred.affectsBusinessesBelowThreshold} increased their cashflow by ${businessBoomOccurred.cashflowIncrease}.",
-            infoTextKind: InfoTextKind.GOOD)
-      ]));
+  void _processBusinessBoom(PlayerState state) async {
+    if (state.holdings.isEmpty) {
+      await DialogHelper<dynamic?>().displayDialog(
+          context,
+          SimpleInfoDialog(
+              "Info", const Text("You currently don't own any businesses or real estate that could be subject to a business boom.")));
+    } else {
+      final BusinessBoomOccurred? businessBoomOccurred =
+          await DialogHelper<BusinessBoomOccurred?>()
+              .displayDialog(context, ConfigureBusinessBoomDialog());
+      if (businessBoomOccurred != null) {
+        _playerBloc.add(businessBoomOccurred);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+          InfoText("Business Boom occurred."),
+          InfoText(
+              "All business with cashflow of less than ${businessBoomOccurred.affectsBusinessesBelowThreshold} increased their cashflow by ${businessBoomOccurred.cashflowIncrease}.",
+              infoTextKind: InfoTextKind.GOOD)
+        ]));
+      }
     }
   }
 
@@ -163,25 +175,32 @@ class _OverviewState extends State<Overview> {
     }
   }
 
-  void _processLoanPaidBack() async {
-    final loanPaidBack = await DialogHelper<LoanPaidBack?>().displayDialog(
-        context,
-        BlocProvider<PlayerBloc>.value(
-          value: _playerBloc,
-          child: PayBackLoanDialog(),
-        ));
-    if (loanPaidBack != null) {
-      _playerBloc.add(loanPaidBack);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-        InfoText("Loan amount reduced."),
-        InfoText("Balance -${loanPaidBack.amount}",
-            infoTextKind: InfoTextKind.BAD),
-        InfoText(
-          "Monthly expenses -${loanPaidBack.amount * 0.1}",
-          infoTextKind: InfoTextKind.GOOD,
-        ),
-      ]));
+  void _processLoanPaidBack(PlayerState state) async {
+    if (state.bankLoan == 0) {
+      await DialogHelper<dynamic?>().displayDialog(
+          context,
+          SimpleInfoDialog("Info",
+              const Text("You currently don't have a loan to be paid back.")));
+    } else {
+      final loanPaidBack = await DialogHelper<LoanPaidBack?>().displayDialog(
+          context,
+          BlocProvider<PlayerBloc>.value(
+            value: _playerBloc,
+            child: PayBackLoanDialog(),
+          ));
+      if (loanPaidBack != null) {
+        _playerBloc.add(loanPaidBack);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+          InfoText("Loan amount reduced."),
+          InfoText("Balance -${loanPaidBack.amount}",
+              infoTextKind: InfoTextKind.BAD),
+          InfoText(
+            "Monthly expenses -${loanPaidBack.amount * 0.1}",
+            infoTextKind: InfoTextKind.GOOD,
+          ),
+        ]));
+      }
     }
   }
 
@@ -228,24 +247,32 @@ class _OverviewState extends State<Overview> {
   }
 
   void _processChildBorn(Player player, PlayerState state) async {
-    final currentChildExpenses = state.totalChildExpenses;
-    final newChildExpenses = currentChildExpenses + player.monthlyChildExpenses;
-    final dialogResult = await DialogHelper<bool?>().displayDialog(
-        context,
-        YesNoAlertDialog(
-            "Get Baby",
-            Text(
-                "Get a baby? This will increase your monthly child expenses from $currentChildExpenses to $newChildExpenses.")));
-    if (dialogResult ?? false) {
-      _playerBloc.add(const BabyBorn());
-      ScaffoldMessenger.of(context)
-          .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-        InfoText("Child added."),
-        InfoText(
-          "Monthly expenses +${player.monthlyChildExpenses}",
-          infoTextKind: InfoTextKind.BAD,
-        ),
-      ]));
+    if (state.numChildren >= 3) {
+      await DialogHelper<dynamic>().displayDialog(
+          context,
+          SimpleInfoDialog("Info",
+              const Text("You've reached the maximum number of children.")));
+    } else {
+      final currentChildExpenses = state.totalChildExpenses;
+      final newChildExpenses =
+          currentChildExpenses + player.monthlyChildExpenses;
+      final dialogResult = await DialogHelper<bool?>().displayDialog(
+          context,
+          YesNoAlertDialog(
+              "Get Baby",
+              Text(
+                  "Get a baby? This will increase your monthly child expenses from $currentChildExpenses to $newChildExpenses.")));
+      if (dialogResult ?? false) {
+        _playerBloc.add(const BabyBorn());
+        ScaffoldMessenger.of(context)
+            .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
+          InfoText("Child added."),
+          InfoText(
+            "Monthly expenses +${player.monthlyChildExpenses}",
+            infoTextKind: InfoTextKind.BAD,
+          ),
+        ]));
+      }
     }
   }
 

@@ -35,13 +35,14 @@ class ColoredElevatedButton extends StatelessWidget {
 
   ButtonStyle _evaluateStyle() {
     if (styleKind == StyleKind.ENABLED) {
-      return _styleFromProperties(Colors.blue, Colors.white);
+      return _styleFromProperties(3, Colors.blue, Colors.white);
     }
-    return _styleFromProperties(Colors.white38, Colors.grey);
+    return _styleFromProperties(1, Colors.white38, Colors.grey);
   }
 
-  ButtonStyle _styleFromProperties(Color primaryColor, Color textColor) {
+  ButtonStyle _styleFromProperties(double elevation, Color primaryColor, Color textColor) {
     return ElevatedButton.styleFrom(
+      elevation: elevation,
       primary: primaryColor,
       textStyle: TextStyle(
         fontWeight: FontWeight.bold,
