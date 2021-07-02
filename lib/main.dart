@@ -17,7 +17,6 @@ import 'package:path_provider/path_provider.dart';
 // TODO Write asset names in caps
 // TODO "Last pressed" field for cashflow day button
 // TODO Sounds! :)
-// TODO Color good stuff in green, bad stuff in red (e. g. balance increase should be displayed in green)
 // TODO Put information currently loaned amount on dialog to pay back loan
 // TODO Display difference between passive income and expenses as a kind of "counter to win"
 // TODO In buy holding dialog, calculate fields automatically, where possible

@@ -11,6 +11,8 @@ import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/reusable_snackbar.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/two_text_field_row.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text.dart';
+import 'package:cashflow_sheet_helper/widgets/textfields/info_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -69,9 +71,15 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
       _playerBloc.add(coinsBought);
       ScaffoldMessenger.of(context)
           .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
-        const Text("Gold coins bought."),
-        Text("Number of coins +${coinsBought.numBought}"),
-        Text("Cash -${coinsBought.numBought * coinsBought.totalPrice}"),
+        InfoText("Gold coins bought."),
+        InfoText(
+          "Number of coins +${coinsBought.numBought}",
+          infoTextKind: InfoTextKind.GOOD,
+        ),
+        InfoText(
+          "Cash -${coinsBought.totalPrice}",
+          infoTextKind: InfoTextKind.BAD,
+        ),
       ]));
     }
   }
@@ -83,9 +91,15 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
       _playerBloc.add(coinsSold);
       ScaffoldMessenger.of(context).showSnackBar(
         ReusableSnackbar.fromChildren(<Widget>[
-          const Text("Gold coins sold."),
-          Text("Number of coins -${coinsSold.numSold}"),
-          Text("Cash +${coinsSold.numSold * coinsSold.pricePerCoin}"),
+          InfoText("Gold coins sold."),
+          InfoText(
+            "Number of coins -${coinsSold.numSold}",
+            infoTextKind: InfoTextKind.BAD,
+          ),
+          InfoText(
+            "Cash +${coinsSold.numSold * coinsSold.pricePerCoin}",
+            infoTextKind: InfoTextKind.GOOD,
+          ),
         ]),
       );
     }
