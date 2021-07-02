@@ -44,15 +44,13 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
           child: TwoTextFieldRow("Gold coins:", "${state.numGoldCoins}",
               TextSizeConstants.TEXT_FIELD_ROW_ITEM),
         ),
-        actions: [
+        secondaryActions: [
           IconSlideAction(
             caption: "Buy",
             color: ColorConstants.BUY_ITEM,
             icon: IconConstants.BUY,
             onTap: _showBuyCoinsDialog,
           ),
-        ],
-        secondaryActions: [
           IconSlideAction(
             caption: "Sell",
             color: ColorConstants.SELL_ITEM,
