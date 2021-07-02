@@ -85,7 +85,7 @@ class PlayerBloc extends HydratedBloc<PlayerEvent, PlayerState> {
   }
 
   Future<PlayerState> _mapCoinsBoughtToPlayerState(CoinsBought event) async {
-    final newBalance = state.balance - (event.pricePerCoin * event.numBought);
+    final newBalance = state.balance - event.totalPrice;
     final newNumGoldCoins = state.numGoldCoins + event.numBought;
     return state.copyWithBalanceAndNumGoldCoins(newBalance, newNumGoldCoins);
   }

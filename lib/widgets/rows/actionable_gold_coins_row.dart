@@ -73,7 +73,7 @@ class _ActionableGoldCoinsRowState extends State<ActionableGoldCoinsRow> {
           .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
         const Text("Gold coins bought."),
         Text("Number of coins +${coinsBought.numBought}"),
-        Text("Cash -${coinsBought.numBought * coinsBought.pricePerCoin}"),
+        Text("Cash -${coinsBought.numBought * coinsBought.totalPrice}"),
       ]));
     }
   }

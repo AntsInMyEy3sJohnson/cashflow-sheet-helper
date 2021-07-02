@@ -34,7 +34,7 @@ class _BuyCoinsDialogState extends State<BuyCoinsDialog> {
             textInputType: TextInputType.number,
           ),
           PaddedInputTextField(
-            "Price per coin",
+            "Total price",
             _priceController,
             textInputType: TextInputType.number,
           ),

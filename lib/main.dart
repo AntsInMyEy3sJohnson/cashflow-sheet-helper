@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 // TODO Provide checks for account balance
-// TODO On dialog to buy coins: Ask player for total buying price rather than price per coin
 // TODO Grey out business boom when player does not own any businesses
 // TODO Provide decimal point for number input
 // TODO Fix overflows (one currently on buy holding dialog)
