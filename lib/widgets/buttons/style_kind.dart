@@ -1,0 +1,4 @@
+enum StyleKind {
+  ENABLED,
+  DISABLED
+}

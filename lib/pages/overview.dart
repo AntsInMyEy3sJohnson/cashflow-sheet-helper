@@ -10,6 +10,7 @@ import 'package:cashflow_sheet_helper/state/player/events/money_given_to_charity
 import 'package:cashflow_sheet_helper/state/player/events/unemployment_incurred.dart';
 import 'package:cashflow_sheet_helper/state/player/player_bloc.dart';
 import 'package:cashflow_sheet_helper/state/player/player_state.dart';
+import 'package:cashflow_sheet_helper/widgets/buttons/style_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/buy_doodad_dialog.dart';
 import 'package:cashflow_sheet_helper/widgets/dialogs/configure_business_boom_dialog.dart';
@@ -80,28 +81,40 @@ class _OverviewState extends State<Overview> {
                     child: AdjustablePadding(
                       paddingKind: PaddingKind.large,
                       child: const VariableSizeTextField("Cashflow Day!",
-                          TextSizeConstants.BUTTON_LARGE, TextAlign.center),
+                          TextSizeConstants.BUTTON_LARGE, TextAlign.center, textColor: Colors.white,),
                     ),
                   ),
                 ),
-                ButtonRow("Charity", "Doodad", () => _processCharity(state),
+                ButtonRow(
+                    "Charity",
+                    "Doodad",
+                    StyleKind.ENABLED,
+                    StyleKind.ENABLED,
+                    () => _processCharity(state),
                     () => _processDoodad()),
                 ButtonRow(
-                    "Child (Current: ${state.numChildren})",
-                    "Unemployed",
-                    state.numChildren < 3
-                        ? () => _processChildBorn(player, state)
-                        : null,
-                    () => _processUnemployment(state)),
+                  "Child (Current: ${state.numChildren})",
+                  "Unemployed",
+                  state.numChildren < 3
+                      ? StyleKind.ENABLED
+                      : StyleKind.DISABLED,
+                  StyleKind.ENABLED,
+                  () => _processChildBorn(player, state),
+                  () => _processUnemployment(state),
+                ),
                 ButtonRow(
                   "Take up loan",
                   "Pay back loan",
+                  StyleKind.ENABLED,
+                  state.bankLoan > 0 ? StyleKind.ENABLED : StyleKind.DISABLED,
                   () => _processLoanTaken(),
-                  state.bankLoan > 0 ? () => _processLoanPaidBack() : null,
+                  () => _processLoanPaidBack(),
                 ),
                 ButtonRow(
                     "Business Boom",
                     "Manually Modify Balance",
+                    StyleKind.ENABLED,
+                    StyleKind.ENABLED,
                     _processBusinessBoom,
                     _processManualAccountBalanceModification),
               ],
