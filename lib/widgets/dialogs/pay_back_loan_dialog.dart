@@ -35,7 +35,8 @@ class _PayBackLoanDialogState extends State<PayBackLoanDialog> {
         return SelectAmountDialog(
           // TODO Disable amount increase and decrease buttons
           title: "Pay Back Loan",
-          infoBoxText: "Monthly expenses -${_step * 100}",
+          infoBoxTextUpper: "Loaned: ${state.bankLoan}",
+          infoBoxTextLower: "Monthly expenses -${_step * 100}",
           amountController: _amountController,
           callbackAmountIncreased: () => _processAmountIncreased(state),
           callbackAmountDecreased: _processAmountDecreased,

@@ -1,4 +1,5 @@
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
+import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
@@ -8,7 +9,8 @@ import 'package:flutter/material.dart';
 
 class SelectAmountDialog extends StatelessWidget {
   final String title;
-  final String infoBoxText;
+  final String infoBoxTextUpper;
+  final String infoBoxTextLower;
   final TextEditingController amountController;
   final Function callbackAmountIncreased;
   final Function callbackAmountDecreased;
@@ -17,7 +19,8 @@ class SelectAmountDialog extends StatelessWidget {
 
   const SelectAmountDialog(
       {required this.title,
-      required this.infoBoxText,
+      required this.infoBoxTextUpper,
+      required this.infoBoxTextLower,
       required this.amountController,
       required this.callbackAmountIncreased,
       required this.callbackAmountDecreased,
@@ -30,7 +33,10 @@ class SelectAmountDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          VariableSizeTextField(title, 20, TextAlign.center),
+          VariableSizeTextField(title, TextSizeConstants.DIALOG_HEADING, TextAlign.center),
+          if (infoBoxTextUpper.isNotEmpty)
+            // TODO Padding between this text field and the AmountSelectionRow is too large
+            VariableSizeTextField(infoBoxTextUpper, TextSizeConstants.DIALOG_INFO_TEXT, TextAlign.center),
           AdjustablePadding(
             // TODO This input text field must be enabled, but not directly editable!
             paddingKind: PaddingKind.large,
@@ -40,7 +46,7 @@ class SelectAmountDialog extends StatelessWidget {
               callbackAmountDecreased,
             ),
           ),
-          Text(infoBoxText),
+          VariableSizeTextField(infoBoxTextLower, TextSizeConstants.DIALOG_INFO_TEXT, TextAlign.center),
           ConfirmAbortButtonBar(
             callbackDialogConfirmed,
             callbackDialogAborted,
