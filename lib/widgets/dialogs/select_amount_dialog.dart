@@ -1,6 +1,5 @@
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
-import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
 import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/rows/amount_selection_row.dart';

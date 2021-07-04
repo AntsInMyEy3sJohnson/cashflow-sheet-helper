@@ -7,7 +7,9 @@ import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_fiel
 import 'package:flutter/material.dart';
 
 class BuyDoodadDialog extends StatefulWidget {
-  const BuyDoodadDialog();
+  final double balance;
+
+  const BuyDoodadDialog(this.balance);
 
   @override
   _BuyDoodadDialogState createState() => _BuyDoodadDialogState();
@@ -16,6 +18,21 @@ class BuyDoodadDialog extends StatefulWidget {
 class _BuyDoodadDialogState extends State<BuyDoodadDialog> {
   final TextEditingController _amountController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  late bool _exceedsBalance;
+
+  @override
+  void initState() {
+    super.initState();
+    _exceedsBalance = false;
+    _amountController.addListener(_checkAmountExceedsBalance);
+  }
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +50,28 @@ class _BuyDoodadDialogState extends State<BuyDoodadDialog> {
               BuyDoodadInputValidation.validateAmount,
               textInputType: TextInputType.number,
             ),
+            if (_exceedsBalance)
+              VariableSizeTextField(
+                "Exceeds available balance!",
+                TextSizeConstants.DIALOG_INFO_TEXT,
+                TextAlign.center,
+                textColor: Colors.red,
+              ),
             ConfirmAbortButtonBar(
-              () => _processConfirm(context),
+              () => _exceedsBalance ? null : _processConfirm(context),
               () => _processAbort(context),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _checkAmountExceedsBalance() {
+    double currentInput = double.tryParse(_amountController.text) ?? 0.0;
+    setState(() {
+      _exceedsBalance = currentInput > widget.balance;
+    });
   }
 
   void _processConfirm(BuildContext context) {

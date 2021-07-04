@@ -96,7 +96,7 @@ class _OverviewState extends State<Overview> {
                     StyleKind.ENABLED,
                     StyleKind.ENABLED,
                     () => _processCharity(state),
-                    _processDoodad),
+                    () => _processDoodad(state)),
                 ButtonRow(
                   "Child (Current: ${state.numChildren})",
                   "Unemployed",
@@ -309,9 +309,9 @@ class _OverviewState extends State<Overview> {
     }
   }
 
-  void _processDoodad() async {
+  void _processDoodad(PlayerState state) async {
     final doodadBought = await DialogHelper<DoodadBought?>()
-        .displayDialog(context, BuyDoodadDialog());
+        .displayDialog(context, BuyDoodadDialog(state.balance));
     if (doodadBought != null) {
       _playerBloc.add(doodadBought);
       ScaffoldMessenger.of(context)
