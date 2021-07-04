@@ -1,6 +1,7 @@
 import 'package:cashflow_sheet_helper/helpers/input_validation/buy_doodad_input_validation.dart';
 import 'package:cashflow_sheet_helper/state/player/events/doodad_bought.dart';
 import 'package:cashflow_sheet_helper/widgets/buttons/confirm_abort_button_bar.dart';
+import 'package:cashflow_sheet_helper/widgets/buttons/style_kind.dart';
 import 'package:cashflow_sheet_helper/widgets/constants/text_size_constants.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/padded_form_field.dart';
 import 'package:cashflow_sheet_helper/widgets/textfields/variable_size_text_field.dart';
@@ -58,8 +59,10 @@ class _BuyDoodadDialogState extends State<BuyDoodadDialog> {
                 textColor: Colors.red,
               ),
             ConfirmAbortButtonBar(
-              () => _exceedsBalance ? null : _processConfirm(context),
+              () => _processConfirm(context),
               () => _processAbort(context),
+              styleKindConfirm:
+                  _exceedsBalance ? StyleKind.DISABLED : StyleKind.ENABLED,
             ),
           ],
         ),

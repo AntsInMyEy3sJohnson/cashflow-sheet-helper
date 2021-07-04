@@ -1,10 +1,15 @@
+import 'package:cashflow_sheet_helper/widgets/buttons/style_kind.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmAbortButtonBar extends StatelessWidget {
   final Function processConfirm;
   final Function processAbort;
 
-  const ConfirmAbortButtonBar(this.processConfirm, this.processAbort);
+  final StyleKind styleKindConfirm;
+
+  const ConfirmAbortButtonBar(this.processConfirm, this.processAbort,
+      {StyleKind styleKindConfirm = StyleKind.ENABLED})
+      : styleKindConfirm = styleKindConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +23,15 @@ class ConfirmAbortButtonBar extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () => processConfirm(),
-          child: const Text(
+          onPressed: styleKindConfirm == StyleKind.ENABLED ? () => processConfirm() : null,
+          child: Text(
             "Confirm",
             textAlign: TextAlign.end,
+
           ),
         ),
       ],
     );
   }
+
 }
