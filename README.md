@@ -20,5 +20,27 @@ At the risk of stating the obvious: This app is not a replacement for the board 
 
 ## Some Screenshots
 
+### Main Screen
+![main screen](./screenshots/overview.png?raw=true)
+
+### Dialog To Take Up Loan
+![take up loan dialog](./screenshots/take_up_loan.png?raw=true)
+
+### Dialog To Buy Shares
+![buy shares dialog](./screenshots/buy_shares.png?raw=true)
+
+### Income Oberview
+![income overview](./screenshots/income_overview.png?raw=true)
+
+### Actions On Shares
+![actions on shares](./screenshots/shares_actions.png?raw=true)
+
+### After Having Bought A House
+![holding bought](./screenshots/holding_bought.png?raw=true)
+
+## Anything else?
+
+Happy cashflowing! :)
+
 
 
