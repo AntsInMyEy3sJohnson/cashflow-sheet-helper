@@ -1,7 +1,4 @@
 import 'package:cashflow_sheet_helper/state/navigation/page_bloc.dart';
-import 'package:cashflow_sheet_helper/widgets/helpers/dimension_helper.dart';
-import 'package:cashflow_sheet_helper/widgets/paddings/adjustable_padding.dart';
-import 'package:cashflow_sheet_helper/widgets/paddings/padding_kind.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,9 +9,11 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PageBloc, Widget>(
       builder: (context, pageBlocState) {
-        return AdjustablePadding(
-          paddingKind: PaddingKind.small,
-          child: pageBlocState,
+        return SizedBox.expand(
+          child: FractionallySizedBox(
+            widthFactor: 0.95,
+            child: pageBlocState,
+          ),
         );
       },
     );

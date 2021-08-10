@@ -17,14 +17,11 @@ class ColoredElevatedButton extends StatelessWidget {
     return ElevatedButton(
       style: _evaluateStyle(),
       onPressed: () => callback(),
-      child: Padding(
-        padding: edgeInsets,
-        child: VariableSizeTextField(
-          text,
-          textSize,
-          TextAlign.center,
-          textColor: _evaluateTextColor(),
-        ),
+      child: VariableSizeTextField(
+        text,
+        textSize,
+        TextAlign.center,
+        textColor: _evaluateTextColor(),
       ),
     );
   }
