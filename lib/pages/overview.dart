@@ -55,73 +55,83 @@ class _OverviewState extends State<Overview> {
       builder: (context, state) {
         final player = state.player;
         return SingleChildScrollView(
-          child: Center(
+          child: FractionallySizedBox(
+            widthFactor: 0.97,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AdjustablePadding(
-                  paddingKind: PaddingKind.medium,
-                  child: const VariableSizeTextField(
-                      "Income and balance overview",
-                      TextSizeConstants.TEXT_FIELD_HEADING,
-                      TextAlign.center),
-                ),
-                OverviewRow("Income",
-                    "${player.activeIncome} + ${state.passiveIncome}"),
-                OverviewRow("Expenses", "${state.totalExpenses}"),
-                OverviewRow("Cashflow", "${state.cashflow}"),
-                OverviewRow("Account balance", "${state.balance}"),
-                AdjustablePadding(
-                  paddingKind: PaddingKind.medium,
-                  child: const VariableSizeTextField("Actions",
-                      TextSizeConstants.TEXT_FIELD_HEADING, TextAlign.center),
-                ),
-                AdjustablePadding(
-                  paddingKind: PaddingKind.medium,
-                  child: ElevatedButton(
-                    onPressed: () => _processCashflowDay(state),
-                    child: AdjustablePadding(
-                      paddingKind: PaddingKind.large,
-                      child: const VariableSizeTextField(
-                        "Cashflow Day!",
-                        TextSizeConstants.BUTTON_LARGE,
-                        TextAlign.center,
-                        textColor: Colors.white,
-                      ),
-                    ),
+                Padding(
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
+                  child: Column(
+                    children: [
+                      const VariableSizeTextField(
+                          "Income and balance overview",
+                          TextSizeConstants.TEXT_FIELD_HEADING,
+                          TextAlign.center),
+                      OverviewRow("Income",
+                          "${player.activeIncome} + ${state.passiveIncome}"),
+                      OverviewRow("Expenses", "${state.totalExpenses}"),
+                      OverviewRow("Cashflow", "${state.cashflow}"),
+                      OverviewRow("Account balance", "${state.balance}"),
+                    ],
                   ),
                 ),
-                ButtonRow(
-                    "Charity",
-                    "Doodad",
-                    StyleKind.ENABLED,
-                    StyleKind.ENABLED,
-                    () => _processCharity(state),
-                    () => _processDoodad(state)),
-                ButtonRow(
-                  "Child (Current: ${state.numChildren})",
-                  "Unemployed",
-                  state.numChildren < 3
-                      ? StyleKind.ENABLED
-                      : StyleKind.DISABLED,
-                  StyleKind.ENABLED,
-                  () => _processChildBorn(player, state),
-                  () => _processUnemployment(state),
+                Padding(
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01),
+                  child: Column(
+                    children: [
+                      const VariableSizeTextField("Actions",
+                          TextSizeConstants.TEXT_FIELD_HEADING, TextAlign.center),
+                      ElevatedButton(
+                        onPressed: () => _processCashflowDay(state),
+                        child: AdjustablePadding(
+                          paddingKind: PaddingKind.large,
+                          child: const VariableSizeTextField(
+                            "Cashflow Day!",
+                            TextSizeConstants.BUTTON_LARGE,
+                            TextAlign.center,
+                            textColor: Colors.white,
+                          ),
+                        ),
+                      ),
+                      ButtonRow(
+                          "Charity",
+                          "Doodad",
+                          StyleKind.ENABLED,
+                          StyleKind.ENABLED,
+                              () => _processCharity(state),
+                              () => _processDoodad(state)),
+                      ButtonRow(
+                        "Child (Current: ${state.numChildren})",
+                        "Unemployed",
+                        state.numChildren < 3
+                            ? StyleKind.ENABLED
+                            : StyleKind.DISABLED,
+                        StyleKind.ENABLED,
+                            () => _processChildBorn(player, state),
+                            () => _processUnemployment(state),
+                      ),
+                      ButtonRow(
+                        "Take up loan",
+                        "Pay back loan",
+                        StyleKind.ENABLED,
+                        state.bankLoan > 0 ? StyleKind.ENABLED : StyleKind.DISABLED,
+                        _processLoanTaken,
+                            () => _processLoanPaidBack(state),
+                      ),
+                      ButtonRow(
+                        "Business Boom",
+                        "Manually Modify Balance",
+                        state.holdings.isNotEmpty
+                            ? StyleKind.ENABLED
+                            : StyleKind.DISABLED,
+                        StyleKind.ENABLED,
+                            () => _processBusinessBoom(state),
+                        _processManualAccountBalanceModification,
+                      ),
+                    ],
+                  ),
                 ),
-                ButtonRow(
-                  "Take up loan",
-                  "Pay back loan",
-                  StyleKind.ENABLED,
-                  state.bankLoan > 0 ? StyleKind.ENABLED : StyleKind.DISABLED,
-                  _processLoanTaken,
-                  () => _processLoanPaidBack(state),
-                ),
-                ButtonRow(
-                    "Business Boom",
-                    "Manually Modify Balance",
-                    state.holdings.isNotEmpty ? StyleKind.ENABLED : StyleKind.DISABLED,
-                    StyleKind.ENABLED,
-                    () => _processBusinessBoom(state),
-                    _processManualAccountBalanceModification),
               ],
             ),
           ),
@@ -132,10 +142,12 @@ class _OverviewState extends State<Overview> {
 
   void _processBusinessBoom(PlayerState state) async {
     if (state.holdings.isEmpty) {
-      await DialogHelper<dynamic?>().displayDialog(
+      await DialogHelper<dynamic>().displayDialog(
           context,
           SimpleInfoDialog(
-              "Info", const Text("You currently don't own any businesses or real estate that could be subject to a business boom.")));
+              "Info",
+              const Text(
+                  "You currently don't own any businesses or real estate that could be subject to a business boom.")));
     } else {
       final BusinessBoomOccurred? businessBoomOccurred =
           await DialogHelper<BusinessBoomOccurred?>()
@@ -177,7 +189,7 @@ class _OverviewState extends State<Overview> {
 
   void _processLoanPaidBack(PlayerState state) async {
     if (state.bankLoan == 0) {
-      await DialogHelper<dynamic?>().displayDialog(
+      await DialogHelper<dynamic>().displayDialog(
           context,
           SimpleInfoDialog("Info",
               const Text("You currently don't have a loan to be paid back.")));
