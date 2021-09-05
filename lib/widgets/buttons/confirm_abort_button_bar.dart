@@ -27,7 +27,6 @@ class ConfirmAbortButtonBar extends StatelessWidget {
           child: Text(
             "Confirm",
             textAlign: TextAlign.end,
-
           ),
         ),
       ],
