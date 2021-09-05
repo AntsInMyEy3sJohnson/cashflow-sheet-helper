@@ -16,7 +16,6 @@ class Income extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerBloc, PlayerState>(builder: (context, state) {
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(

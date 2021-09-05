@@ -180,7 +180,7 @@ class _OverviewState extends State<Overview> {
             .showSnackBar(ReusableSnackbar.fromChildren(<Widget>[
           InfoText("Business Boom occurred."),
           InfoText(
-              "All business with cashflow of less than ${businessBoomOccurred.affectsBusinessesBelowThreshold} increased their cashflow by ${businessBoomOccurred.cashflowIncrease}.",
+              "All businesses with cashflow of less than ${businessBoomOccurred.affectsBusinessesBelowThreshold} increased their cashflow by ${businessBoomOccurred.cashflowIncrease}.",
               infoTextKind: InfoTextKind.GOOD)
         ]));
       }
